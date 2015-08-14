@@ -1,0 +1,86 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Column Drop Pattern</title>
+
+    <style>
+      body {
+        margin: 0;
+      }
+      .container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .box {
+        height: 100px;
+        text-align: center;
+        width: 100%;
+      }
+
+      .blue {
+        background-color: blue;
+        width: 100%;
+      }
+
+      .light__blue {
+        background-color: lightblue;
+        width: 100%;
+      }
+
+      .green {
+        background-color: green;
+        width: 100%;
+      }
+
+      .red {
+        background-color: red;
+        width: 100%;
+      }
+
+      .orange {
+        background-color: orange;
+        width: 100%;
+      }
+
+      /* breakpoint @ 450px */
+      @media screen and (min-width: 450px) {
+        .light__blue,
+        .green { width: 50%; }
+      }
+
+      /* breakpoint @ 550px */
+      @media screen and (min-width: 550px) {
+        .light__blue,
+        .green { width: 50%; }
+        .red { width: 33.33%; }
+        .orange { width: 66.66%; }
+      }
+
+      /* breakpoint @ 700px */
+      @media screen and (min-width: 800px) {
+        .container {
+          margin: 0 auto;
+          width: 800px;
+        }
+      }
+
+    </style>
+
+  </head>
+  <body>
+    <div class="container">
+      <!-- normal flow of the flex boxes -->
+      <div class="box blue"></div>
+      <div class="box light__blue"></div>
+      <div class="box green"></div>
+      <div class="box red"></div>
+      <div class="box orange"></div>
+    </div>
+  </body>
+</html>
