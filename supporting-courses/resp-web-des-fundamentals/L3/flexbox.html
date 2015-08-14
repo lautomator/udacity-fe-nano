@@ -1,0 +1,86 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox</title>
+
+    <style>
+      body {
+        margin: 0;
+      }
+      .container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .box {
+        height: 100px;
+        text-align: center;
+        width: 100%;
+      }
+
+      .lime {
+        background-color: lime;
+        width: 100%;
+      }
+
+      .red {
+        background-color: red;
+        width: 50%;
+      }
+
+      .blue {
+        background-color: blue;
+        width: 50%;
+      }
+
+      .green {
+        background-color: green;
+        width: 35%;
+      }
+
+      .orange {
+        background-color: orange;
+        width: 30%;
+      }
+
+      .gray {
+        background-color: gray;
+        width: 35%;
+      }
+
+      .purple {
+        background-color: purple;
+        width: 100%;
+      }
+
+      /* will jumble the normal flow at 700px */
+      @media screen and (min-width: 700px) {
+        .lime { order: 6; }
+        .red { order: 5; }
+        .blue { order: 4; }
+        .green { order: 3; }
+        .orange { order: 1; }
+        .gray { order: 2; }
+        .purple { order: 0; }
+      }
+
+    </style>
+
+  </head>
+  <body>
+    <div class="container">
+      <header class="box lime"></header>
+      <div class="box red"></div>
+      <div class="box blue"></div>
+      <div class="box green"></div>
+      <div class="box orange"></div>
+      <div class="box gray"></div>
+      <footer class="box purple">
+    </div>
+  </body>
+</html>
