@@ -57,7 +57,11 @@
   }
 
   .hero {
-    background-image: url("./images/dog@cropped.jpg");
+    background-image: url("./images/dog@30%.jpg");
+  }
+
+  .scores__location {
+    display: none;
   }
 }
 
