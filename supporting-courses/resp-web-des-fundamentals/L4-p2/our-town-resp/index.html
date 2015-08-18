@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
 
-<!-- "hamburger" &#9776; -->
-
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,6 +12,7 @@
   <body>
 
     <header class="header">
+      <div id="mobile__menu">&#9776;</div>
       <div class="header__inner">
         <img class="header__logo" src="images/city.png" alt="iconic view of a cityscape">
         <h1 class="header__title">
@@ -181,5 +180,22 @@
         </ul>
       </footer>
     </main>
+
+    <script>
+      var menu = document.querySelector('#mobile__menu'),
+          main = document.querySelector('main'),
+          drawer = document.querySelector('#drawer');
+
+      menu.addEventListener('click', function(e) {
+        drawer.classList.toggle('open');
+        e.stopPropagation();
+      });
+
+      main.addEventListener('click', function() {
+        drawer.classList.remove('open');
+      });
+
+    </script>
+
   </body>
 </html>
