@@ -21,7 +21,7 @@ html {
 }
 
 article {
-  width: 50em;
+  max-width: 50em;
 }
 
 h1,
@@ -31,4 +31,8 @@ h2 {
 
 img {
   max-width: 100%;
+}
+
+figure {
+  margin: 0;
 }

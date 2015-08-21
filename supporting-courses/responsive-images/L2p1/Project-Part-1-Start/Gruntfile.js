@@ -1,10 +1,10 @@
-/*
- After you have changed the settings at "Your code goes here",
- run this with one of these options:
-  "grunt" alone creates a new, completed images directory
-  "grunt clean" removes the images directory
-  "grunt responsive_images" re-processes images without removing the old ones
-*/
+
+ // After you have changed the settings at "Your code goes here",
+ // run this with one of these options:
+ //  "grunt" alone creates a new, completed images directory
+ //  "grunt clean" removes the images directory
+ //  "grunt responsive_images" re-processes images without removing the old ones
+
 
 module.exports = function(grunt) {
 
@@ -14,20 +14,20 @@ module.exports = function(grunt) {
         options: {
           engine: 'im',
           sizes: [{
-            /*
-            Change these:
-            
-            width: ,
-            suffix: ,
-            quality:
-            */
+
+            // Change these:
+
+            width: 800,
+            // suffix: ,
+            // jpeg quality (1 -100)
+            quality: 50
           }]
         },
 
-        /*
-        You don't need to change this part if you don't change
-        the directory structure.
-        */
+
+        // You don't need to change this part if you don't change
+        // the directory structure.
+
         files: [{
           expand: true,
           src: ['*.{gif,jpg,png}'],
@@ -37,14 +37,14 @@ module.exports = function(grunt) {
       }
     },
 
-    /* Clear out the images directory if it exists */
+     // Clear out the images directory if it exists
     clean: {
       dev: {
         src: ['images'],
       },
     },
 
-    /* Generate the images directory if it is missing */
+     // Generate the images directory if it is missing
     mkdir: {
       dev: {
         options: {
@@ -53,7 +53,7 @@ module.exports = function(grunt) {
       },
     },
 
-    /* Copy the "fixed" images that don't go through processing into the images/directory */
+     // Copy the "fixed" images that don't go through processing into the images/directory
     copy: {
       dev: {
         files: [{
@@ -64,11 +64,12 @@ module.exports = function(grunt) {
       },
     },
   });
-  
+
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-mkdir');
+
   grunt.registerTask('default', ['clean', 'mkdir', 'copy', 'responsive_images']);
 
 };
