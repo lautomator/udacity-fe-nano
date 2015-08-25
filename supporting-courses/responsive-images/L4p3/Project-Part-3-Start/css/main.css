@@ -14,17 +14,25 @@ article {
 
 h1,
 h2,
+h3,
 p {
   font-family: 'Dosis', sans-serif;
-  margin: 2%;
+  margin: 15px;
 }
 
 p {
   font-size: 20px;
 }
 
+h3 {
+  border-bottom: dotted 1px #000;
+  padding-bottom: 4px;
+  text-transform: uppercase;
+}
+
 img {
   max-width: 100%;
+  border-radius: 0 15px 15px 0;
 }
 
 figure {
