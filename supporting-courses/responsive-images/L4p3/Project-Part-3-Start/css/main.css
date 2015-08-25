@@ -1,0 +1,52 @@
+@import url(http://fonts.googleapis.com/css?family=Dosis);
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+article {
+  max-width: 50em;
+}
+
+h1,
+h2,
+p {
+  font-family: 'Dosis', sans-serif;
+  margin: 2%;
+}
+
+p {
+  font-size: 20px;
+}
+
+img {
+  max-width: 100%;
+}
+
+figure {
+  margin: 0;
+  font-family: 'Dosis', sans-serif;
+  font-style: italic;
+}
+
+figcaption {
+  border: rgba(0, 0, 0, .4);
+  background-color: rgba(0, 0, 0, .1);
+  display: inline-block;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+span.fa {
+  color: rgba(0, 0, 0, .2);
+}
+
+@media screen and (max-width: 750px) {
+  p {
+    font-size: 20px;
+  }
+}
