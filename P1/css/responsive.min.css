@@ -1,1 +1,0 @@
-#drawer,body,html,main{height:100%}body,html{width:100%}a#menu svg{width:40px;fill:#000}main,nav{box-sizing:border-box}main{width:100%}#drawer{width:300px;position:absolute;-webkit-transform:translate(-300px,0);transform:translate(-300px,0);transition:transform .3s ease}#drawer.open{-webkit-transform:translate(0,0);transform:translate(0,0)}

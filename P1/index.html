@@ -17,44 +17,82 @@
 </head>
 
 <body>
-  <!-- navigation -->
-  <nav>
-    <!-- mobile-nav -->
-    <div id="drawer" class="dark_blue">
-      <h2>Off Canvas</h2>
-      <div id="close-drawer"><i class="fa fa-times-circle fa-2x"></i></div>
+  <div class="container">
 
-      <ul>
-        <li>menu item</li>
-        <li>menu item</li>
-        <li>menu item</li>
-      </ul>
-    </div><!-- /.mobile-nav -->
+    <!-- navigation -->
 
-    <div id="main-nav">
-      <ul>
-        <li>menu item</li>
-        <li>menu item</li>
-        <li>menu item</li>
-      </ul>
+    <!-- hamburger -->
+    <div id="hamburger">
+      <!-- mobile-ready menu -->
+      <div id="mobile-menu">
+        <a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/></svg></a>
+      </div><!-- /.mobile-ready menu -->
+    </div><!-- /.hamburger -->
+
+    <header>
+      <img src="" alt="logo">
+      <h1>John Merigliano</h1>
+      <h2>Front-End Dxeveloper</h2>
+    </header>
+
+    <hr>
+
+    <div class="hero">
+      <img src="" alt="hero">
     </div>
-  </nav><!-- /.navigation -->
 
-  <!-- main -->
-  <div class="main">
-    <!-- mobile-ready menu -->
-    <div id="mobile-menu">
-      <a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/></svg></a>
-    </div><!-- /.mobile-ready menu -->
+    <nav>
+      <!-- mobile-nav -->
+      <div id="drawer">
+        <div id="close-drawer"><a><i class="fa fa-times-circle fa-2x"></i></a></div>
 
-  </div><!-- /.main -->
+        <p>Featured Work</p>
+        <ul>
+          <li><a href="">Project Title 1</a></li>
+          <li><a href="">Project Title 2</a></li>
+          <li><a href="">Project Title 3</a></li>
+        </ul>
+      </div><!-- /.mobile-nav -->
+
+      <div id="main-nav">
+        <p>Featured Work</p>
+        <figure>
+          <picture>
+            <source media="(min-width: 750px)" srcset="images/still_life-1600_large_2x.jpg">
+            <source media="(max-width: 749px)" srcset="images/still_life-800_small_1x.jpg">
+            <img src="images/still_life-800.jpg" alt="p1">
+          </picture>
+          <figcaption>Project Title 1</figcaption>
+        </figure>
+
+        <figure>
+          <picture>
+            <source media="(min-width: 750px)" srcset="images/still_life-1600_large_2x.jpg">
+            <source media="(max-width: 749px)" srcset="images/still_life-800_small_1x.jpg">
+            <img src="images/still_life-800.jpg" alt="p2">
+          </picture>
+          <figcaption>Project Title 2</figcaption>
+        </figure>
+
+        <figure>
+          <picture>
+            <source media="(min-width: 750px)" srcset="images/still_life-1600_large_2x.jpg">
+            <source media="(max-width: 749px)" srcset="images/still_life-800_small_1x.jpg">
+            <img src="images/still_life-800.jpg" alt="p3">
+          </picture>
+          <figcaption>Project Title 3</figcaption>
+        </figure>
+      </div>
+    </nav><!-- /.navigation -->
+
+  </div><!-- /.container -->
 
   <script src="js/drawer.js"></script>
 
   <script>
     // These targets are declared here to keep the html oustide of the js
     var portfolioTargets = {
-        menu: document.getElementById('mobile-menu'),
+        menu: document.getElementById('hamburger'),
         close: document.getElementById('close-drawer'),
         drawer: document.getElementById('drawer')
     };
