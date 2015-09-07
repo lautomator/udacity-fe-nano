@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>John Merigliano: Portfolio Site</title>
+
+  <meta lang="en" charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="robots" content="noindex, nofollow, noarchive"/>
+
+  <link rel="stylesheet" href="css/normalize.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+  <nav>
+    <!-- mobile-nav -->
+    <div id="drawer" class="dark_blue">
+      <h2>Off Canvas</h2>
+      <div id="close-drawer">X</div>
+
+      <ul>
+        <li>menu item</li>
+        <li>menu item</li>
+        <li>menu item</li>
+      </ul>
+    </div><!-- /.mobile-nav -->
+
+    <ul>
+      <li>menu item</li>
+      <li>menu item</li>
+      <li>menu item</li>
+    </ul>
+  </nav>
+
+  <!-- main -->
+  <div class="main">
+    <!-- mobile-ready menu -->
+    <a id="menu">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+      </svg>
+    </a><!-- /.mobile-ready menu -->
+
+  </div><!-- /.main -->
+
+  <script src="js/drawer.js"></script>
+
+  <script>
+    // These targets are declared here to keep the html oustide of the js
+    var portfolioTargets = {
+        menu: document.getElementById('menu'),
+        close: document.getElementById('close-drawer'),
+        drawer: document.getElementById('drawer')
+    };
+
+    init(portfolioTargets);
+  </script>
+
+</body>
+</html>

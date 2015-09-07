@@ -1,0 +1,19 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.box {
+  min-height: 150px;
+}
+
+.dark_blue {
+  background-color: #2A457A;
+  color: #efefef;
+}
