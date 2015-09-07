@@ -8,16 +8,21 @@
   <meta name="robots" content="noindex, nofollow, noarchive"/>
 
   <link rel="stylesheet" href="css/normalize.min.css">
+<!-- TODO: grunt and use the .min files when complete -->
   <link rel="stylesheet" href="css/main.css">
+  <!-- <link rel="stylesheet" href="css/main.min.css"> -->
   <link rel="stylesheet" href="css/responsive.css">
+  <!-- <link rel="stylesheet" href="css/responsive.min.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 
 <body>
+  <!-- navigation -->
   <nav>
     <!-- mobile-nav -->
     <div id="drawer" class="dark_blue">
       <h2>Off Canvas</h2>
-      <div id="close-drawer">X</div>
+      <div id="close-drawer"><i class="fa fa-times-circle fa-2x"></i></div>
 
       <ul>
         <li>menu item</li>
@@ -26,21 +31,21 @@
       </ul>
     </div><!-- /.mobile-nav -->
 
-    <ul>
-      <li>menu item</li>
-      <li>menu item</li>
-      <li>menu item</li>
-    </ul>
-  </nav>
+    <div id="main-nav">
+      <ul>
+        <li>menu item</li>
+        <li>menu item</li>
+        <li>menu item</li>
+      </ul>
+    </div>
+  </nav><!-- /.navigation -->
 
   <!-- main -->
   <div class="main">
     <!-- mobile-ready menu -->
-    <a id="menu">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
-      </svg>
-    </a><!-- /.mobile-ready menu -->
+    <div id="mobile-menu">
+      <a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/></svg></a>
+    </div><!-- /.mobile-ready menu -->
 
   </div><!-- /.main -->
 
@@ -49,7 +54,7 @@
   <script>
     // These targets are declared here to keep the html oustide of the js
     var portfolioTargets = {
-        menu: document.getElementById('menu'),
+        menu: document.getElementById('mobile-menu'),
         close: document.getElementById('close-drawer'),
         drawer: document.getElementById('drawer')
     };
