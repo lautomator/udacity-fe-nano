@@ -82,6 +82,12 @@ body {
  * img
  */
 
+#logo {
+  border-radius: 4px;
+  height: 85px;
+  overflow: hidden;
+  width: 85px;
+}
 
 
 
