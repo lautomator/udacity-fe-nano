@@ -6,29 +6,36 @@
  */
 
 .container {
-  display: flex;
-  flex-wrap: wrap;
   max-width: 800px;
-  /*padding: 0 10px;*/
-}
-
-#hamburger {
-  height: 44px;
-  left: 0;
-  position: relative;
-  top: 0;
-  width: 50px;
 }
 
 header {
-  z-index: 0;
+  margin: 0 0 50px 0;
+}
+
+.main header,
+.main .featured-work h1,
+.main .featured-work h2,
+.main .featured-work p {
+  padding: 0 10px;
+}
+
+#hamburger {
+  height: 60px;
+  left: 0;
+  position: relative;
+  top: 0;
+  width: 60px;
+}
+
+.featured-work {
+  margin: 0 auto;
 }
 
 .col {
   display: inline-block;
   height: 146px;
-  text-align: center;
-  /*width: 100%;*/
+  /*text-align: center;*/
 }
 
 
@@ -45,24 +52,20 @@ nav ul li {
   list-style: none;
 }
 
-.featured__work {
-  /*display: none;*/
-}
-
-#mobile__menu svg {
-  width: 40px;
-  fill: #000;
+#mobile-menu svg {
+  width: 50px;
+  fill: #bcbbbb;
 }
 
 #drawer {
   background: #fff;
   height: 100%;
-  width: 300px;
+  width: 750px;
   position: fixed;
   top: 0;
   /* This trasform moves the drawer off canvas. */
-  -webkit-transform: translate(-300px, 0);
-  transform: translate(-300px, 0);
+  -webkit-transform: translate(-750px, 0);
+  transform: translate(-750px, 0);
   transition: transform 0.3s ease;
   z-index: 10;
 }
@@ -87,19 +90,41 @@ a {
  * type
  */
 
-body {
+h1,
+h2,
+h3,
+p,
+ul li {
+  color: #404040;
   font-family: 'Roboto', sans-serif;
+  margin: 4px 0;
+}
+
+h3 {
+  padding: 0 3px;
+}
+
+hr {
+  border: solid 3px #bcbbbb;
+}
+
+i {
+  color: #bcbbbb;
 }
 
 
 /*
- * img
+ * images
  */
 
 .logo {
   border-radius: 4px;
+  float: right;
   height: 85px;
   overflow: hidden;
+  position: relative;
+  right: 10px;
+  top: 0;
   width: 85px;
 }
 
@@ -111,5 +136,3 @@ body {
 .col img {
   width: 100%;
 }
-
-

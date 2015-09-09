@@ -22,7 +22,7 @@
     <!-- hamburger -->
     <div id="hamburger">
       <!-- mobile-ready menu -->
-      <div id="mobile__menu">
+      <div id="mobile-menu">
         <a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/></svg></a>
       </div><!-- /mobile-ready menu -->
     </div><!-- /hamburger -->
@@ -31,7 +31,7 @@
     <nav>
       <!-- mobile-nav -->
       <div id="drawer">
-        <div id="close__drawer"><a><i class="fa fa-times-circle fa-2x"></i></a></div>
+        <div id="close-drawer"><a><i class="fa fa-times-circle fa-2x"></i></a></div>
 
         <p>Featured Work</p>
         <ul>
@@ -42,43 +42,57 @@
       </div><!-- /mobile-nav -->
     </nav><!-- /navigation -->
 
-    <header>
-      <div class="logo"><img src="img/icon.gif" alt="pixel tennis player logo"></div>
-      <h1>John Merigliano</h1>
-      <h3>Front-End Developer</h3>
-    </header>
+    <div class="main">
+      <header>
+        <div class="logo"><img src="img/icon.gif" alt="pixel tennis player logo"></div>
+        <h1>John Merigliano</h1>
+        <h3>Front-End Developer</h3>
+      </header>
 
-    <hr>
+      <hr>
 
-    <div class="hero">
-      <img src="img/hero.gif" alt="computer terminal">
-    </div>
+      <div class="hero">
+        <img src="img/hero.gif" alt="computer terminal">
+      </div>
 
-    <!-- featured work -->
-    <div class="featured__work">
-      <h2>Featured Work</h2>
+      <!-- featured work -->
+      <div class="featured-work">
+        <h2>Featured Work</h2>
 
-      <!-- col L -->
-      <div class="col">
-        <img src="img/automaton-01-400_small_1x.png" alt="project 1">
-        <h1>Project Title 1</h1>
-        <p>a url</p>
-      </div><!-- /col -->
+        <!-- col L -->
+        <div class="col">
+          <picture>
+            <source media="(min-width: 750px)" srcset="img/automaton-01-224_@1x.png">
+            <source media="(max-width: 749px)" srcset="img/automaton-01-400_@2x.png">
+            <img src="img/automaton-01-400_@2x.png" alt="project 1">
+          </picture>
+          <h1>Project Title 1</h1>
+          <p>a url</p>
+        </div><!-- /col -->
 
-      <!-- col M -->
-      <div class="col">
-        <img src="img/automaton-02-400_small_1x.jpg" alt="project 2">
-        <h1>Project Title 2</h1>
-        <p>a url</p>
-      </div><!-- /col -->
+        <!-- col M -->
+        <div class="col">
+          <picture>
+            <source media="(min-width: 750px)" srcset="img/automaton-02-224_@1x.jpg">
+            <source media="(max-width: 749px)" srcset="img/automaton-02-400_@2x.jpg">
+            <img src="img/automaton-02-400_@2x.jpg" alt="project 2">
+          </picture>
+          <h1>Project Title 2</h1>
+          <p>a url</p>
+        </div><!-- /col -->
 
-      <!-- col R -->
-      <div class="col">
-        <img src="img/automaton-03-400_small_1x.png" alt="project 3">
-        <h1>Project Title 3</h1>
-        <p>a url</p>
-      </div><!-- /col -->
-    </div><!-- /featured work -->
+        <!-- col R -->
+        <div class="col">
+          <picture>
+            <source media="(min-width: 750px)" srcset="img/automaton-03-224_@1x.png">
+            <source media="(max-width: 749px)" srcset="img/automaton-03-400_@2x.png">
+            <img src="img/automaton-03-400_@2x.png" alt="project 1">
+          </picture>
+          <h1>Project Title 3</h1>
+          <p>a url</p>
+        </div><!-- /col -->
+      </div><!-- /featured work -->
+    </div><!-- /main -->
   </div><!-- /container -->
 
   <script src="js/drawer.js"></script>
@@ -87,7 +101,7 @@
     // These targets are declared here to keep the html oustide of the js
     var portfolioTargets = {
         menu: document.getElementById('hamburger'),
-        close: document.getElementById('close__drawer'),
+        close: document.getElementById('close-drawer'),
         drawer: document.getElementById('drawer')
     };
 
