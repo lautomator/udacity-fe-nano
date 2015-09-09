@@ -23,7 +23,7 @@ module.exports = function(grunt) {
                     engine: 'im',
                     sizes: [{
                         /* Change these */
-                        width: 224,
+                        width: 400,
                         suffix: '_small_1x',
                         quality: 30
                     }]

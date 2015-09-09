@@ -19,32 +19,19 @@
 <body>
   <div class="container">
 
-    <!-- navigation -->
-
     <!-- hamburger -->
     <div id="hamburger">
       <!-- mobile-ready menu -->
-      <div id="mobile-menu">
+      <div id="mobile__menu">
         <a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/></svg></a>
-      </div><!-- /.mobile-ready menu -->
-    </div><!-- /.hamburger -->
+      </div><!-- /mobile-ready menu -->
+    </div><!-- /hamburger -->
 
-    <header>
-      <div id="logo"><img src="img/icon.gif" alt="pixel tennis player logo"></div>
-      <h1>John Merigliano</h1>
-      <h2>Front-End Dxeveloper</h2>
-    </header>
-
-    <hr>
-
-    <div class="hero">
-      <img src="" alt="hero">
-    </div>
-
+    <!-- navigation -->
     <nav>
       <!-- mobile-nav -->
       <div id="drawer">
-        <div id="close-drawer"><a><i class="fa fa-times-circle fa-2x"></i></a></div>
+        <div id="close__drawer"><a><i class="fa fa-times-circle fa-2x"></i></a></div>
 
         <p>Featured Work</p>
         <ul>
@@ -52,40 +39,47 @@
           <li><a href="">Project Title 2</a></li>
           <li><a href="">Project Title 3</a></li>
         </ul>
-      </div><!-- /.mobile-nav -->
+      </div><!-- /mobile-nav -->
+    </nav><!-- /navigation -->
 
-      <div id="main-nav">
-        <p>Featured Work</p>
-        <figure>
-          <picture>
-            <source media="(min-width: 750px)" srcset="images/still_life-1600_large_2x.jpg">
-            <source media="(max-width: 749px)" srcset="images/still_life-800_small_1x.jpg">
-            <img src="images/still_life-800.jpg" alt="p1">
-          </picture>
-          <figcaption>Project Title 1</figcaption>
-        </figure>
+    <header>
+      <div class="logo"><img src="img/icon.gif" alt="pixel tennis player logo"></div>
+      <h1>John Merigliano</h1>
+      <h3>Front-End Developer</h3>
+    </header>
 
-        <figure>
-          <picture>
-            <source media="(min-width: 750px)" srcset="images/still_life-1600_large_2x.jpg">
-            <source media="(max-width: 749px)" srcset="images/still_life-800_small_1x.jpg">
-            <img src="images/still_life-800.jpg" alt="p2">
-          </picture>
-          <figcaption>Project Title 2</figcaption>
-        </figure>
+    <hr>
 
-        <figure>
-          <picture>
-            <source media="(min-width: 750px)" srcset="images/still_life-1600_large_2x.jpg">
-            <source media="(max-width: 749px)" srcset="images/still_life-800_small_1x.jpg">
-            <img src="images/still_life-800.jpg" alt="p3">
-          </picture>
-          <figcaption>Project Title 3</figcaption>
-        </figure>
-      </div>
-    </nav><!-- /.navigation -->
+    <div class="hero">
+      <img src="img/hero.gif" alt="computer terminal">
+    </div>
 
-  </div><!-- /.container -->
+    <!-- featured work -->
+    <div class="featured__work">
+      <h2>Featured Work</h2>
+
+      <!-- col L -->
+      <div class="col">
+        <img src="img/automaton-01-400_small_1x.png" alt="project 1">
+        <h1>Project Title 1</h1>
+        <p>a url</p>
+      </div><!-- /col -->
+
+      <!-- col M -->
+      <div class="col">
+        <img src="img/automaton-02-400_small_1x.jpg" alt="project 2">
+        <h1>Project Title 2</h1>
+        <p>a url</p>
+      </div><!-- /col -->
+
+      <!-- col R -->
+      <div class="col">
+        <img src="img/automaton-03-400_small_1x.png" alt="project 3">
+        <h1>Project Title 3</h1>
+        <p>a url</p>
+      </div><!-- /col -->
+    </div><!-- /featured work -->
+  </div><!-- /container -->
 
   <script src="js/drawer.js"></script>
 
@@ -93,7 +87,7 @@
     // These targets are declared here to keep the html oustide of the js
     var portfolioTargets = {
         menu: document.getElementById('hamburger'),
-        close: document.getElementById('close-drawer'),
+        close: document.getElementById('close__drawer'),
         drawer: document.getElementById('drawer')
     };
 

@@ -1,12 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 
+
 /*
  * layout
  */
 
 .container {
-  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
   max-width: 800px;
+  /*padding: 0 10px;*/
 }
 
 #hamburger {
@@ -16,6 +19,18 @@
   top: 0;
   width: 50px;
 }
+
+header {
+  z-index: 0;
+}
+
+.col {
+  display: inline-block;
+  height: 146px;
+  text-align: center;
+  /*width: 100%;*/
+}
+
 
 /*
  * nav
@@ -30,11 +45,11 @@ nav ul li {
   list-style: none;
 }
 
-#main-nav {
-  display: none;
+.featured__work {
+  /*display: none;*/
 }
 
-#mobile-menu svg {
+#mobile__menu svg {
   width: 40px;
   fill: #000;
 }
@@ -57,9 +72,6 @@ nav ul li {
   transform: translate(0, 0);
 }
 
-header {
-  z-index: 0;
-}
 
 /*
  * links
@@ -70,6 +82,7 @@ a {
   text-decoration: none;
 }
 
+
 /*
  * type
  */
@@ -78,16 +91,25 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+
 /*
  * img
  */
 
-#logo {
+.logo {
   border-radius: 4px;
   height: 85px;
   overflow: hidden;
   width: 85px;
 }
 
+.hero {
+  display: none;
+}
+
+.hero img,
+.col img {
+  width: 100%;
+}
 
 

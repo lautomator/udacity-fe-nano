@@ -12,12 +12,11 @@
     display: block;
   }
 
-  a {
-    padding: 0;
+  .hero {
+    display: block;
   }
 
-  nav ul li {
-    display: inline-block;
-    list-style: none;
+  a {
+    padding: 0;
   }
 }
