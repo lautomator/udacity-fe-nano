@@ -1,5 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto);
-
+@import url(https://fonts.googleapis.com/css?family=Karla);
 
 /*
  * layout
@@ -7,16 +6,18 @@
 
 .container {
   max-width: 800px;
+  margin: 0 0 45px 0;
 }
 
 header {
-  margin: 0 0 50px 0;
+  margin: 0 0 25px 0;
 }
 
 .main header,
 .main .featured-work h1,
 .main .featured-work h2,
-.main .featured-work p {
+.main .featured-work p,
+#drawer h2 {
   padding: 0 10px;
 }
 
@@ -29,13 +30,14 @@ header {
 }
 
 .featured-work {
-  margin: 0 auto;
+  margin: 25px 0 0 0;
 }
 
 .col {
   display: inline-block;
-  height: 146px;
-  /*text-align: center;*/
+  height: 100%;
+  margin: 20px 0 60px 0;
+  width: 100%;
 }
 
 
@@ -48,25 +50,21 @@ nav,
   box-sizing: border-box;
 }
 
-nav ul li {
-  list-style: none;
-}
-
 #mobile-menu svg {
   width: 50px;
-  fill: #bcbbbb;
+  fill: #606060;
 }
 
 #drawer {
+  /*background: rgba(255, 255, 255, .95);*/
   background: #fff;
   height: 100%;
-  width: 750px;
   position: fixed;
   top: 0;
-  /* This trasform moves the drawer off canvas. */
   -webkit-transform: translate(-750px, 0);
   transform: translate(-750px, 0);
   transition: transform 0.3s ease;
+  width: 100%;
   z-index: 10;
 }
 
@@ -75,15 +73,27 @@ nav ul li {
   transform: translate(0, 0);
 }
 
+#close-drawer {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
 
 /*
  * links
  */
 
 a {
-  padding: 0.15em;
+  color: #bcbbbb;
+  padding: 0.2em;
   text-decoration: none;
 }
+
+a:hover {
+  text-decoration: underline;
+}
+
 
 
 /*
@@ -96,7 +106,7 @@ h3,
 p,
 ul li {
   color: #404040;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Karla', sans-serif;
   margin: 4px 0;
 }
 
@@ -104,12 +114,52 @@ h3 {
   padding: 0 3px;
 }
 
+h1 {
+  font-size: 50px;
+  line-height: 50px;
+}
+
+h2 {
+  font-size: 35px;
+}
+
+h3 {
+  font-size: 30px;
+  font-variant: small-caps;
+}
+
+.project-title {
+  font-size: 40px;
+}
+
+li.project-title {
+  font-size: 30px;
+  margin: 10px 0;
+  padding: 10px 0;
+}
+
+.project-url {
+  font-size: 20px;
+}
+
 hr {
-  border: solid 3px #bcbbbb;
+  border: solid 2px #606060;
 }
 
 i {
-  color: #bcbbbb;
+  color: #606060;
+}
+
+ul {
+  list-style: none;
+  padding-left: 6px;
+}
+
+#drawer ul li hr {
+  border: 2px solid #bcbbbb;
+  left: -5px;
+  position: relative;
+  width: 100%;
 }
 
 
@@ -118,14 +168,13 @@ i {
  */
 
 .logo {
-  border-radius: 4px;
-  float: right;
-  height: 85px;
-  overflow: hidden;
-  position: relative;
-  right: 10px;
-  top: 0;
-  width: 85px;
+    border-radius: 4px;
+    height: 55px;
+    overflow: hidden;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 55px;
 }
 
 .hero {

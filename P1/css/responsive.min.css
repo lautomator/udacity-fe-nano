@@ -1,1 +1,1 @@
-@media screen and (min-width:750px){#drawer{visibility:hidden}#mobile-menu{display:none}#main-nav,.hero{display:block}a{padding:0}}
+@media screen and (min-width:750px){#drawer{visibility:hidden}#hamburger{display:none}#main-nav,.hero{display:block}a{padding:0}.logo{border-radius:4px;display:inline-block;float:right;height:85px;overflow:hidden;position:relative;right:10px;top:0;width:85px}}
