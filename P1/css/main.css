@@ -13,7 +13,6 @@ header {
   margin: 0 0 25px 0;
 }
 
-.main header,
 .main .featured-work h1,
 .main .featured-work h2,
 .main .featured-work p,
@@ -143,7 +142,7 @@ li.project-title {
 }
 
 hr {
-  border: solid 2px #606060;
+  border: solid 2px #bcbbbb;
 }
 
 i {

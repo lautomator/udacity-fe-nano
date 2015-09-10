@@ -1,6 +1,13 @@
 /* screens  > 749px */
 @media screen and (min-width: 750px) {
 
+  .container {
+    box-shadow: 0 0 34px #bcbbbb;
+    margin: 0 auto;
+    padding: 40px 40px;
+    width: 720px;
+  }
+
   #drawer {
     visibility: hidden;
   }
@@ -15,6 +22,7 @@
 
   .hero {
     display: block;
+    width: 720px;
   }
 
   a {
@@ -23,23 +31,35 @@
 
   .logo {
     border-radius: 4px;
-    display: inline-block;
-    float: right;
     height: 85px;
+    float: left;
+    left: 0;
     overflow: hidden;
     position: relative;
-    right: 10px;
     top: 0;
     width: 85px;
   }
 
   .col {
     width: 224px;
-    margin-right: 24px
+    margin-right: 18px;
   }
 
   .col:last-of-type {
     margin-right: 0;
   }
 
+  header {
+    text-align: right;
+  }
+
+  .project-title {
+    font-size: 30px;
+  }
+
+  .main .featured-work h1,
+  .main .featured-work h2,
+  .main .featured-work p {
+    padding: 0;
+  }
 }
