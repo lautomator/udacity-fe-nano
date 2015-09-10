@@ -11,13 +11,8 @@
 
 header {
   margin: 0 0 25px 0;
-}
-
-.main .featured-work h1,
-.main .featured-work h2,
-.main .featured-work p,
-#drawer h2 {
-  padding: 0 10px;
+  max-width: 400px;
+  padding-left: 10px;
 }
 
 #hamburger {
@@ -29,7 +24,8 @@ header {
 }
 
 .featured-work {
-  margin: 25px 0 0 0;
+  margin: 25px auto 0 auto;
+  max-width: 400px;
 }
 
 .col {
@@ -55,7 +51,6 @@ nav,
 }
 
 #drawer {
-  /*background: rgba(255, 255, 255, .95);*/
   background: #fff;
   height: 100%;
   position: fixed;
@@ -94,7 +89,6 @@ a:hover {
 }
 
 
-
 /*
  * type
  */
@@ -104,7 +98,7 @@ h2,
 h3,
 p,
 ul li {
-  color: #404040;
+  color: #797979;
   font-family: 'Karla', sans-serif;
   margin: 4px 0;
 }
@@ -141,6 +135,10 @@ li.project-title {
   font-size: 20px;
 }
 
+.project-info {
+  color: #bcbbbb;
+}
+
 hr {
   border: solid 2px #bcbbbb;
 }
@@ -159,6 +157,13 @@ ul {
   left: -5px;
   position: relative;
   width: 100%;
+}
+
+.main .featured-work h1,
+.main .featured-work h2,
+.main .featured-work p,
+#drawer h2 {
+  padding: 0 10px;
 }
 
 
@@ -182,5 +187,5 @@ ul {
 
 .hero img,
 .col img {
-  width: 100%;
+  max-width: 400px;
 }

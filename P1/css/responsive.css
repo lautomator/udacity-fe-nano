@@ -4,8 +4,7 @@
   .container {
     box-shadow: 0 0 34px #bcbbbb;
     margin: 0 auto;
-    padding: 40px 40px;
-    width: 720px;
+    max-width: 720px;
   }
 
   #drawer {
@@ -22,7 +21,12 @@
 
   .hero {
     display: block;
-    width: 720px;
+    max-width: 720px;
+  }
+
+  .featured-work {
+    margin: 25px 0;
+    max-width: 720px;
   }
 
   a {
@@ -42,7 +46,7 @@
 
   .col {
     width: 224px;
-    margin-right: 18px;
+    margin-right: 19px;
   }
 
   .col:last-of-type {
@@ -50,7 +54,9 @@
   }
 
   header {
+    max-width: 720px;
     text-align: right;
+    padding: 20px;
   }
 
   .project-title {
@@ -61,5 +67,28 @@
   .main .featured-work h2,
   .main .featured-work p {
     padding: 0;
+  }
+
+  .col img {
+    max-width: 224px;
+  }
+
+  .hero img {
+    max-width: 720px;
+  }
+
+}
+
+/* screens  > 819px */
+@media screen and (min-width: 820px) {
+
+  .container {
+    padding: 40px 40px;
+  }
+
+  header {
+    max-width: 720px;
+    text-align: right;
+    padding-left: 0;
   }
 }
