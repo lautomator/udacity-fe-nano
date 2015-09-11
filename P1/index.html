@@ -28,22 +28,24 @@
     <nav>
       <!-- mobile-nav -->
       <div id="drawer">
-        <div id="close-drawer"><a><span class="fa fa-times-circle fa-2x"></span></a></div>
+        <div id="close-drawer">
+          <div class="close-button"><span class="fa fa-times-circle fa-2x"></span></div>
 
-        <h2>Featured Work</h2>
-        <ul>
-          <li class="project-title"><a href="">Project Title 1</a><hr></li>
-          <li class="project-title"><a href="">Project Title 2</a><hr></li>
-          <li class="project-title"><a href="">Project Title 3</a><hr></li>
-        </ul>
+          <h2 class="left-margin-mobile">Featured Work</h2>
+          <ul>
+            <li class="project-title"><a href="#project-1">Project Title 1</a></li>
+            <li class="project-title"><a href="#project-2">Project Title 2</a></li>
+            <li class="project-title"><a href="#project-3">Project Title 3</a></li>
+          </ul>
+        </div><!-- /close-drawer -->
       </div><!-- /mobile-nav -->
     </nav><!-- /navigation -->
 
     <header>
       <div class="logo">
         <picture>
-          <source media="(min-width: 750px)" srcset="img/icon_@85.gif">
-          <source media="(max-width: 749px)" srcset="img/icon_@55.gif">
+          <source media="(min-width: 720px)" srcset="img/icon_@85.gif">
+          <source media="(max-width: 719px)" srcset="img/icon_@55.gif">
           <img src="img/icon_@55.gif" alt="pixel tennis player logo">
         </picture>
       </div>
@@ -59,42 +61,42 @@
 
       <!-- featured work -->
       <div class="featured-work">
-        <h2>Featured Work</h2>
+        <h2 class="left-margin-mobile">Featured Work</h2>
 
         <!-- col L -->
-        <div class="col">
+        <div id="project-1" class="col">
           <picture>
-            <source media="(min-width: 750px)" srcset="img/automaton-01-224_@1x.png">
-            <source media="(max-width: 749px)" srcset="img/automaton-01-400_@2x.png">
+            <source media="(min-width: 720px)" srcset="img/automaton-01-224_@1x.png">
+            <source media="(max-width: 719px)" srcset="img/automaton-01-400_@2x.png">
             <img src="img/automaton-01-400_@2x.png" alt="project 1">
           </picture>
-          <h1 class="project-title">Project Title 1</h1>
-          <p class="project-url"><a href ="">a url to project 1</a></p>
-          <p class="project-info">Some info on this project...</p>
+          <h1 class="project-title left-margin-mobile">Project Title 1</h1>
+          <p class="project-url left-margin-mobile"><a href ="#project-1">a url to project 1</a></p>
+          <p class="project-info left-margin-mobile">Some info on this project...</p>
         </div><!-- /col -->
 
         <!-- col M -->
-        <div class="col">
+        <div id="project-2" class="col">
           <picture>
-            <source media="(min-width: 750px)" srcset="img/automaton-02-224_@1x.jpg">
-            <source media="(max-width: 749px)" srcset="img/automaton-02-400_@2x.jpg">
+            <source media="(min-width: 720px)" srcset="img/automaton-02-224_@1x.jpg">
+            <source media="(max-width: 719px)" srcset="img/automaton-02-400_@2x.jpg">
             <img src="img/automaton-02-400_@2x.jpg" alt="project 2">
           </picture>
-          <h1 class="project-title">Project Title 2</h1>
-          <p class="project-url"><a href ="">a url to project 2</a></p>
-          <p class="project-info">Some info on this project...</p>
+          <h1 class="project-title left-margin-mobile">Project Title 2</h1>
+          <p class="project-url left-margin-mobile"><a href ="#project-2">a url to project 2</a></p>
+          <p class="project-info left-margin-mobile">Some info on this project...</p>
         </div><!-- /col -->
 
         <!-- col R -->
-        <div class="col">
+        <div id="project-3" class="col">
           <picture>
-            <source media="(min-width: 750px)" srcset="img/automaton-03-224_@1x.png">
-            <source media="(max-width: 749px)" srcset="img/automaton-03-400_@2x.png">
-            <img src="img/automaton-03-400_@2x.png" alt="project 1">
+            <source media="(min-width: 720px)" srcset="img/automaton-03-224_@1x.png">
+            <source media="(max-width: 719px)" srcset="img/automaton-03-400_@2x.png">
+            <img src="img/automaton-03-400_@2x.png" alt="project 3">
           </picture>
-          <h1 class="project-title">Project Title 3</h1>
-          <p class="project-url"><a href ="">a url to project 3</a></p>
-          <p class="project-info">Some info on this project...</p>
+          <h1 class="project-title left-margin-mobile">Project Title 3</h1>
+          <p class="project-url left-margin-mobile"><a href ="#project-3">a url to project 3</a></p>
+          <p class="project-info left-margin-mobile">Some info on this project...</p>
         </div><!-- /col -->
       </div><!-- /featured work -->
     </div><!-- /main -->

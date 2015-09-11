@@ -1,10 +1,11 @@
-/* screens  > 749px */
-@media screen and (min-width: 750px) {
+/* screens  > 719px */
+@media screen and (min-width: 720px) {
 
   .container {
     box-shadow: 0 0 34px #bcbbbb;
     margin: 0 auto;
     max-width: 720px;
+    padding-top: 40px;
   }
 
   #drawer {
@@ -34,7 +35,6 @@
   }
 
   .logo {
-    border-radius: 4px;
     height: 85px;
     float: left;
     left: 0;
@@ -56,17 +56,11 @@
   header {
     max-width: 720px;
     text-align: right;
-    padding: 20px;
+    padding: 20px 20px 20px 0;
   }
 
   .project-title {
     font-size: 30px;
-  }
-
-  .main .featured-work h1,
-  .main .featured-work h2,
-  .main .featured-work p {
-    padding: 0;
   }
 
   .col img {
@@ -90,5 +84,9 @@
     max-width: 720px;
     text-align: right;
     padding-left: 0;
+  }
+
+  .left-margin-mobile {
+    padding: 0 10px;
   }
 }
