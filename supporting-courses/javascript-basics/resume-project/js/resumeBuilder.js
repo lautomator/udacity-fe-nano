@@ -47,18 +47,14 @@ var work = {
 var projects = {
     "project": [
         {
-            "name": "Project Name",
-            "client": "client name",
-            "city": "com city",
-            "state": "PA",
-            "description": "Some blurb about the project"
+            "name": "Project Name 1",
+            "year": "2015",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eros mauris, dictum ut mi eu, faucibus fringilla velit. Ut ac metus eleifend, vulputate arcu et, ultrices est. Sed sodales et lacus vel imperdiet. Suspendisse mollis felis quis cursus posuere. Etiam eget sapien metus. Nunc cursus porta accumsan. Ut pulvinar quis lectus vel condimentum. Mauris tempor eleifend tristique."
         },
         {
-            "name": "Project Name",
-            "client": "client name",
-            "city": "com city",
-            "state": "PA",
-            "description": "Some blurb about the project"
+            "name": "Project Name 2",
+            "year": "2015",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eros mauris, dictum ut mi eu, faucibus fringilla velit. Ut ac metus eleifend, vulputate arcu et, ultrices est. Sed sodales et lacus vel imperdiet. Suspendisse mollis felis quis cursus posuere. Etiam eget sapien metus. Nunc cursus porta accumsan. Ut pulvinar quis lectus vel condimentum. Mauris tempor eleifend tristique."
         }
     ]
 
@@ -135,4 +131,40 @@ function displayWork() {
     }
 }
 
+// the internationalize button
+$("#main").append(internationalizeButton);
+
+// procedure to make the first name title case
+// and the last name CAPS
+function inName() {
+    var usName = bio.name,
+        fName = usName.split(' ')[0],
+        lName = usName.split(' ')[1];
+
+    // Ensure first name is title case
+    fName = fName[0].toUpperCase() + fName.substring(1);
+
+    // Make last name CAPS
+    lName = lName.toUpperCase();
+
+    var newName = fName + ' ' + lName;
+
+    return newName;
+}
+
+// display the projects
+projects.display = function() {
+    for (item in projects.project) {
+        $("#projects").append(HTMLprojectStart);
+        $(".project-entry:last").append(HTMLprojectTitle.replace('%data%', projects.project[item].name));
+        $(".project-entry:last").append(HTMLprojectDates.replace('%data%', projects.project[item].year));
+        $(".project-entry:last").append(HTMLprojectDescription.replace('%data%', projects.project[item].description));
+    }
+}
+
+// add the map
+// $("#mapDiv").append(googleMap);
+
+// function calls
 displayWork();
+projects.display();
