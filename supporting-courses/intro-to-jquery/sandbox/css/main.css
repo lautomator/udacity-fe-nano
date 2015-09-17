@@ -1,0 +1,63 @@
+.container {
+    background: #ffffcc;
+    max-width: 800px;
+    padding: 20px;
+}
+
+
+nav {
+    padding: 10px;
+    width: 100%;
+}
+
+nav ul li {
+    display: inline-block;
+    list-style: none;
+}
+
+.box {
+    background: aliceblue;
+    border: dotted 1px #000;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 8px;
+    font-weight: bold;
+    height: 55px;
+    margin: 5px;
+    padding: 5px;
+    width: 55px;
+}
+
+.box:hover {
+    background: #004c99;
+    color: #fff;
+}
+
+.circle {
+    background: lightgreen;
+    border: dotted 1px #000;
+    border-radius: 55px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 8px;
+    font-weight: bold;
+    height: 55px;
+    margin: 5px;
+    padding: 10px;
+    width: 55px;
+}
+
+.circle:hover {
+    background: #004c99;
+    color: #fff;
+}
+
+
+.action {
+    cursor: pointer;
+}
+
+.action:hover {
+    color: red;
+}
