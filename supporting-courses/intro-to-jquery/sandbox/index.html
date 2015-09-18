@@ -29,7 +29,7 @@
       <div class="row">
         <div class="col-md-4">
           <ol class="action-items">
-            <li>A <span class="action fa fa-play"></span></li>
+            <li class="selected">A <span class="action fa fa-play"></span></li>
             <li>B <span class="action fa fa-play"></span></li>
             <li>C <span class="action fa fa-play"></span></li>
             <li>D <span class="action fa fa-play"></span></li>
@@ -38,18 +38,22 @@
           </ol>
         </div>
         <div class="col-md-4 box-actions">
-          <div class="box">A</div>
-          <div class="box">B</div>
-          <div class="box">C</div>
-          <div class="box">D</div>
-          <div class="box">E</div>
+          <ul class="box-buttons">
+            <li class="box"><a>A</a></li>
+            <li class="box"><a href="#b">B</a></li>
+            <li class="box"><a href="#c">C</a></li>
+            <li class="box"><a href="#d">D</a></li>
+            <li class="box"><a href="#e">E</a></li>
+          </ul><!-- /box-buttons -->
         </div>
         <div class="col-md-4 circle-actions">
-          <div class="circle">A</div>
-          <div class="circle">B</div>
-          <div class="circle">C</div>
-          <div class="circle">D</div>
-          <div class="circle">E</div>
+          <div class="round-buttons">
+            <div class="circle">A</div>
+            <div class="circle">B</div>
+            <div class="circle">C</div>
+            <div class="circle">D</div>
+            <div class="circle">E</div>
+        </div><!-- /round-buttons -->
         </div>
       </div>
 
@@ -58,5 +62,6 @@
 
   <!-- jQuery CDN -->
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

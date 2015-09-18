@@ -61,3 +61,8 @@ nav ul li {
 .action:hover {
     color: red;
 }
+
+.selected {
+    background: yellow;
+}
+
