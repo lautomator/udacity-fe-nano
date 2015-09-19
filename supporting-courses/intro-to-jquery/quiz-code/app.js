@@ -6,17 +6,17 @@ You must use articleList to navigate to the element(s)!
 */
 
 // Start with these variable!
-var articleList, h1, kids, parents;
+// var articleList, h1, kids, parents;
 
-articleList = $('.article-list');
+// articleList = $('.article-list');
 
-h1 = articleList.siblings('h1');
+// h1 = articleList.siblings('h1');
 
-kids = articleList.find('*');
+// kids = articleList.find('*');
 
-parents = articleList.parents('div');
+// parents = articleList.parents('div');
 
-console.log(h1, kids, parents);
+// console.log(h1, kids, parents);
 
 
 /*
@@ -24,9 +24,9 @@ For this quiz, use a jQuery class selector and featuredArticle variable to toggl
 */
 
 // don't change this variable!
-var featuredArticle;
+// var featuredArticle;
 
-featuredArticle = $(".featured").toggleClass();
+// featuredArticle = $(".featured").toggleClass();
 
 /*
 For this quiz, remove the class 'featured' from Article #2 and add it to Article #3!
@@ -45,6 +45,7 @@ article2.toggleClass('featured');
 // for article 3
 article3 = article2.next();
 article3.toggleClass('featured');
+article3.css('padding', '12px'); // don't do this
 
 /*
 For this quiz, set the href of the <a> in the first nav item to "#1".
@@ -72,4 +73,34 @@ var articleItems;
 
 articleItems = $('.article-item');
 articleItems.css('font-size', '20px');
+
+
+/*
+For this quiz, use jQuery's val method to make live changes to the 'Cool Articles' <h1>!
+
+The starter code below creates an event listener that will run any time the input changes.
+For more on events, check the instructor notes.
+*/
+
+
+$('#input').on('change', function() {
+    var val = $('#input').val(),
+        heading = $('.articles').children('h1');
+
+    heading.text(val);
+});
+
+
+/*
+For this quiz, remove the <ul> from the first article item!
+
+You must use jQuery's remove() method.
+*/
+
+// Start with this variable!
+var articleItems;
+
+articleItems = $('.article-list li ul');
+
+articleItems.remove();
 

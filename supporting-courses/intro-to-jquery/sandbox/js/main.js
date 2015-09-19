@@ -1,17 +1,35 @@
+$(function() {
+
 // toggleClass() and next()
-selectedItem = $('.selected');
 
-selectedItem.toggleClass('selected');
+    var selectedItem = $('.selected');
 
-// target the next element and add the 'selected' class
-selectedItem.next().toggleClass('selected');
+    selectedItem.toggleClass('selected');
+
+    // target the next element and add the 'selected' class
+    selectedItem.next().toggleClass('selected');
 
 
 //.attr()
-// you can target an attribute to get its value
-// or assign a value to an attribute
-buttons = $('.box-buttons');
-selectedButton = buttons.children();
-first = selectedButton.first();
-console.log(first.attr('href', "#a"));
+
+    // you can target an attribute to get its value
+    // or assign a value to an attribute
+    var selectedButton = $('.box-buttons').children().first(),
+        link = selectedButton.find('a');
+
+    console.log(link);
+    link.attr('href', '#1');
+
+// .html() and .text()
+
+    // target everything in the container
+    var page = $('.container'),
+        allText = page.text(),
+        allHTML = page.html();
+
+    console.log(allText);
+    console.log(allHTML);
+
+
+});
 
