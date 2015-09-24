@@ -6,5 +6,7 @@ The following classes were taken to support the completetion of this degree:
 * Responsive Images
 * JavaScript Basics
 * Intro to JQuery
+* Object-Oriented Javascript
+* HTML5 Canvas
 
 
