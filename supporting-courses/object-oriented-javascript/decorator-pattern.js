@@ -1,6 +1,8 @@
 // assume libray.js has been imported
 // js has no import or include functions
 
+// The following is  classic decorator pattern
+
 // library.js
 var myGame = {
 
@@ -12,7 +14,7 @@ var myGame = {
         // constructor
         obj.loc = loc;
         obj.move = function () {
-            this.loc += 1;
+            obj.loc += 1;
         };
         return obj;
     }
