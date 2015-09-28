@@ -13,10 +13,10 @@ Car.prototype.move = function () {
     this.loc += 1;
 };
 
-var amy = new Car(1);
+var amy = Car(1);
 amy.move(); // 2
 
-var ben = new Car(9);
+var ben = Car(9);
 ben.move(); // 10
 
 console.log(Car.prototype.constructor); // [Function]
