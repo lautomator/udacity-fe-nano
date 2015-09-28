@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML5 Canvas</title>
+</head>
+<body>
+    <canvas id="c" width="300" height="482"></canvas>
+
+    <script>
+        var c = document.querySelector("#c"),
+            ctx = c.getContext("2d");
+
+        // the rectangle
+        ctx.strokeRect(50, 50, 100, 100);
+
+
+        // the triangle
+        ctx.beginPath();
+        ctx.moveTo(75, 75);
+        ctx.lineTo(125, 125);
+        ctx.lineTo(125, 75);
+        ctx.lineTo(75, 75);
+        // ctx.stroke(); // actually draws the line
+        ctx.fill();
+
+    </script>
+
+</body>
+</html>

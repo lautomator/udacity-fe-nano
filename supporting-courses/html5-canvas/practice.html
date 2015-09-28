@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML5 Canvas</title>
+</head>
+<body>
+    <canvas id="c" width="900" height="800"></canvas>
+
+    <script>
+        var c = document.querySelector("#c"),
+            ctx = c.getContext("2d");
+
+        // the rectangle
+        ctx.strokeRect(50, 50, 100, 100);
+        ctx.strokeRect(175, 50, 100, 100);
+        ctx.strokeRect(300, 50, 100, 100);
+
+        // hamburger
+        ctx.fillRect(10, 10, 30, 5);
+        ctx.fillRect(10, 17, 30, 5);
+        ctx.fillRect(10, 24, 30, 5);
+
+        // draw some lines
+        ctx.beginPath();
+        ctx.moveTo(10, 200);
+        ctx.lineTo(10, 230);
+        ctx.lineTo(25, 230);
+        ctx.lineTo(25, 200);
+        ctx.lineTo(40, 200);
+        ctx.lineTo(40, 230);
+        ctx.lineTo(55, 230);
+        ctx.lineTo(55, 200);
+        ctx.stroke();
+
+    </script>
+
+</body>
+</html>

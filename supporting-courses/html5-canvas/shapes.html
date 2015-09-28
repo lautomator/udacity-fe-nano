@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML5 Canvas</title>
+</head>
+<body>
+    <canvas id="c" width="300" height="482"></canvas>
+
+    <script>
+        var c = document.querySelector("#c"),
+            ctx = c.getContext("2d");
+
+        // draw shapes
+        ctx.fillStyle = 'yellow';
+        ctx.fillRect(100, 100, 100, 100);
+
+        ctx.strokeStyle = 'purple';
+        ctx.strokeRect(100, 100, 100, 100);
+
+        // draw lines
+        ctx.beginPath();
+        ctx.moveTo(10, 10); // like a cursor position
+        ctx.lineTo(50, 50);
+        ctx.lineTo(50, 10);
+        ctx.lineTo(10, 10);
+        ctx.stroke(); // actually draws the line
+        ctx.fill();
+
+    </script>
+
+</body>
+</html>
