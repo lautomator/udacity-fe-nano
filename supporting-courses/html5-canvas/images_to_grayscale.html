@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML5 Canvas</title>
+</head>
+<body>
+    <canvas id="c" width="300" height="482"></canvas>
+
+    <script>
+        var c = document.querySelector("#c"),
+            ctx = c.getContext("2d"),
+            image = new Image();
+
+
+        image.onload = function() {
+            console.log('image loaded');
+            ctx.drawImage(image, 0, 0, c.width, c.height);
+        }
+
+        image.src = "berner_iustitia.jpg";
+
+    </script>
+
+</body>
+</html>

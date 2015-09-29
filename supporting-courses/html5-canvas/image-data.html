@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML5 Canvas</title>
+    <style>
+        * { margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            border: solid 1px #000;
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="c" width="640" height="480"></canvas>
+
+    <script>
+        var c = document.querySelector("#c"),
+            ctx = c.getContext("2d"),
+            data = ctx.getImageData(0, 0, 640, 480);
+
+        function paintGreen(imageData) {
+            var numPixels = imageData.data.length / 4,
+                i;
+
+            for (i = 0; i < numPixels; i += 1) {
+                if (i % 10 === 0) {
+                    imageData.data[i * 4 + 1] = 255;
+                    imageData.data[i * 4 + 3] = 255;
+                }
+            }
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        // function calls
+        paintGreen(data);
+
+    </script>
+
+</body>
+</html>
