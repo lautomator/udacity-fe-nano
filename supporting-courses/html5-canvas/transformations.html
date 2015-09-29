@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML5 Canvas</title>
+    <style>
+        * { margin: 0;
+            padding: 0;
+        }
+
+        .paper {
+            background: url('pixel-graph.png') repeat;
+        }
+
+        .note {
+            font: 12px/0 courier;
+            left: 12px;
+            opacity: 0.3;
+            position: absolute;
+            top: 4px;
+        }
+
+    </style>
+</head>
+<body class="paper">
+    <p class="note">note: each grid division represents 10 pixels</p>
+
+    <canvas id="c" width="900" height="800"></canvas>
+
+    <script>
+        var c = document.querySelector("#c"),
+            ctx = c.getContext("2d");
+
+        // the rectangle
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(20, 20, 100, 100);
+
+        // some transformations
+
+        // scale
+        // ctx.scale(2, 2); // l x w @2x
+
+        // translate
+        ctx.translate(300, 300);
+
+        // the rectangle
+        ctx.fillStyle = "blue";
+        ctx.fillRect(25, 25, 100, 100);
+
+
+    </script>
+
+</body>
+</html>
