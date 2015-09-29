@@ -27,6 +27,7 @@
       <span>Bottom Line:</span><br/>
       <input id="bottomLineText" type="text"><br/>
       <button id="saveBtn">Save</button>
+      <button id="resetBtn">Reset</button>
     </div>
   </div>
   <script>
@@ -48,17 +49,27 @@
       var canvas = document.querySelector('canvas'),
           ctx = canvas.getContext("2d");
 
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
       ctx.font = "bold 72px impact";
       ctx.textAlign = 'center';
       ctx.lineWidth = 3;
       ctx.strokeStyle = "black";
       ctx.fillStyle = "white";
 
-      ctx.fillText(topLine, canvas.width / 2, 72);
-      ctx.strokeText(topLine, canvas.width / 2, 72);
+      if (topLine === null) {
+          topLine = '';
+      }
 
-      ctx.fillText(bottomLine, canvas.width / 2, 500);
-      ctx.strokeText(bottomLine, canvas.width / 2, 500);
+      if (bottomLine === null) {
+          bottomLine = '';
+      }
+
+        ctx.fillText(topLine, canvas.width / 2, 72);
+        ctx.strokeText(topLine, canvas.width / 2, 72);
+
+        ctx.fillText(bottomLine, canvas.width / 2, 490);
+        ctx.strokeText(bottomLine, canvas.width / 2, 490);
 
     }
 
@@ -93,6 +104,15 @@
       reader.readAsDataURL(file)
     }
 
+    function resetPage() {
+        input1.value = '';
+        input2.value = '';
+        window.topLineText = '';
+        window.bottomLineText = '';
+
+        redrawMeme(window.imageSrc, window.topLineText, window.bottomLineText);
+    }
+
     window.topLineText = "";
     window.bottomLineText = "";
     var input1 = document.getElementById('topLineText');
@@ -100,7 +120,8 @@
     input1.oninput = textChangeListener;
     input2.oninput = textChangeListener;
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
-    document.querySelector('button').addEventListener('click', saveFile, false);
+    document.getElementById('saveBtn').addEventListener('click', saveFile, false);
+    document.getElementById('resetBtn').addEventListener('click', resetPage, false);
   </script>
 
 </body>
