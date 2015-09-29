@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML5 Canvas</title>
+    <style>
+        * { margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            border: solid 1px #000;
+        }
+
+        .paper {
+            background: url('pixel-graph.png') repeat;
+        }
+
+        .note {
+            background: #fff;
+            height: auto;
+            bottom: 0;
+            font: 100%/0 courier;
+            left: 0;
+            padding: 10px;
+            position: fixed;
+            width: auto;
+        }
+
+    </style>
+</head>
+<body class="paper">
+    <p class="note">note: each grid division represents 10 pixels</p>
+
+    <canvas id="c" width="640" height="480"></canvas>
+
+    <script>
+        var c = document.querySelector("#c"),
+            ctx = c.getContext("2d");
+
+        ctx.strokeStyle = "blue";
+        ctx.fillStyle = "white";
+        ctx.lineWidth = 3;
+        ctx.font = "bold 72px impact";
+        ctx.textAlign = 'center';
+        // ctx.strokeText('helloooooo!', 200, 100);
+        ctx.fillText('helloooooo!', c.width / 2, 100); // center on the canvas and down 100
+        ctx.strokeText('helloooooo!', c.width / 2, 100); // center on the canvas and down 100
+
+    </script>
+
+</body>
+</html>

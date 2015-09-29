@@ -12,11 +12,14 @@
         }
 
         .note {
+            background: #fff;
+            height: auto;
+            bottom: 0;
             font: 12px/0 courier;
-            left: 12px;
-            opacity: 0.3;
-            position: absolute;
-            top: 4px;
+            left: 0;
+            padding: 10px;
+            position: fixed;
+            width: auto;
         }
 
     </style>
@@ -30,21 +33,35 @@
         var c = document.querySelector("#c"),
             ctx = c.getContext("2d");
 
-        // the rectangle
-        ctx.fillStyle = "yellow";
-        ctx.fillRect(20, 20, 100, 100);
-
         // some transformations
 
         // scale
-        // ctx.scale(2, 2); // l x w @2x
-
+        ctx.scale(2, 2); // l x w @2x
         // translate
-        ctx.translate(300, 300);
+        ctx.translate(-65, -10); // why?
 
         // the rectangle
         ctx.fillStyle = "blue";
-        ctx.fillRect(25, 25, 100, 100);
+        ctx.fillRect(130, 20, 100, 100);
+
+        // save the state
+        ctx.save();
+
+        // the rectangle
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(300, 20, 20, 20);
+
+        // translate
+        // ctx.translate(400, 25);
+
+        // // rotate
+        // // radians = degrees * (Math.PI/180)
+        // // radians = degrees * 0.017
+        // ctx.rotate(0.765);
+
+        // // the rectangle
+        // ctx.fillStyle = "blue";
+        // ctx.fillRect(25, 25, 100, 100);
 
 
     </script>
