@@ -32,12 +32,15 @@ Enemy.prototype.update = function(dt) {
     // when they reach the end of the game board.
 
     // generate a random number for speed between 100 and 600
-    // var vel = Math.floor(Math.random() * (600 - 100 + 1)) + 10;
+    var ranSpd =  Math.floor(Math.random() * (3 - 0)),
+        speeds = [100, 300, 600],
+        spd = speeds[ranSpd];
 
+    // if the Enemy reaches the far right, reset to the left again
     if (this.x > 565) {
         this.x = -100;
     } else {
-        this.x += (300 * dt);
+        this.x += (spd * dt);
     }
 };
 
@@ -104,7 +107,6 @@ Player.prototype.handleInput = function(direction) {
                 this.x = 200;
                 this.y = 375;
                 this.score += 1;
-                console.log(player.score);
             } else {
                 move.y = -85;
             }
