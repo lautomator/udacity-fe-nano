@@ -11,10 +11,14 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
+    // generate and position and speed from 3 choices, selected randomly
+    var ranPos = Math.floor(Math.random() * (3 - 0)),
+        positions = [60, 143, 226],
+        pos = positions[ranPos];
+
     // the initial location of an enemy on the gameboard
-    // pos__1
     this.x = -100;
-    this.y = 60;
+    this.y = pos;
 };
 
 // Update the enemy's position, required method for game
@@ -26,6 +30,10 @@ Enemy.prototype.update = function(dt) {
 
     // The enemies will change position and speed
     // when they reach the end of the game board.
+
+    // generate a random number for speed between 100 and 600
+    // var vel = Math.floor(Math.random() * (600 - 100 + 1)) + 10;
+
     if (this.x > 565) {
         this.x = -100;
     } else {
