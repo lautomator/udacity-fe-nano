@@ -24,12 +24,13 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
-// TODO: FIX THIS >>>>>>>>>>>>
-    // while (this.x < 600) {
-    //     this.x += (300 * dt);
-    //     console.log(this.x);
-    // }
-
+    // The enemies will change position and speed
+    // when they reach the end of the game board.
+    if (this.x > 565) {
+        this.x = -100;
+    } else {
+        this.x += (300 * dt);
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -52,6 +53,9 @@ var Player = function() {
     // initial player position
     this.x = 200;
     this.y = 375;
+
+    // initial player score
+    this.score = 0;
 };
 
 // This updates the position of the player
@@ -59,11 +63,14 @@ var Player = function() {
 // keystrokes. The direction (dir) of movement is
 // the object that is passed into the function.
 Player.prototype.update = function(dir) {
+    // update the position
     if (dir) {
         this.x += dir.x;
         this.y += dir.y;
-        // console.log(this.x, this.y);
     }
+
+    // update the score
+    displayScore(player.score);
 }
 
 // Render the player on the canvas and position
@@ -72,33 +79,58 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// takes in the keystroke from 'allowed keys' and stores
+// Takes in the keystroke from 'allowed keys' and stores
 // an increment of movement (for x an y, resp.) inside
 // an object (move). The move object is passed into update()
-// to update the player's position in the canvas
+// to update the player's position in the canvas.
+// Contains the position of the player within the boundary.
 Player.prototype.handleInput = function(direction) {
     var move = {x: 0, y: 0};
 
     if (direction) {
+        // this first condition also indicates a successful pass
         if (direction === 'up') {
-            move.y = -85;
+            if (this.y === 35) {
+                // back to the original position
+                // the score is recorded
+                this.x = 200;
+                this.y = 375;
+                this.score += 1;
+                console.log(player.score);
+            } else {
+                move.y = -85;
+            }
         }
-
-        if (direction === 'down') {
+        // These conditions increment the players position
+        // and keep the player within the game boundary.
+        if (direction === 'down' && !(this.y === 375)) {
             move.y = 85;
         }
 
-        if (direction === 'left') {
+        if (direction === 'left' && !(this.x === 0)) {
             move.x = -100;
         }
 
-        if (direction === 'right') {
+        if (direction === 'right' && !(this.x === 400)) {
             move.x = 100;
         }
 
         player.update(move);
-        console.log(this.x, this.y);
+        console.log('keystroke:', this.x, this.y);
+
     }
+};
+
+// TODO: This needs to be part of the Player class
+var displayScore = function(s) {
+    var scoreTarget = gameTargets.score;
+    scoreTarget.innerHTML = s;
+};
+
+// TODO: This needs to be part of the game engine
+var resetGame = function() {
+    // This will reset the score of the game
+
 };
 
 // ==============
@@ -130,3 +162,5 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
