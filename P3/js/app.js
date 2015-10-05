@@ -11,14 +11,23 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
-    // generate and position and speed from 3 choices, selected randomly
-    var ranPos = Math.floor(Math.random() * (3 - 0)),
-        positions = [60, 143, 226],
-        pos = positions[ranPos];
+    // define a position from 3 choices, selected randomly
+    var yPositions = [35, 120, 205],
+        yRanPos = Math.floor(Math.random() * yPositions.length),
+        yPos = yPositions[yRanPos],
+        // x positions
+        xPositions = [-100, 0, 100, 200, 300, 400],
+        xRanPos = Math.floor(Math.random() * xPositions.length),
+        xPos = xPositions[xRanPos],
+        // generate speed
+        speeds = [100, 200, 300, 400, 500, 600],
+        ranSpd =  Math.floor(Math.random() * speeds.length),
+        spd = speeds[ranSpd];
 
-    // the initial location of an enemy on the gameboard
-    this.x = -100;
-    this.y = pos;
+    this.x = xPos;
+    this.y = yPos;
+    this.speed = spd;
+    this.collision = false; // assume no collision has been made
 };
 
 // Update the enemy's position, required method for game
@@ -31,17 +40,27 @@ Enemy.prototype.update = function(dt) {
     // The enemies will change position and speed
     // when they reach the end of the game board.
 
-    // generate a random number for speed between 100 and 600
-    var ranSpd =  Math.floor(Math.random() * (3 - 0)),
-        speeds = [100, 300, 600],
-        spd = speeds[ranSpd];
 
-    // if the Enemy reaches the far right, reset to the left again
+
+    // if the Enemy reaches the far right,
+    // reset to the left again and change the speed
     if (this.x > 565) {
         this.x = -100;
     } else {
-        this.x += (spd * dt);
+        // set the speed
+        this.x += this.speed * dt;
     }
+
+    // determine if the enemy has colided with the player
+    // define a collision
+    // var collision = {[this.y, this.x + 70], [player.x, player.y]};
+    // if (Math.floor(this.x + 70, this.y) === player.x && this.y === 226) {
+    //     player.x = 200;
+    //     player.y = 375;
+    // }
+    // console.log(Math.floor(this.x));
+    // console.log(player.x);
+
 };
 
 // Draw the enemy on the screen, required method for game
@@ -64,7 +83,6 @@ var Player = function() {
     // initial player position
     this.x = 200;
     this.y = 375;
-
     // initial player score
     this.score = 0;
 };
@@ -80,8 +98,8 @@ Player.prototype.update = function(dir) {
         this.y += dir.y;
     }
 
-    // update the score
-    displayScore(player.score);
+    // display the score
+    this.displayScore(player.score);
 }
 
 // Render the player on the canvas and position
@@ -99,20 +117,21 @@ Player.prototype.handleInput = function(direction) {
     var move = {x: 0, y: 0};
 
     if (direction) {
+        // These conditions increment the players position
+        // and keep the player within the game boundary.
+
         // this first condition also indicates a successful pass
         if (direction === 'up') {
             if (this.y === 35) {
                 // back to the original position
-                // the score is recorded
                 this.x = 200;
                 this.y = 375;
+                // update the score
                 this.score += 1;
             } else {
                 move.y = -85;
             }
         }
-        // These conditions increment the players position
-        // and keep the player within the game boundary.
         if (direction === 'down' && !(this.y === 375)) {
             move.y = 85;
         }
@@ -131,13 +150,14 @@ Player.prototype.handleInput = function(direction) {
     }
 };
 
-// TODO: This needs to be part of the Player class
-var displayScore = function(s) {
+// TODO: this will also handle gems: a system of rewards
+// This method displays a player's score.
+Player.prototype.displayScore = function(scr) {
     var scoreTarget = gameTargets.score;
-    scoreTarget.innerHTML = s;
+    scoreTarget.innerHTML = scr;
 };
 
-// TODO: This needs to be part of the game engine
+// TODO: This may need to be part of the game engine
 var resetGame = function() {
     // This will reset the score of the game
 
