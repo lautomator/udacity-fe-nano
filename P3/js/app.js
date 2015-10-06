@@ -11,23 +11,24 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
-    // define a position from 3 choices, selected randomly
+    // This method will generate a random selection
+    // from the given array ('choices').
+    var randomSelector = function(choices) {
+        var ran = Math.floor(Math.random() * choices.length);
+        return choices[ran];
+    };
+
+    // define initial positions and speeds, selected randomly
     var yPositions = [35, 120, 205],
-        yRanPos = Math.floor(Math.random() * yPositions.length),
-        yPos = yPositions[yRanPos],
-        // x positions
         xPositions = [-100, 0, 100, 200, 300, 400],
-        xRanPos = Math.floor(Math.random() * xPositions.length),
-        xPos = xPositions[xRanPos],
-        // generate speed
         speeds = [100, 200, 300, 400, 500, 600],
-        ranSpd =  Math.floor(Math.random() * speeds.length),
-        spd = speeds[ranSpd];
+        yPos = randomSelector(yPositions),
+        xPos = randomSelector(xPositions),
+        spd = randomSelector(speeds);
 
     this.x = xPos;
     this.y = yPos;
     this.speed = spd;
-    this.collision = false; // assume no collision has been made
 };
 
 // Update the enemy's position, required method for game
@@ -37,30 +38,45 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
+    // method to change the speed
+    var newSpeed = function() {
+        var ran = Math.floor(Math.random() * 6 + 1);
+        return ran * 100;
+    },
+    // method to change position
+        newPos = function() {
+        pos = [35, 120, 205];
+        ran = Math.floor(Math.random() * 3);
+        return pos[ran];
+    };
+
     // The enemies will change position and speed
     // when they reach the end of the game board.
-
-
-
-    // if the Enemy reaches the far right,
-    // reset to the left again and change the speed
     if (this.x > 565) {
         this.x = -100;
+        this.speed = newSpeed();
+        this.y = newPos();
     } else {
         // set the speed
         this.x += this.speed * dt;
     }
 
-    // determine if the enemy has colided with the player
-    // define a collision
-    // var collision = {[this.y, this.x + 70], [player.x, player.y]};
-    // if (Math.floor(this.x + 70, this.y) === player.x && this.y === 226) {
-    //     player.x = 200;
-    //     player.y = 375;
-    // }
-    // console.log(Math.floor(this.x));
-    // console.log(player.x);
+    // check for a collision
+    var coords = {
+        enemy: [Math.floor(this.x), Math.floor(this.y)],
+        player: [player.x, player.y]
+    };
 
+    // check the coords (first y, then x)
+    if (coords.enemy[1] === coords.player[1]) {
+
+        if ((coords.enemy[0] + 70) === coords.player[0] || coords.enemy[0] === coords.player[0]) {
+            console.log('collision');
+            // player goes back to the beginning
+            player.x = 200;
+            player.y = 375;
+        }
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -145,7 +161,7 @@ Player.prototype.handleInput = function(direction) {
         }
 
         player.update(move);
-        console.log('keystroke:', this.x, this.y);
+        // console.log('keystroke:', this.x, this.y);
 
     }
 };
