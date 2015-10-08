@@ -100,7 +100,7 @@ var Player = function() {
     this.x = 200;
     this.y = 375;
     // initial player score
-    this.score = 0;
+    this.score = 9;
 };
 
 // This updates the position of the player
@@ -114,8 +114,9 @@ Player.prototype.update = function(dir) {
         this.y += dir.y;
     }
 
-    // display the score
+    // display the score and rewards (if any)
     this.displayScore(player.score);
+    this.displayRewards(player.score);
 }
 
 // Render the player on the canvas and position
@@ -144,6 +145,9 @@ Player.prototype.handleInput = function(direction) {
                 this.y = 375;
                 // update the score
                 this.score += 1;
+                if (this.score > 100) {
+                    this.score = 0;
+                }
             } else {
                 move.y = -85;
             }
@@ -166,17 +170,61 @@ Player.prototype.handleInput = function(direction) {
     }
 };
 
-// TODO: this will also handle gems: a system of rewards
-// This method displays a player's score.
+// This method displays a player's score
 Player.prototype.displayScore = function(scr) {
-    var scoreTarget = gameTargets.score;
-    scoreTarget.innerHTML = scr;
+    var scoreTarget = gameTargets.score,
+        rewards = gameTargets.rewards;
+
+    // update the current score
+    scoreTarget.innerHTML = "<p>" + scr + "</p>";
 };
 
-// TODO: This may need to be part of the game engine
-var resetGame = function() {
-    // This will reset the score of the game
+// This method tracks and displays rewards
+Player.prototype.displayRewards = function(scr) {
+    var rewards = gameTargets.rewards,
+        gem = '<img src ="images/gem-%color%.png" width="50" alt="*">',
+        gems = [
+            gem.replace('%color%', 'blue'),
+            gem.replace('%color%', 'green'),
+            gem.replace('%color%', 'orange')
+        ],
+        gemCount = 0;
 
+    // every ten points earns a blue gem
+    if ((scr % 10) === 0) {
+        gemCount = (scr / 10);
+    }
+
+    var rewardGem = function(gemCount) {
+
+    }
+
+
+
+    while (gemCount > 0) {
+        rewards.innerHTML = gems[0];
+        break;
+    }
+
+    // if (scr >= 20) {
+    //     // rewards.innerHTML = gems[0] + gems[1];
+    // }
+    // if (scr >= 30) {
+    //     // rewards.innerHTML = gems[0] + gems[1] + gems[2];
+    // }
+};
+
+var resetGame = function(scr, gems, reset) {
+    // This will reset the score of the game
+    // and remove any rewards (gems)
+    var displayScore = scr.innerHTML;
+
+    reset.addEventListener('click', function() {
+        console.log('reset');
+        player.score = 0;
+        displayScore = "<p>" + player.score + "</p>";
+        gems.style.display = 'none';
+    }, false);
 };
 
 // ==============
@@ -208,5 +256,3 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
-
