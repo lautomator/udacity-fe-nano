@@ -7,16 +7,20 @@ var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-
     // This method will generate a random selection
     // from the given array ('choices').
     var randomSelector = function(choices) {
         var ran = Math.floor(Math.random() * choices.length);
         return choices[ran];
     };
+
+    // The image/sprite for our enemies, this uses
+    // a helper we've provided to easily load images
+    // Car colors are picked at random from the list below.
+    var cars = ['red', 'yellow', 'blue'],
+        car = randomSelector(cars);
+
+    this.sprite = 'images/enemy-car-' + car + '.png';
 
     // define initial positions and speeds, selected randomly
     var yPositions = [35, 120, 205],
@@ -69,9 +73,10 @@ Enemy.prototype.update = function(dt) {
 
     // check the coords (first y, then x)
     if (coords.enemy[1] === coords.player[1]) {
-
-        if ((coords.enemy[0] + 70) === coords.player[0] || coords.enemy[0] === coords.player[0]) {
-            console.log('collision');
+        if ((coords.enemy[0] + 50) === coords.player[0]
+            || coords.enemy[0] === coords.player[0]
+            || (coords.enemy[0] - 50) === coords.player[0]) {
+            // console.log('collision');
             // player goes back to the beginning
             player.x = 200;
             player.y = 375;
@@ -92,15 +97,14 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    // TODO: add functionality whereby player
-    // can pick from the available sprites
-    this.sprite = 'images/char-boy.png';
+
+    this.sprite = 'images/player-frog.png';
 
     // initial player position
     this.x = 200;
     this.y = 375;
     // initial player score
-    this.score = 9;
+    this.score = 0;
 };
 
 // This updates the position of the player
@@ -114,9 +118,8 @@ Player.prototype.update = function(dir) {
         this.y += dir.y;
     }
 
-    // display the score and rewards (if any)
+    // display/update the score
     this.displayScore(player.score);
-    this.displayRewards(player.score);
 }
 
 // Render the player on the canvas and position
@@ -155,18 +158,14 @@ Player.prototype.handleInput = function(direction) {
         if (direction === 'down' && !(this.y === 375)) {
             move.y = 85;
         }
-
         if (direction === 'left' && !(this.x === 0)) {
             move.x = -100;
         }
-
         if (direction === 'right' && !(this.x === 400)) {
             move.x = 100;
         }
-
         player.update(move);
         // console.log('keystroke:', this.x, this.y);
-
     }
 };
 
@@ -179,51 +178,27 @@ Player.prototype.displayScore = function(scr) {
     scoreTarget.innerHTML = "<p>" + scr + "</p>";
 };
 
-// This method tracks and displays rewards
-Player.prototype.displayRewards = function(scr) {
-    var rewards = gameTargets.rewards,
-        gem = '<img src ="images/gem-%color%.png" width="50" alt="*">',
-        gems = [
-            gem.replace('%color%', 'blue'),
-            gem.replace('%color%', 'green'),
-            gem.replace('%color%', 'orange')
-        ],
-        gemCount = 0;
-
-    // every ten points earns a blue gem
-    if ((scr % 10) === 0) {
-        gemCount = (scr / 10);
-    }
-
-    var rewardGem = function(gemCount) {
-
-    }
-
-
-
-    while (gemCount > 0) {
-        rewards.innerHTML = gems[0];
-        break;
-    }
-
-    // if (scr >= 20) {
-    //     // rewards.innerHTML = gems[0] + gems[1];
-    // }
-    // if (scr >= 30) {
-    //     // rewards.innerHTML = gems[0] + gems[1] + gems[2];
-    // }
-};
-
-var resetGame = function(scr, gems, reset) {
+var resetGame = function(scr, reset) {
     // This will reset the score of the game
     // and remove any rewards (gems)
     var displayScore = scr.innerHTML;
 
     reset.addEventListener('click', function() {
-        console.log('reset');
+        // reset the score
         player.score = 0;
         displayScore = "<p>" + player.score + "</p>";
         gems.style.display = 'none';
+
+        // reset the player
+        player.x = 200;
+        player.y = 375;
+
+        // reset the enemies
+        // The enemies will move to the position
+        // where they will reset speed and position
+        for (enemy in allEnemies) {
+            allEnemies[enemy].x = 565;
+        }
     }, false);
 };
 

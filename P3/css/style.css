@@ -24,10 +24,6 @@ body {
     width: 90px;
 }
 
-#gems {
-    display: inline;
-}
-
 button {
     cursor: pointer;
     font-size: 16px;
