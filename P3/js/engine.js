@@ -174,7 +174,12 @@ var Engine = (function(global) {
         'images/enemy-car-red.png',
         'images/enemy-car-yellow.png',
         'images/enemy-car-blue.png',
-        'images/player-frog.png'
+        'images/player-frog-blue.png',
+        'images/player-frog-cyan.png',
+        'images/player-frog-magenta.png',
+        'images/player-frog-orange.png',
+        'images/player-frog-yellow.png',
+        'images/player-frog-green.png'
     ]);
     Resources.onReady(init);
 

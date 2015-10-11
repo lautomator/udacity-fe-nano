@@ -1,34 +1,72 @@
+// ========
+//  Global
+// ========
+
+// The following are helper functions and objects
+// that exist in the global scope. They are enclosed
+// in a wrapper object for organization.
+var frogger = {
+    // This method generates a random selection
+    // from the given array ('choices').
+    randomSelector: function(choices) {
+        var ran = Math.floor(Math.random() * choices.length);
+        return choices[ran];
+    },
+    cars: ['red', 'yellow', 'blue'],
+    enemyPositionsY: [35, 120, 205],
+    enemyPositionsX: [-100, 0, 100, 200, 300, 400],
+    enemySpeeds: [100, 200, 300, 400, 500, 600],
+    resetGame: function(scr, reset) {
+        // This will reset the score of the game
+        // and remove any rewards (gems)
+        var displayScore = scr.innerHTML;
+
+        reset.addEventListener('click', function() {
+            // reset the score and refresh the display
+            player.score = 0;
+            displayScore = player.score;
+
+            // reset the player position
+            player.x = 200;
+            player.y = 375;
+
+            // reset the enemies
+            // The enemies will move to the position
+            // where they will reset speed and position
+            for (enemy in allEnemies) {
+                allEnemies[enemy].x = 565;
+            }
+        }, false);
+    },
+     getInstructions: function(btn, inst, close) {
+        // toggle the instructions
+        btn.addEventListener('click', function() {
+            inst.style.display = 'block';
+        }, false);
+
+        // close the window
+        close.addEventListener('click', function() {
+            inst.style.display = 'none';
+        }, false);
+    }
+}; // globals
+
+
 // =========
 //  Enemies
 // =========
 
-// Enemies our player must avoid
+// Enemies our player must avoid (cars)
 var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // This method will generate a random selection
-    // from the given array ('choices').
-    var randomSelector = function(choices) {
-        var ran = Math.floor(Math.random() * choices.length);
-        return choices[ran];
-    };
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     // Car colors are picked at random from the list below.
-    var cars = ['red', 'yellow', 'blue'],
-        car = randomSelector(cars);
+    var car = frogger.randomSelector(frogger.cars);
 
     this.sprite = 'images/enemy-car-' + car + '.png';
 
     // define initial positions and speeds, selected randomly
-    var yPositions = [35, 120, 205],
-        xPositions = [-100, 0, 100, 200, 300, 400],
-        speeds = [100, 200, 300, 400, 500, 600],
-        yPos = randomSelector(yPositions),
-        xPos = randomSelector(xPositions),
-        spd = randomSelector(speeds);
+    var yPos = frogger.randomSelector(frogger.enemyPositionsY),
+        xPos = frogger.randomSelector(frogger.enemyPositionsX),
+        spd = frogger.randomSelector(frogger.enemySpeeds);
 
     this.x = xPos;
     this.y = yPos;
@@ -44,22 +82,28 @@ Enemy.prototype.update = function(dt) {
 
     // method to change the speed
     var newSpeed = function() {
-        var ran = Math.floor(Math.random() * 6 + 1);
-        return ran * 100;
+            var spd = frogger.randomSelector(frogger.enemySpeeds);
+            return spd;
     },
     // method to change position
         newPos = function() {
-        pos = [35, 120, 205];
-        ran = Math.floor(Math.random() * 3);
-        return pos[ran];
+            var pos = frogger.randomSelector(frogger.enemyPositionsY);
+            return pos;
+    },
+    // method to change color
+        newCar = function() {
+            var car = frogger.randomSelector(frogger.cars),
+                sprite = 'images/enemy-car-' + car + '.png';
+            return sprite;
     };
 
-    // The enemies will change position and speed
-    // when they reach the end of the game board.
+    // The enemies will change position, speed, and color
+    // when they reach the end of the game board (pos 565).
     if (this.x > 565) {
-        this.x = -100;
+        this.x = frogger.enemyPositionsX[0];
         this.speed = newSpeed();
         this.y = newPos();
+        this.sprite = newCar();
     } else {
         // set the speed
         this.x += this.speed * dt;
@@ -89,6 +133,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+
 // ========
 //  Player
 // ========
@@ -98,7 +143,7 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
 
-    this.sprite = 'images/player-frog.png';
+    this.sprite = 'images/player-frog-blue.png';
 
     // initial player position
     this.x = 200;
@@ -178,41 +223,7 @@ Player.prototype.displayScore = function(scr) {
     scoreTarget.innerHTML = scr;
 };
 
-var resetGame = function(scr, reset) {
-    // This will reset the score of the game
-    // and remove any rewards (gems)
-    var displayScore = scr.innerHTML;
 
-    reset.addEventListener('click', function() {
-        // reset the score and refresh the display
-        player.score = 0;
-        displayScore = player.score;
-
-        // reset the player position
-        player.x = 200;
-        player.y = 375;
-
-        // reset the enemies
-        // The enemies will move to the position
-        // where they will reset speed and position
-        for (enemy in allEnemies) {
-            allEnemies[enemy].x = 565;
-        }
-    }, false);
-};
-
-var getInstructions = function(btn, inst, close) {
-    // toggle the instructions
-    btn.addEventListener('click', function() {
-        inst.style.display = 'block';
-    }, false);
-
-    // close the window
-    close.addEventListener('click', function() {
-        inst.style.display = 'none';
-    }, false);
-
-}
 
 // ==============
 //  Game Objects
