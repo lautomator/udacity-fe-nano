@@ -175,7 +175,7 @@ Player.prototype.displayScore = function(scr) {
         rewards = gameTargets.rewards;
 
     // update the current score
-    scoreTarget.innerHTML = "<p>" + scr + "</p>";
+    scoreTarget.innerHTML = scr;
 };
 
 var resetGame = function(scr, reset) {
@@ -184,12 +184,11 @@ var resetGame = function(scr, reset) {
     var displayScore = scr.innerHTML;
 
     reset.addEventListener('click', function() {
-        // reset the score
+        // reset the score and refresh the display
         player.score = 0;
-        displayScore = "<p>" + player.score + "</p>";
-        gems.style.display = 'none';
+        displayScore = player.score;
 
-        // reset the player
+        // reset the player position
         player.x = 200;
         player.y = 375;
 
@@ -201,6 +200,19 @@ var resetGame = function(scr, reset) {
         }
     }, false);
 };
+
+var getInstructions = function(btn, inst, close) {
+    // toggle the instructions
+    btn.addEventListener('click', function() {
+        inst.style.display = 'block';
+    }, false);
+
+    // close the window
+    close.addEventListener('click', function() {
+        inst.style.display = 'none';
+    }, false);
+
+}
 
 // ==============
 //  Game Objects

@@ -2,27 +2,59 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Effective JavaScript: Frogger</title>
+    <title>Frogger!</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- title -->
+    <div class="title"><h1>Frogger!</h1></div>
+
+    <!-- the game -->
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
+
     <!-- the score area -->
-    <div id="score" class="game_style"></div>
-    <!-- the reset button -->
-    <div id="reset"><button class="game_style">new game</button></div>
+
+
+    <!-- reset and instructions buttons -->
+    <div class="buttons">
+        <button id="reset">new game</button>
+        <p id="score"></p>
+        <button id="instructions">how to play</button>
+    </div><!-- /buttons -->
+
+    <!-- instructions -->
+    <div id="how-to-play" class="copy">
+        <button id="close">X</button>
+
+        <h2>Instructions</h2>
+
+        <h3>Object</h3>
+        <p>Right now, Lenny, the frog, is blue, fearing the prospect of leaping across this busy freeway. Get Lenny through the traffic to the other side unscathed so that he can turn back to his original color. It takes at least 10 passes to see a change in Lenny's color. If Lenny is hit, he goes back to the original side of the road where he started.</p>
+
+        <h3>Controls</h3>
+        <p>Use the arrow keys [&uarr; &darr; &larr; &rarr;] to move around the board.</p>
+
+        <h3>Scoring</h3>
+        <p>Every successfull pass receives a point. Keep playing until Lenny turns green!</p>
+    </div><!-- /instructions -->
 
     <script>
-    // these html targets are passed to the game scripts
+    // these html targets are passed to the game script
     var gameTargets = {
-        score:   document.getElementById('score'),
-        reset:   document.getElementById('reset'),
+        score:          document.getElementById('score'),
+        reset:          document.getElementById('reset'),
+        instructions:   document.getElementById('instructions'),
+        howToPlay:      document.getElementById('how-to-play'),
+        closeBtn:       document.getElementById('close')
     };
 
     // listen for reset
     resetGame(gameTargets.score, gameTargets.reset);
+
+    // listen for instructions
+    getInstructions(gameTargets.instructions, gameTargets.howToPlay, gameTargets.closeBtn);
 
     </script>
 
