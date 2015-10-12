@@ -1,13 +1,22 @@
-// ========
-//  Global
-// ========
+/********
+  Global
+ ********/
 
-// The following are helper functions and objects
-// that exist in the global scope. They are enclosed
-// in a wrapper object for organization.
+/**
+* @description Helper functions
+* @summary global helper functions and objects
+* @global
+* @namespace
+*/
 var frogger = {
-    // This method generates a random selection
-    // from the given array ('choices').
+    /**
+    * @function randomSelector
+    * @summary generates a random selection
+    * @memberof frogger
+    * @param {array} choices
+    * @returns {array object} a random choice
+    * @inner
+    */
     randomSelector: function(choices) {
         var ran = Math.floor(Math.random() * choices.length);
         return choices[ran];
@@ -16,54 +25,156 @@ var frogger = {
     enemyPositionsY: [35, 120, 205],
     enemyPositionsX: [-100, 0, 100, 200, 300, 400],
     enemySpeeds: [100, 200, 300, 400, 500, 600],
+    players: {
+        'bl': 'blue',
+        'cy': 'cyan',
+        'mg': 'magenta',
+        'or': 'orange',
+        'yl': 'yellow',
+        'gr': 'green'
+    },
+    /**
+    * @function playerReset
+    * @summary resets the player's position
+    * @memberof frogger
+    * @param {Object} player
+    * @inner
+    */
+    playerReset: function(player) {
+        /** initial player position */
+        player.x = 200;
+        player.y = 375;
+    },
+    /**
+    * @function playerChange
+    * @summary changes the player's color
+    * @description every 10 points earned (up to 50)
+      will change the color of the frog
+    * @memberof frogger
+    * @param {Object} player
+    * @param {number} score
+    * @inner
+    */
+    playerChange: function(player, score) {
+        /** default color */
+        var color = frogger.players.bl;
+
+        if (score >= 10 && score < 20) {
+            color = frogger.players.cy
+        }
+        if (score >= 20 && score < 30) {
+            color = frogger.players.mg
+        }
+        if (score >= 30 && score < 40) {
+            color = frogger.players.or
+        }
+        if (score >= 40 && score < 50) {
+            color = frogger.players.yl
+        }
+        if (score >= 50) {
+            color = frogger.players.gr
+        }
+
+        player.sprite = 'images/player-frog-' + color + '.png';
+    },
+    /**
+    * @function isCollision
+    * @summary determines if the player has collided with an enemy
+    * @memberof frogger
+    * @param {number} enemy
+    * @returns {boolean}
+    * @inner
+    */
+    isCollision: function(enemy) {
+        var coords = {
+                enemy: {
+                    x: enemy.x,
+                    y: enemy.y
+                },
+                player: {
+                    x: player.x,
+                    y: player.y
+                }
+            },
+            collision = false;
+
+        // check the coords (first y, then x)
+        if (coords.enemy.y === coords.player.y) {
+            if ((coords.enemy.x + 33) >= (coords.player.x - 33)
+                && (coords.enemy.x - 33) <= coords.player.x + 33) {
+
+                collision = true;
+            }
+        }
+        return collision;
+    },
+    /**
+    * @function resetGame
+    * @summary resets the game
+    * @memberof frogger
+    * @param {number} scr
+    * @param {number} reset
+    * @returns {boolean}
+    * @inner
+    */
     resetGame: function(scr, reset) {
-        // This will reset the score of the game
-        // and remove any rewards (gems)
+        /** This will display the score of the game */
         var displayScore = scr.innerHTML;
 
         reset.addEventListener('click', function() {
-            // reset the score and refresh the display
+            /** reset the score and refresh the display */
             player.score = 0;
             displayScore = player.score;
 
-            // reset the player position
-            player.x = 200;
-            player.y = 375;
+            /** reset the player position */
+            /** @function */
+            frogger.playerReset(player);
 
-            // reset the enemies
-            // The enemies will move to the position
-            // where they will reset speed and position
-            for (enemy in allEnemies) {
+            /** reset the enemies:
+            The enemies will move to the position
+            where they will reset speed and position */
+            for (var enemy in allEnemies) {
                 allEnemies[enemy].x = 565;
             }
         }, false);
     },
+    /**
+    * @function getInstructions
+    * @summary toggles the instruction panel
+    * @memberof frogger
+    * @returns {boolean}
+    * @inner
+    */
      getInstructions: function(btn, inst, close) {
-        // toggle the instructions
+        /** toggle the instructions */
         btn.addEventListener('click', function() {
             inst.style.display = 'block';
         }, false);
 
-        // close the window
+        /** close the window */
         close.addEventListener('click', function() {
             inst.style.display = 'none';
         }, false);
     }
-}; // globals
+};
 
 
-// =========
-//  Enemies
-// =========
+/*********
+  Enemies
+ *********/
 
-// Enemies our player must avoid (cars)
+/**
+* Creates a new Enemy
+* @class
+* @constructor
+*/
 var Enemy = function() {
-    // Car colors are picked at random from the list below.
+    /** @function */
     var car = frogger.randomSelector(frogger.cars);
 
     this.sprite = 'images/enemy-car-' + car + '.png';
 
-    // define initial positions and speeds, selected randomly
+    /** @function */
     var yPos = frogger.randomSelector(frogger.enemyPositionsY),
         xPos = frogger.randomSelector(frogger.enemyPositionsX),
         spd = frogger.randomSelector(frogger.enemySpeeds);
@@ -73,177 +184,206 @@ var Enemy = function() {
     this.speed = spd;
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+/**
+* @function update
+* @summary update the enemy's position
+* @param {time object} dt
+*/
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
 
-    // method to change the speed
+    /**
+    * @function newSpeed
+    * @summary set new Enemy speed
+    * @returns {number}
+    */
     var newSpeed = function() {
+            /** @function */
             var spd = frogger.randomSelector(frogger.enemySpeeds);
             return spd;
     },
-    // method to change position
+    /**
+    * @function newPos
+    * @summary set new Enemy position
+    * @returns {number}
+    */
         newPos = function() {
+            /** @function */
             var pos = frogger.randomSelector(frogger.enemyPositionsY);
             return pos;
     },
-    // method to change color
+    /**
+    * @function newCar
+    * @summary set new Enemy color
+    * @returns {string}
+    */
         newCar = function() {
+            /** @function */
             var car = frogger.randomSelector(frogger.cars),
                 sprite = 'images/enemy-car-' + car + '.png';
             return sprite;
     };
 
-    // The enemies will change position, speed, and color
-    // when they reach the end of the game board (pos 565).
+    /** The enemies will change position, speed, and color
+    when they reach the end of the game board (pos 565). */
     if (this.x > 565) {
         this.x = frogger.enemyPositionsX[0];
         this.speed = newSpeed();
         this.y = newPos();
         this.sprite = newCar();
     } else {
-        // set the speed
+        /** set the speed */
         this.x += this.speed * dt;
     }
 
-    // check for a collision
-    var coords = {
-        enemy: [Math.floor(this.x), Math.floor(this.y)],
-        player: [player.x, player.y]
-    };
-
-    // check the coords (first y, then x)
-    if (coords.enemy[1] === coords.player[1]) {
-        if ((coords.enemy[0] + 50) === coords.player[0]
-            || coords.enemy[0] === coords.player[0]
-            || (coords.enemy[0] - 50) === coords.player[0]) {
-            // console.log('collision');
-            // player goes back to the beginning
-            player.x = 200;
-            player.y = 375;
-        }
+    /** check for a collision */
+    if (frogger.isCollision(this)) {
+        /** player goes back to the beginning */
+        /** @function */
+        frogger.playerReset(player);
     }
 };
 
-// Draw the enemy on the screen, required method for game
+/**
+* @function render
+* @summary draw the enemy on the screen
+*/
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 
-// ========
-//  Player
-// ========
+/********
+  Player
+ ********/
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+/**
+* Creates a new Player
+* @class
+* @constructor
+*/
 var Player = function() {
 
     this.sprite = 'images/player-frog-blue.png';
 
-    // initial player position
-    this.x = 200;
-    this.y = 375;
-    // initial player score
+    /** initial player position */
+    /** @function */
+    frogger.playerReset(this);
+    /** initial player score */
     this.score = 0;
 };
 
-// This updates the position of the player
-// based on movement, controlled through the
-// keystrokes. The direction (dir) of movement is
-// the object that is passed into the function.
+/**
+* @function update
+* @summary updates the position of the player
+* @description This updates the position of the player
+  based on movement, controlled through the
+  keystrokes. The direction (dir) of movement is
+  the object that is passed into the function.
+* @param {number} dir
+*/
 Player.prototype.update = function(dir) {
-    // update the position
+    /** update the position */
     if (dir) {
         this.x += dir.x;
         this.y += dir.y;
     }
 
-    // display/update the score
+    /** display/update the score */
+    /** @function */
     this.displayScore(player.score);
+
+    /** set a new color, if earned */
+    /** @function */
+    // console.log(player.score);
+    frogger.playerChange(player, player.score);
+    // this.sprite = 'images/player-frog-blue.png';
 }
 
-// Render the player on the canvas and position
-// it according to the current (or default) x and y coords
+/**
+* @function render
+* @summary draw the player on the screen
+*/
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Takes in the keystroke from 'allowed keys' and stores
-// an increment of movement (for x an y, resp.) inside
-// an object (move). The move object is passed into update()
-// to update the player's position in the canvas.
-// Contains the position of the player within the boundary.
+/**
+* @function handleInput
+* @summary handles the keystrokes
+* @description Takes in the keystroke from 'allowed keys'
+  and stores an increment of movement (for x an y, resp.)
+  inside an object (move). The move object is passed into
+  update() to update the player's position in the canvas.
+  Contains the position of the player within the boundary.
+* @param {string} direction
+*/
 Player.prototype.handleInput = function(direction) {
-    var move = {x: 0, y: 0};
+    var move = {
+        x: 0,
+        y: 0
+    };
 
     if (direction) {
-        // These conditions increment the players position
-        // and keep the player within the game boundary.
+        /** These conditions increment the players position
+        and keep the player within the game boundary. */
 
-        // this first condition also indicates a successful pass
+        /** this first condition also indicates a successful pass */
         if (direction === 'up') {
             if (this.y === 35) {
-                // back to the original position
-                this.x = 200;
-                this.y = 375;
-                // update the score
+                /** back to the original position */
+                /** @function */
+                frogger.playerReset(this);
+                /** update the score */
                 this.score += 1;
-                if (this.score > 100) {
-                    this.score = 0;
-                }
             } else {
                 move.y = -85;
             }
         }
-        if (direction === 'down' && !(this.y === 375)) {
+        if (direction === 'down' && (this.y !== 375)) {
             move.y = 85;
         }
-        if (direction === 'left' && !(this.x === 0)) {
+        if (direction === 'left' && (this.x !== 0)) {
             move.x = -100;
         }
-        if (direction === 'right' && !(this.x === 400)) {
+        if (direction === 'right' && (this.x !== 400)) {
             move.x = 100;
         }
+        /** @function */
         player.update(move);
-        // console.log('keystroke:', this.x, this.y);
     }
 };
 
-// This method displays a player's score
+/**
+* @function displayScore
+* @summary displays a player's score
+* @param {number} scr
+*/
 Player.prototype.displayScore = function(scr) {
     var scoreTarget = gameTargets.score,
         rewards = gameTargets.rewards;
 
-    // update the current score
+    /** update the current score */
     scoreTarget.innerHTML = scr;
 };
 
 
+/**************
+  Game Objects
+ **************/
 
-// ==============
-//  Game Objects
-// ==============
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+/** @type {Object} */
 var moe = new Enemy(),
     larry = new Enemy(),
     curly = new Enemy(),
-    allEnemies = [moe, larry, curly],
-    player = new Player();
+    player = new Player(),
+    /** @type {Array} */
+    allEnemies = [moe, larry, curly];
 
-// ========
-//  Events
-// ========
+/********
+  Events
+ ********/
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+/** @listens function:handleInput */
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -252,5 +392,6 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
     };
 
+    /** @function */
     player.handleInput(allowedKeys[e.keyCode]);
 });

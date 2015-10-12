@@ -28,8 +28,9 @@ canvas {
     bottom: 675px;
     cursor: pointer;
     display: none;
-    height: auto;
+    max-height: 525px;
     margin: 0 auto;
+    overflow: scroll;
     padding: 25px;
     position: relative;
     text-align: left;
@@ -85,6 +86,7 @@ button:hover {
 h1,
 h2,
 h3,
+li,
 button {
     color: #6600cc;
     font-family: 'Press Start 2P', cursive;
@@ -103,6 +105,12 @@ button {
     padding: 10px;
 }
 
-.copy p {
+.copy p,
+.copy li {
     line-height: 18px;
 }
+
+.copy li {
+    margin: 0 0 10px 21px;
+}
+
