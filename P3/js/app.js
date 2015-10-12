@@ -3,7 +3,7 @@
  ********/
 
 /**
-* @description Helper functions
+* @description Global functions
 * @summary global helper functions and objects
 * @global
 * @namespace
@@ -26,12 +26,12 @@ var frogger = {
     enemyPositionsX: [-100, 0, 100, 200, 300, 400],
     enemySpeeds: [100, 200, 300, 400, 500, 600],
     players: {
-        'bl': 'blue',
-        'cy': 'cyan',
-        'mg': 'magenta',
-        'or': 'orange',
-        'yl': 'yellow',
-        'gr': 'green'
+        petrified       : 'blue',
+        less_petrified  : 'cyan',
+        scared          : 'magenta',
+        less_scared     : 'orange',
+        mellow          : 'yellow',
+        im_the_master   : 'green'
     },
     /**
     * @function playerReset
@@ -57,22 +57,22 @@ var frogger = {
     */
     playerChange: function(player, score) {
         /** default color */
-        var color = frogger.players.bl;
+        var color = frogger.players.petrified;
 
         if (score >= 10 && score < 20) {
-            color = frogger.players.cy
+            color = frogger.players.less_petrified;
         }
         if (score >= 20 && score < 30) {
-            color = frogger.players.mg
+            color = frogger.players.scared;
         }
         if (score >= 30 && score < 40) {
-            color = frogger.players.or
+            color = frogger.players.less_scared;
         }
         if (score >= 40 && score < 50) {
-            color = frogger.players.yl
+            color = frogger.players.mellow;
         }
         if (score >= 50) {
-            color = frogger.players.gr
+            color = frogger.players.im_the_master;
         }
 
         player.sprite = 'images/player-frog-' + color + '.png';
@@ -100,8 +100,8 @@ var frogger = {
 
         // check the coords (first y, then x)
         if (coords.enemy.y === coords.player.y) {
-            if ((coords.enemy.x + 33) >= (coords.player.x - 33)
-                && (coords.enemy.x - 33) <= coords.player.x + 33) {
+            if ((coords.enemy.x + 33) >= (coords.player.x - 33) &&
+                (coords.enemy.x - 33) <= coords.player.x + 33) {
 
                 collision = true;
             }
@@ -126,6 +126,8 @@ var frogger = {
             player.score = 0;
             displayScore = player.score;
 
+            var enemy = 0;
+
             /** reset the player position */
             /** @function */
             frogger.playerReset(player);
@@ -133,8 +135,11 @@ var frogger = {
             /** reset the enemies:
             The enemies will move to the position
             where they will reset speed and position */
-            for (var enemy in allEnemies) {
-                allEnemies[enemy].x = 565;
+            while (enemy  < allEnemies.length) {
+                if (allEnemies.hasOwnProperty(enemy)) {
+                    allEnemies[enemy].x = 565;
+                    enemy += 1;
+                }
             }
         }, false);
     },
@@ -158,6 +163,18 @@ var frogger = {
     }
 };
 
+
+/**********************
+  Abstract Game Object
+ **********************/
+
+/**
+* Creates an abstract class
+* @description all game objects share
+* two things: position and rendering
+* @class
+* @constructor
+*/
 
 /*********
   Enemies
@@ -190,7 +207,6 @@ var Enemy = function() {
 * @param {time object} dt
 */
 Enemy.prototype.update = function(dt) {
-
     /**
     * @function newSpeed
     * @summary set new Enemy speed
@@ -262,7 +278,6 @@ Enemy.prototype.render = function() {
 * @constructor
 */
 var Player = function() {
-
     this.sprite = 'images/player-frog-blue.png';
 
     /** initial player position */
@@ -297,7 +312,7 @@ Player.prototype.update = function(dir) {
     // console.log(player.score);
     frogger.playerChange(player, player.score);
     // this.sprite = 'images/player-frog-blue.png';
-}
+};
 
 /**
 * @function render
@@ -359,9 +374,7 @@ Player.prototype.handleInput = function(direction) {
 * @param {number} scr
 */
 Player.prototype.displayScore = function(scr) {
-    var scoreTarget = gameTargets.score,
-        rewards = gameTargets.rewards;
-
+    var scoreTarget = gameTargets.score;
     /** update the current score */
     scoreTarget.innerHTML = scr;
 };
@@ -376,7 +389,6 @@ var moe = new Enemy(),
     larry = new Enemy(),
     curly = new Enemy(),
     player = new Player(),
-    /** @type {Array} */
     allEnemies = [moe, larry, curly];
 
 /********
@@ -386,10 +398,10 @@ var moe = new Enemy(),
 /** @listens function:handleInput */
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
+        '37': 'left',
+        '38': 'up',
+        '39': 'right',
+        '40': 'down'
     };
 
     /** @function */
