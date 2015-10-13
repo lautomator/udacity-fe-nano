@@ -1,28 +1,26 @@
-// This is the same as the other file in this
-// dir; it only has fewer comments.
+// This is a practical example
 
 // this is the superclass
 var Template = function() {
-    /** position on the game board */
-    var x = 1,
-        y = 2,
-        sprite = 'blank';
+    this.x = 100;
+    this.y = 100;
+    this.sprite = 'blank';
 };
 
 // Car subclass
 var Car = function () {
     Template.call();
-    this.x = 100;
+    this.x = 300;
     this.y = 200;
-    this.sprite = sprite;
+    this.sprite = sprite + ' and a red car';
 };
 
 Car.prototype = Object.create(Template.prototype);
 Car.prototype.constructor = Template;
 
-// // Player subclass
+// Player subclass
 var Player = function () {
-    Template.call(this);
+    Template.call();
     this.x = x + 900;
     this.y = 500;
     this.sprite = 'A blue frog';
@@ -31,10 +29,29 @@ var Player = function () {
 Player.prototype = Object.create(Template.prototype);
 Player.prototype.constructor = Template;
 
-// a new car object
-// var aCar = new Car();
-// console.log(aCar);
+// Instantiate the objects
+// the template
+var theTemplate = new Template(),
+    aCar = new Car(),
+    aPlayer = new Player()
 
-// a new player object
-var aPlayer = new Player();
+
+console.log(theTemplate);
+console.log(aCar);
 console.log(aPlayer);
+
+// display the objects on an html page
+$(function() {
+    $('.template .properties .x').append(theTemplate.x);
+    $('.template .properties .y').append(theTemplate.y);
+    $('.template .properties .sp').append(theTemplate.sprite);
+
+    $('.car .properties .x').append(aCar.x);
+    $('.car .properties .y').append(aCar.y);
+    $('.car .properties .sp').append(aCar.sprite);
+
+    $('.player .properties .x').append(aPlayer.x);
+    $('.player .properties .y').append(aPlayer.y);
+    $('.player .properties .sp').append(aPlayer.sprite);
+});
+

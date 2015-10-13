@@ -21,7 +21,7 @@ var frogger = {
         var ran = Math.floor(Math.random() * choices.length);
         return choices[ran];
     },
-    cars: ['red', 'yellow', 'blue'],
+    cars: ['red', 'yellow', 'blue', 'lightblue', 'racingstripes', 'green'],
     enemyPositionsY: [35, 120, 205],
     enemyPositionsX: [-100, 0, 100, 200, 300, 400],
     enemySpeeds: [100, 200, 300, 400, 500, 600],
@@ -32,18 +32,6 @@ var frogger = {
         less_scared     : 'orange',
         mellow          : 'yellow',
         im_the_master   : 'green'
-    },
-    /**
-    * @function playerReset
-    * @summary resets the player's position
-    * @memberof frogger
-    * @param {Object} player
-    * @inner
-    */
-    playerReset: function(player) {
-        /** initial player position */
-        player.x = 200;
-        player.y = 375;
     },
     /**
     * @function playerChange
@@ -57,21 +45,19 @@ var frogger = {
     */
     playerChange: function(player, score) {
         /** default color */
-        var color = frogger.players.petrified;
+        var color;
 
-        if (score >= 10 && score < 20) {
+        if (score < 10) {
+            color = frogger.players.petrified;
+        } else if (score < 20) {
             color = frogger.players.less_petrified;
-        }
-        if (score >= 20 && score < 30) {
+        } else if (score < 30) {
             color = frogger.players.scared;
-        }
-        if (score >= 30 && score < 40) {
+        } else if (score < 40) {
             color = frogger.players.less_scared;
-        }
-        if (score >= 40 && score < 50) {
+        } else if (score < 50) {
             color = frogger.players.mellow;
-        }
-        if (score >= 50) {
+        } else {
             color = frogger.players.im_the_master;
         }
 
@@ -130,7 +116,7 @@ var frogger = {
 
             /** reset the player position */
             /** @function */
-            frogger.playerReset(player);
+            player.playerReset();
 
             /** reset the enemies:
             The enemies will move to the position
@@ -173,8 +159,13 @@ var frogger = {
 * @description all game objects share
 * two things: position and rendering
 * @class
-* @constructor
 */
+var ObjectTemplate = function() {
+    /** positioning */
+    this.x = 0;
+    this.y = 0;
+    this.sprite = 'images/';
+};
 
 /*********
   Enemies
@@ -186,10 +177,13 @@ var frogger = {
 * @constructor
 */
 var Enemy = function() {
+    /** extends the ObjectTemplate base class*/
+    ObjectTemplate.call();
+
     /** @function */
     var car = frogger.randomSelector(frogger.cars);
 
-    this.sprite = 'images/enemy-car-' + car + '.png';
+    this.sprite = sprite + 'enemy-car-' + car + '.png';
 
     /** @function */
     var yPos = frogger.randomSelector(frogger.enemyPositionsY),
@@ -200,6 +194,9 @@ var Enemy = function() {
     this.y = yPos;
     this.speed = spd;
 };
+
+Enemy.prototype = Object.create(ObjectTemplate.prototype);
+Enemy.prototype.constructor = ObjectTemplate;
 
 /**
 * @function update
@@ -255,7 +252,7 @@ Enemy.prototype.update = function(dt) {
     if (frogger.isCollision(this)) {
         /** player goes back to the beginning */
         /** @function */
-        frogger.playerReset(player);
+        player.playerReset();
     }
 };
 
@@ -278,14 +275,20 @@ Enemy.prototype.render = function() {
 * @constructor
 */
 var Player = function() {
-    this.sprite = 'images/player-frog-blue.png';
+    /** extends the ObjectTemplate base class*/
+    ObjectTemplate.call();
+
+    this.sprite = sprite + 'player-frog-blue.png';
 
     /** initial player position */
     /** @function */
-    frogger.playerReset(this);
+    this.playerReset();
     /** initial player score */
     this.score = 0;
 };
+
+Player.prototype = Object.create(ObjectTemplate.prototype);
+Player.prototype.constructor = ObjectTemplate;
 
 /**
 * @function update
@@ -347,7 +350,7 @@ Player.prototype.handleInput = function(direction) {
             if (this.y === 35) {
                 /** back to the original position */
                 /** @function */
-                frogger.playerReset(this);
+                this.playerReset();
                 /** update the score */
                 this.score += 1;
             } else {
@@ -377,6 +380,19 @@ Player.prototype.displayScore = function(scr) {
     var scoreTarget = gameTargets.score;
     /** update the current score */
     scoreTarget.innerHTML = scr;
+};
+
+/**
+* @function playerReset
+* @summary resets the player's position
+* @memberof frogger
+* @param {Object} player
+* @inner
+*/
+Player.prototype.playerReset = function() {
+    /** initial player position */
+    this.x = 200;
+    this.y = 375;
 };
 
 
