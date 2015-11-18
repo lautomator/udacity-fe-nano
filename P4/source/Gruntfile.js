@@ -43,12 +43,23 @@ module.exports = function(grunt) {
                     {expand: true, src: ['css/*.min.css'], dest: '../production/', filter: 'isFile'},
             ],
           },
+        },
+
+        // minify js
+        uglify: {
+            my_target: {
+                files: {
+                    '../production/js/perfmatters.min.js': ['js/perfmatters.js'],
+                    '../production/js/main.min.js': ['js/main.js']
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    grunt.registerTask('default', ['cssmin', 'htmlmin', 'copy']);
+    grunt.registerTask('default', ['cssmin', 'htmlmin', 'copy', 'uglify']);
 };
