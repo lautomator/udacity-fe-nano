@@ -3,15 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content=" FILL ME IN ">
-    <meta name="author" content=" FILL ME IN ">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta http-equiv="cache-control" content="public">
+    <meta http-equiv="expires" content="0">
     <title>Cameron Pittman: Portfolio</title>
 
     <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
     <!-- <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> -->
     <!-- javascript is loading below -->
 
-    <link href="css/style.min.css" rel="stylesheet" media="all">
+    <link href="css/style.min.css" rel="stylesheet">
     <link href="css/print.min.css" rel="stylesheet" media="print">
 
     <script async src="http://www.google-analytics.com/analytics.js"></script>
@@ -61,7 +63,8 @@
       <p>&copy; Web Performance 2014 <span id="crp-stats"></span></p>
     </footer>
 
-    <script type="text/javascript">
+    <script>
+      // fonts
       WebFontConfig = {
         google: { families: [ 'Open+Sans::latin' ] }
       };
@@ -74,9 +77,8 @@
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(wf, s);
       })();
-    </script>
 
-    <script>
+      // analytics
       (function(w,g){w['GoogleAnalyticsObject']=g;
       w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
 

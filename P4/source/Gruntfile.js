@@ -23,12 +23,14 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     removeComments: false,
-                    collapseWhitespace: true
+                    collapseWhitespace: true,
+                    minifyJS: true,
+                    minifyCSS: true,
                 },
                 files: {
                     // dest, source
                     '../production/index.html': 'index.html',
-                    // 'dist/contact.html': 'src/contact.html' can add more files
+                    // '../index.html': 'index.html',
                 }
             }
         },
@@ -38,7 +40,7 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     // includes files within path
-                    {expand: true, src: ['css/*.min.css'], dest: '../production/css/', filter: 'isFile'},
+                    {expand: true, src: ['css/*.min.css'], dest: '../production/', filter: 'isFile'},
             ],
           },
         }
