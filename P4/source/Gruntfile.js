@@ -8,13 +8,22 @@ module.exports = function(grunt) {
         // minify css (this plugin can also concatenate files)
         cssmin: {
             target: {
-                files: [{
-                    expand: true,
-                    cwd: 'css',
-                    src: ['*.css', '!*.min.css'],
-                    dest: 'css',
-                    ext: '.min.css'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'css',
+                        src: ['*.css', '!*.min.css'],
+                        dest: 'css',
+                        ext: '.min.css'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'views/css',
+                        src: ['*.css', '!*.min.css'],
+                        dest: 'views/css',
+                        ext: '.min.css'
+                    }
+                ]
             }
         },
 
@@ -30,7 +39,7 @@ module.exports = function(grunt) {
                 files: {
                     // dest, source
                     '../production/index.html': 'index.html',
-                    // '../index.html': 'index.html',
+                    '../production/views/pizza.html': 'views/pizza.html',
                 }
             }
         },
@@ -40,9 +49,20 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     // includes files within path
-                    {expand: true, src: ['css/*.min.css'], dest: '../production/', filter: 'isFile'},
-            ],
-          },
+                    {
+                        expand: true,
+                        src: ['css/*.min.css'],
+                        dest: '../production/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        src: ['views/css/*.min.css'],
+                        dest: '../production',
+                        filter: 'isFile'
+                    }
+                ],
+            },
         },
 
         // minify js
@@ -50,7 +70,8 @@ module.exports = function(grunt) {
             my_target: {
                 files: {
                     '../production/js/perfmatters.min.js': ['js/perfmatters.js'],
-                    '../production/js/main.min.js': ['js/main.js']
+                    '../production/js/main.min.js': ['js/main.js'],
+                    '../production/views/js/main.min.js': ['views/js/main.js']
                 }
             }
         }
