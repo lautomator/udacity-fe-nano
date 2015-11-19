@@ -1,6 +1,10 @@
 <!DOCTYPE HTML>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <title>Pizza Time!</title>
+
         <style>
         * {
         -webkit-box-sizing: border-box;
@@ -32,6 +36,7 @@
         .randomPizzaContainer {
         float: left;
         display: flex;
+        width: 33.33%;
         }
         .randomPizzaContainer:after {
         content: "";
@@ -40,6 +45,25 @@
         }
         .container {
         background-color: rgba(240, 60, 60, 0.8);
+        }
+
+        /* mobile */
+        @media only screen and (max-width: 480px) {
+
+            body { font-size: 14px; }
+
+            header p { padding-left: 6.5em;}
+
+            .randomPizzaContainer {
+                display: block;
+                width: 100%;
+            }
+
+            h4,
+            ul li,
+            p {
+                font-size: 18px;
+            }
         }
         </style>
     </head>
@@ -76,7 +100,7 @@
 
             <div id="callToAction" class="row">
                 <div class="col-md-4">
-                    <img src="images/pizzeria.jpg" class="img-responsive"> <!-- Image credit to: http://commons.wikimedia.org/wiki/File:HK_TST_night_%E5%98%89%E8%98%AD%E9%81%93_Granville_Road_restaurant_Paisano's_Pizzeria_pizza_Dec-2013.JPG -->
+                    <img src="images/pizzeria.jpg" class="img-responsive" alt="">
                 </div>
                 <div class="col-md-8">
                     <div class="row">
@@ -140,9 +164,9 @@
                     </div>
 
                     <div id="randomPizzas" class="row">
-                        <div id="pizza0" class="randomPizzaContainer" style="width:33.33%;">
+                        <div id="pizza0" class="randomPizzaContainer">
                             <div class="col-md-6">
-                                <img src="images/pizza.png" class="img-responsive">
+                                <img src="images/pizza.png" class="img-responsive" alt="">
                             </div>
                             <div class="col-md-6">
                                 <h4>The Udacity Special</h4>
@@ -158,9 +182,9 @@
                             </div>
                         </div><!-- /pizza0 -->
 
-                        <div id="pizza1" class="randomPizzaContainer" style="width:33.33%;">
+                        <div id="pizza1" class="randomPizzaContainer">
                             <div class="col-md-6">
-                                <img src="images/pizza.png" class="img-responsive">
+                                <img src="images/pizza.png" class="img-responsive" alt="">
                             </div>
                             <div class="col-md-6">
                                 <h4>The Cameron Special</h4>
@@ -178,5 +202,17 @@
             <div id="footer" class="col-md-12">Thanks for visiting! &copy; 2014 Udacity</div>
         </div>
         <script async src="js/main.min.js"></script>
+
+        <script>
+          var cb = function() {
+            var l = document.createElement('link'); l.rel = 'stylesheet';
+            l.href = 'css/bootstrap-grid.min.css';
+            var h = document.getElementsByTagName('head')[0]; h.appendChild(l, h);
+          };
+          var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+              webkitRequestAnimationFrame || msRequestAnimationFrame;
+          if (raf) raf(cb);
+          else window.addEventListener('load', cb);
+        </script>
     </body>
 </html>

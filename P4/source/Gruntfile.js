@@ -71,7 +71,8 @@ module.exports = function(grunt) {
                 files: {
                     '../production/js/perfmatters.min.js': ['js/perfmatters.js'],
                     '../production/js/main.min.js': ['js/main.js'],
-                    '../production/views/js/main.min.js': ['views/js/main.js']
+                    '../production/views/js/main.min.js': ['views/js/main.js'],
+                    // '../production/views/js/worker.min.js': ['views/js/worker.js']
                 }
             }
         }
