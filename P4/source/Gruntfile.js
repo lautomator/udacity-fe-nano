@@ -1,5 +1,8 @@
 module.exports = function(grunt) {
 
+    var mozjpeg = require('imagemin-mozjpeg'),
+        pngcrush = require('imagemin-pngcrush');
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -16,13 +19,13 @@ module.exports = function(grunt) {
                         dest: 'css',
                         ext: '.min.css'
                     },
-                    {
-                        expand: true,
-                        cwd: 'views/css',
-                        src: ['*.css', '!*.min.css'],
-                        dest: 'views/css',
-                        ext: '.min.css'
-                    }
+                    // {
+                    //     expand: true,
+                    //     cwd: 'views/css',
+                    //     src: ['*.css', '!*.min.css'],
+                    //     dest: 'views/css',
+                    //     ext: '.min.css'
+                    // }
                 ]
             }
         },
@@ -75,13 +78,63 @@ module.exports = function(grunt) {
                     // '../production/views/js/worker.min.js': ['views/js/worker.js']
                 }
             }
+        },
+
+        // optimize images
+        imagemin: {
+            static: {
+                options: {
+                    optimizationLevel: 1,
+                    svgoPlugins: [{ removeViewBox: false }],
+                    use: [
+                        mozjpeg({quality: 80}),
+                        pngcrush({reduce: true})
+                    ]
+                },
+                files: {
+                    '../production/img/2048.png': './img/2048.png',
+                    '../production/img/cam_be_like.jpg': './img/cam_be_like.jpg',
+                    '../production/img/mobilewebdev.jpg': './img/mobilewebdev.jpg',
+                    '../production/img/profilepic.jpg': './img/profilepic.jpg',
+                    '../production/views/images/pizza.png': './views/images/pizza.png',
+                    '../production/views/images/pizzeria.jpg': './views/images/pizzeria.jpg'
+                }
+            }
+        },
+        // resize a large image
+        responsive_images: {
+            dev: {
+                options: {
+                    engine: 'im',
+                    sizes: [{
+                        width: 395,
+                    }]
+                },
+                files: [{
+                    expand: true,
+                    src: ['*.jpg'],
+                    cwd: 'views/images/',
+                    dest: '../production/views/images/'
+                }]
+            }
         }
+
+
     });
 
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-responsive-images');
 
-    grunt.registerTask('default', ['cssmin', 'htmlmin', 'copy', 'uglify']);
+    grunt.registerTask('default', [
+        'cssmin',
+        'htmlmin',
+        'copy',
+        'uglify',
+        'imagemin',
+        'responsive_images'
+    ]);
 };
