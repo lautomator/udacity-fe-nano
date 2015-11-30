@@ -378,70 +378,12 @@
         return pizzaContainer;
     }
 
-    // resizePizzas(size) is called when the slider in the "Our Pizzas" section of the website moves.
-
-    var resizePizzas = function(size) {
-        window.performance.mark("mark_start_resize");   // User Timing API function
-
-        // Changes the value for the size of the pizza above the slider
-        function changeSliderLabel(size) {
-            switch(size) {
-                case "1":
-                    document.querySelector("#pizzaSize").innerHTML = "Small";
-                    return;
-                case "2":
-                    document.querySelector("#pizzaSize").innerHTML = "Medium";
-                    return;
-                case "3":
-                    document.querySelector("#pizzaSize").innerHTML = "Large";
-                    return;
-                default:
-                    console.log("bug in changeSliderLabel");
-            }
-        }
-
-        changeSliderLabel(size);
-
-        function changePizzaSizes(size) {
-                switch(size) {
-                    case "1":
-                        newWidth = 25; // sizes are now a percentage
-                        break;
-                    case "2":
-                        newWidth = 33.33; // sizes are now a percentage
-                        break;
-                    case "3":
-                        newWidth = 50; // sizes are now a percentage
-                        break;
-                    default:
-                        console.log("bug in sizeSwitcher");
-                }
-
-            /* determineDx was not needed and was causing a bottleneck: it was changing layout
-            (width)and would render the page over and over. Instead, the page renders and the
-            var below stores all of the instances of '.randomPizzaContainer'. The new width
-            in percent is applied. */
-            var randomPizzas = document.querySelectorAll(".randomPizzaContainer");
-
-            for (var i = 0; i < randomPizzas.length; i++) {
-                randomPizzas[i].style.width = newWidth + "%";
-            }
-        }
-
-        changePizzaSizes(size);
-
-        // User Timing API is awesome
-        window.performance.mark("mark_end_resize");
-        window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
-        var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
-        console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
-    }
-
     window.performance.mark("mark_start_generating"); // collect timing data
 
     var pizzasDiv = document.getElementById("randomPizzas");
 
-    for (var i = 2; i < 100; i += 1) {
+    // I think 20 pizzas is enough; who would browse 200+ pizzas? :-)
+    for (var i = 2; i < 20; i += 1) {
         pizzasDiv.appendChild(pizzaElementGenerator(i));
     }
 
@@ -474,10 +416,10 @@
         window.performance.mark("mark_start_frame");
 
         var items = document.querySelectorAll('.mover'),
-            pos = document.body.scrollTop / 1250;
+            pos = document.body.scrollTop;
 
         for (var i = 0; i < items.length; i += 1) {
-            items[i].style.left = items[i].basicLeft + 100 * Math.sin(pos + (i % 5)) + 'px';
+            items[i].style.left = items[i].basicLeft + 100 * Math.sin((pos / 1250) + (i % 5)) + 'px';
         }
 
         // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -506,7 +448,9 @@
             elem.basicLeft = (i % cols) * s;
             elem.style.top = (Math.floor(i / cols) * s) + 'px';
             document.querySelector("#movingPizzas1").appendChild(elem);
+            // this helps avoid an async layout by initiating the updatePositions function
+            // when the page is scrolled only.
+            document.body.scrollTop = 1;
         }
-        updatePositions();
     });
 })();

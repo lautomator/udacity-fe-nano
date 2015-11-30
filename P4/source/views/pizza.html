@@ -994,8 +994,66 @@
             <div id="footer" class="col-md-12">Thanks for visiting! &copy; 2014 Udacity</div>
         </div>
 
-        <!-- TODO: use minified once debugging is complete -->
-        <script src="js/main.js"></script>
+        <script src="js/main.min.js"></script>
 
+        <script type="text/javascript">
+
+        var resizePizzas = function(size) {
+            window.performance.mark("mark_start_resize");   // User Timing API function
+
+            // Changes the value for the size of the pizza above the slider
+            function changeSliderLabel(size) {
+                switch(size) {
+                    case "1":
+                        document.querySelector("#pizzaSize").innerHTML = "Small";
+                        return;
+                    case "2":
+                        document.querySelector("#pizzaSize").innerHTML = "Medium";
+                        return;
+                    case "3":
+                        document.querySelector("#pizzaSize").innerHTML = "Large";
+                        return;
+                    default:
+                        console.log("bug in changeSliderLabel");
+                }
+            }
+
+            changeSliderLabel(size);
+
+            function changePizzaSizes(size) {
+                    switch(size) {
+                        case "1":
+                            newWidth = 25; // sizes are now a percentage
+                            break;
+                        case "2":
+                            newWidth = 33.33; // sizes are now a percentage
+                            break;
+                        case "3":
+                            newWidth = 50; // sizes are now a percentage
+                            break;
+                        default:
+                            console.log("bug in sizeSwitcher");
+                    }
+
+                /* determineDx was not needed and was causing a bottleneck: it was changing layout
+                (width)and would render the page over and over. Instead, the page renders and the
+                var below stores all of the instances of '.randomPizzaContainer'. The new width
+                in percent is applied. */
+                var randomPizzas = document.querySelectorAll(".randomPizzaContainer");
+
+                for (var i = 0; i < randomPizzas.length; i++) {
+                    randomPizzas[i].style.width = newWidth + "%";
+                }
+            }
+
+            changePizzaSizes(size);
+
+            // User Timing API is awesome
+            window.performance.mark("mark_end_resize");
+            window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
+            var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
+            console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
+        }
+        </script>
     </body>
 </html>

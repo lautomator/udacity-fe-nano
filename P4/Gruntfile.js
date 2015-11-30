@@ -139,7 +139,7 @@ module.exports = function(grunt) {
         'htmlmin',
         'copy',
         'uglify',
-        // 'imagemin',
-        // 'responsive_images'
+        'imagemin',
+        'responsive_images'
     ]);
 };
