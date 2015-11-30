@@ -8,15 +8,15 @@ module.exports = function(grunt) {
 
         // tasks
 
-        // minify css (this plugin can also concatenate files)
+        // minify css
         cssmin: {
             target: {
                 files: [
                     {
                         expand: true,
-                        cwd: 'css',
+                        cwd: 'source/css',
                         src: ['*.css', '!*.min.css'],
-                        dest: 'css',
+                        dest: 'source/css',
                         ext: '.min.css'
                     },
                     // {
@@ -41,8 +41,8 @@ module.exports = function(grunt) {
                 },
                 files: {
                     // dest, source
-                    '../production/index.html': 'index.html',
-                    '../production/views/pizza.html': 'views/pizza.html',
+                    'production/index.html': 'source/index.html',
+                    'production/views/pizza.html': 'source/views/pizza.html',
                 }
             }
         },
@@ -54,14 +54,17 @@ module.exports = function(grunt) {
                     // includes files within path
                     {
                         expand: true,
-                        src: ['css/*.min.css'],
-                        dest: '../production/',
+                        cwd: 'source/css',
+                        src: ['*.min.css'],
+                        dest: 'production/css',
                         filter: 'isFile'
                     },
+                    // this is temporary --> TODO: delete
                     {
                         expand: true,
-                        src: ['views/css/*.min.css'],
-                        dest: '../production',
+                        cwd: 'source/views/js',
+                        src: ['*.js'],
+                        dest: 'production/views/js',
                         filter: 'isFile'
                     }
                 ],
@@ -72,10 +75,12 @@ module.exports = function(grunt) {
         uglify: {
             my_target: {
                 files: {
-                    '../production/js/perfmatters.min.js': ['js/perfmatters.js'],
-                    '../production/js/main.min.js': ['js/main.js'],
-                    '../production/views/js/main.min.js': ['views/js/main.js'],
-                    // '../production/views/js/worker.min.js': ['views/js/worker.js']
+                    'production/js/perfmatters.min.js': ['source/js/perfmatters.js'],
+                    'source/js/perfmatters.min.js': ['source/js/perfmatters.js'],
+                    'production/js/main.min.js': ['source/js/main.js'],
+                    'source/js/main.min.js': ['source/js/main.js'],
+                    'production/views/js/main.min.js': ['source/views/js/main.js'],
+                    'source/views/js/main.min.js': ['source/views/js/main.js'],
                 }
             }
         },
@@ -92,12 +97,12 @@ module.exports = function(grunt) {
                     ]
                 },
                 files: {
-                    '../production/img/2048.png': './img/2048.png',
-                    '../production/img/cam_be_like.jpg': './img/cam_be_like.jpg',
-                    '../production/img/mobilewebdev.jpg': './img/mobilewebdev.jpg',
-                    '../production/img/profilepic.jpg': './img/profilepic.jpg',
-                    '../production/views/images/pizza.png': './views/images/pizza.png',
-                    '../production/views/images/pizzeria.jpg': './views/images/pizzeria.jpg'
+                    'production/img/2048.png': 'source/img/2048.png',
+                    'production/img/cam_be_like.jpg': 'source/img/cam_be_like.jpg',
+                    'production/img/mobilewebdev.jpg': 'source/img/mobilewebdev.jpg',
+                    'production/img/profilepic.jpg': 'source/img/profilepic.jpg',
+                    'production/views/images/pizza.png': 'source/views/images/pizza.png',
+                    'production/views/images/pizzeria.jpg': 'source/views/images/pizzeria.jpg'
                 }
             }
         },
@@ -113,8 +118,8 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     src: ['*.jpg'],
-                    cwd: 'views/images/',
-                    dest: '../production/views/images/'
+                    cwd: 'source/views/images/',
+                    dest: 'production/views/images/'
                 }]
             }
         }
@@ -134,7 +139,7 @@ module.exports = function(grunt) {
         'htmlmin',
         'copy',
         'uglify',
-        'imagemin',
-        'responsive_images'
+        // 'imagemin',
+        // 'responsive_images'
     ]);
 };

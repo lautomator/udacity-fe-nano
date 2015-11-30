@@ -19,9 +19,9 @@ There are two directories: `source` and `production`. The **source** folder cont
 Any changes reflected on the localhost will also be reflected in the external url (after refreshing). Use the external url for checking the site performance in [Page Speed Insights](https://developers.google.com/speed/pagespeed/insights/).
 
 ##Procedures
-You will need to install the *grunt* task dependencies: cd to the `source` folder and type: `npm install`. This will load all of the plugins from `package.json`. You only need to do this once.
+You will need to install the *grunt* task dependencies: cd to the root folder and type: `npm install`. This will load all of the plugins from `package.json`. You only need to do this once.
 
 1. Only edit the files in the `source` directory.
-2. After making any changes to files in the `source` directory, `grunt`. This will minify all css, js, and html. It will also copy these files to the production folder.
+2. After making any changes to files in the `source` directory, `grunt`. This will minify all css, js, and html. It will also copy these files to the production folder. It will optimize images and resize one of the larger images.
 3. Go to the localhost and refresh (refresh the ngrok url as well). You should see your changes. You can then test Page Speed Insights again to check the performance.
 5. Repeat, as necessary.
