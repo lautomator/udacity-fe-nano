@@ -415,10 +415,11 @@
         frame += 1;
         window.performance.mark("mark_start_frame");
 
-        var items = document.querySelectorAll('.mover'),
-            pos = document.body.scrollTop;
+        var items = document.getElementsByClassName('mover'),
+            pos = document.body.scrollTop,
+            len = items.length;
 
-        for (var i = 0; i < items.length; i += 1) {
+        for (var i = 0; i < len; i += 1) {
             items[i].style.left = items[i].basicLeft + 100 * Math.sin((pos / 1250) + (i % 5)) + 'px';
         }
 
@@ -437,17 +438,29 @@
 
     // Generates the sliding pizzas when the page loads.
     document.addEventListener('DOMContentLoaded', function() {
-        var cols = 8;
-        var s = 256;
-        for (var i = 0; i < 15; i += 1) {
-            var elem = document.createElement('img');
+        // maxPies ensures that there will be only the amount of pizzas
+        // needed to fill the window.
+        var sHeight = window.innerHeight,
+            rows = sHeight / 100,
+            cols = 8,
+            maxPies = rows * cols,
+            s = 256,
+            // this was pulled out of the loop so that it is not
+            // defined with every iteration
+            elem,
+            // this was also moved outside of the loop and is targeted
+            // by ID, as opposed to the query selector
+            movingPizzas = document.getElementById("movingPizzas1");
+
+        for (var i = 0; i < maxPies; i += 1) {
+            elem = document.createElement('img');
             elem.className = 'mover';
             elem.src = "images/pizza.png";
             elem.style.height = "100px";
             elem.style.width = "73.333px";
             elem.basicLeft = (i % cols) * s;
             elem.style.top = (Math.floor(i / cols) * s) + 'px';
-            document.querySelector("#movingPizzas1").appendChild(elem);
+            movingPizzas.appendChild(elem);
             // this helps avoid an async layout by initiating the updatePositions function
             // when the page is scrolled only.
             document.body.scrollTop = 1;
