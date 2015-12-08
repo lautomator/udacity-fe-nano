@@ -19,7 +19,8 @@ function loadData() {
 
     // get the values of the form request
     var $street  = $('#street').val(),
-        $city    = $('#city').val();
+        $city    = $('#city').val(),
+        $address = $city + ', ' + $street;
 
     // check that the fields are not blank
     if ($street === '' && $city === '') {
@@ -33,11 +34,16 @@ function loadData() {
         var $googlePic = 'https://maps.googleapis.com/maps/api/streetview?size=600x300&location=' + $street + ',' + $city,
             $backgroundImage = '<img class="bgimg" src="' + $googlePic + '">';
 
-            // just a check ... (Preserve the log in the console to see the value)
-            console.log($backgroundImage);
+        // just a check ... (Preserve the log in the console to see the value)
+        console.log($backgroundImage);
 
         // append the image to the body
         $body.append($backgroundImage);
+
+        // update the greeting
+        $greeting.text('So, you want to live at: ' + $address);
+
+        // more APIs...
     }
 
     return false;
