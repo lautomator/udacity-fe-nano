@@ -4,4 +4,6 @@ supporting-courses/responsive-images/sample-grunt-automation/node_modules
 supporting-courses/responsive-images/sample-grunt-automation/build
 supporting-courses/responsive-images/sample-grunt-automation/img
 *node_modules
+secrets.txt
+script-local.js
 

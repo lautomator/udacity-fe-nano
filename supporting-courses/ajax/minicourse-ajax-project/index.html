@@ -4,24 +4,13 @@
     <meta charset="UTF-8">
     <title>Your Moving Companion</title>
     <link rel="stylesheet" href="css/style.css">
-
-    <style>
-    .no_display {
-        display: none;
-    }
-    .has_warning {
-        color: red;
-        display: block;
-        font-family: sans-serif;
-    }
-    </style>
 </head>
 <body>
     <form id="form-container" class="form-container">
         <label for="street">Street: </label><input type="text" id="street" value="">
         <label for="city">City: </label><input type="text" id="city" value="">
         <button id="submit-btn">Submit</button>
-        <p id="messages" class="no_display"><em>Please enter data in both fields.</em></p>
+        <p id="messages" class="no_display"><em>Please enter data in at least one field.</em></p>
     </form>
 
     <hr>
@@ -41,7 +30,12 @@
     </div>
 
     <script src="js/libs/jquery.min.js"></script>
+<!--
+    FOR PRODUCTION ONLY
     <script src="js/script.js"></script>
+ -->
+    <script src="js/script-local.js"></script>
+
     <script async defer src="https://maps.googleapis.com/maps/api/js"></script>
 
 </body>
