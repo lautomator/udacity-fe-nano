@@ -48,7 +48,7 @@ function loadData() {
         $greeting.text($greetingMessage);
 
         // NY Times API
-        var $nytApiKey = 'api-key=THIS_IS_A_SECRET',
+        var $nytApiKey = 'api-key=0f4df9e641f30618fc99f9edbf7677df:8:73715864',
             $fq = 'source:("The New York Times") AND glocations.contains:("' + $city + '")',
             $NYTimesURL = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=' +
                 $fq + '&' + $nytApiKey;
@@ -61,6 +61,31 @@ function loadData() {
             });
         }).error(function(e) {
                 $nytElem.append('<li>No data available.</li>');
+        });
+
+        // Wiki API
+        var $wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
+                $city + '&format=json&callback=wikiCallback';
+
+
+
+        $.ajax( {
+            url: $wikiURL,
+            dataType: 'jsonp',
+            success: function(data) {
+                var wikiURLStr = 'http://en.wikipedia.org/wiki/',
+                    len = data[1].length,
+                    title = data[1],
+                    url = data[3],
+                    i;
+
+                for (i = 0; i < len; i += 1) {
+                    $wikiElem.append('<li><a href="' + url[i] +
+                        '" target="_blank">' + title[i] + '</a></li>');
+                }
+            }
+        }).error(function(e) {
+                $wikiElem.append('<li>No data available.</li>');
         });
     }
     return false;
