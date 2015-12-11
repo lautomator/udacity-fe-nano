@@ -43,3 +43,21 @@ body {background-color: #CCC;}
 .article:first-child {
     border-top:none;
 }
+
+.no_display {
+    display: none;
+}
+
+.has_warning {
+    background: #fff;
+    border-radius: 5px;
+    display: inline-block;
+    color: red;
+    font: 11px/11px sans-serif;
+    padding: 6px 8px;
+}
+
+li {
+    list-style: none;
+    margin-bottom: 30px;
+}

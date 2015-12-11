@@ -34,9 +34,6 @@ function loadData() {
         var $googlePic = 'https://maps.googleapis.com/maps/api/streetview?size=600x300&location=' + $street + ',' + $city,
             $backgroundImage = '<img class="bgimg" src="' + $googlePic + '">';
 
-        // just a check ... (Preserve the log in the console to see the value)
-        console.log($backgroundImage);
-
         // append the image to the body
         $body.append($backgroundImage);
 
@@ -61,7 +58,10 @@ function loadData() {
 
         // Wiki API
         var $wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
-                $city + '&format=json&callback=wikiCallback';
+                $city + '&format=json&callback=wikiCallback',
+            $wikiRequestTimeout = setTimeout(function() {
+                $wikiElem.text("Failed to get Wikipedia resources.");
+            }, 8000);
 
         $.ajax( {
             url: $wikiURL,
@@ -73,13 +73,17 @@ function loadData() {
                     url = data[3],
                     i;
 
-                for (i = 0; i < len; i += 1) {
-                    $wikiElem.append('<li><a href="' + url[i] +
-                        '" target="_blank">' + title[i] + '</a></li>');
+                if (len === 0) {
+                    $wikiElem.append('<li>No data available</li>');
+                } else {
+                    for (i = 0; i < len; i += 1) {
+                        $wikiElem.append('<li><a href="' + url[i] +
+                            '" target="_blank">' + title[i] + '</a></li>');
+                    };
                 }
+
+                clearTimeout($wikiRequestTimeout);
             }
-        }).error(function(e) {
-                $wikiElem.append('<li>No data available.</li>');
         });
     }
 
