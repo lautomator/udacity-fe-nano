@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="description" content="Cat Clicker: Click the cat!">
+        <meta name="author" content="John Merigliano">
+        <title>Cat Clicker</title>
+
+        <style>
+            .cat-pic {
+                cursor: pointer;
+            }
+        </style>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <!-- cat pic -->
+                <div class="col-md-6 cat-pic" id="cat">
+                    <!-- cat picture -->
+                    <img class="img-responsive" src="img/cat.jpg" alt="cat">
+                </div><!-- /cat pic -->
+
+                <!-- clicks -->
+                <div class="col-md-6 clicks">
+                    <h1>Number of clicks:
+                        <span class="numbers" id="clicks-count">0</span>
+                    </h1>
+                </div><!-- /clicks -->
+            </div><!-- /row -->
+        </div><!-- /container -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/game.js"></script>
+
+        <script>
+            // get the HTML targets and pass them into one global var
+            var catClickerHTMLTargets = {
+                cat:            document.getElementById('cat'),
+                clicksCount:    document.getElementById('clicks-count')
+            };
+
+            catClickerTheGame(catClickerHTMLTargets);
+        </script>
+    </body>
+</html>
