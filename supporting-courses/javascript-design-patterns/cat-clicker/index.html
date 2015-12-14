@@ -9,6 +9,11 @@
         <title>Cat Clicker</title>
 
         <style>
+            @media (min-width: 768px) {
+                .br-mobile {
+                    display: none;
+                }
+            }
             .cat-pic {
                 cursor: pointer;
             }
@@ -18,35 +23,15 @@
 
     <body>
         <div class="container">
-            <div class="row">
-                <!-- cat pic -->
-                <div class="col-md-6 cat-pic" id="cat">
-                    <!-- cat picture -->
-                    <img class="img-responsive" src="img/cat.jpg" alt="cat">
-                </div><!-- /cat pic -->
-
-                <!-- clicks -->
-                <div class="col-md-6 clicks">
-                    <h1>Number of clicks:
-                        <span class="numbers" id="clicks-count">0</span>
-                    </h1>
-                </div><!-- /clicks -->
-            </div><!-- /row -->
+            <h1>Cat Clicker <br class="br-mobile"><small>Click the cats!</small></h1>
         </div><!-- /container -->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/game.js"></script>
+        <script src="js/main.js"></script>
 
         <script>
-            // get the HTML targets and pass them into one global var
-            var catClickerHTMLTargets = {
-                cat:            document.getElementById('cat'),
-                clicksCount:    document.getElementById('clicks-count')
-            };
-
-            catClickerTheGame(catClickerHTMLTargets);
+            catClickerTheGame();
         </script>
     </body>
 </html>
