@@ -9,21 +9,46 @@
         <title>Cat Clicker</title>
 
         <style>
+            .cat-pic {
+                cursor: pointer;
+            }
+
+            .btn {
+                margin-right: 5px;
+                margin-top: 5px;
+            }
+
+            .btn:last-of-type {
+                margin-right: 0;
+            }
+
+            /* desktop exception */
             @media (min-width: 768px) {
                 .br-mobile {
                     display: none;
                 }
+
+                .btn {
+                    margin-top: 0;
+                }
             }
-            .cat-pic {
-                cursor: pointer;
-            }
+
         </style>
         <link href="css/bootstrap.min.css" rel="stylesheet">
     </head>
 
     <body>
         <div class="container">
-            <h1>Cat Clicker <br class="br-mobile"><small>Click the cats!</small></h1>
+            <h1>Cat Clicker <br class="br-mobile"><small>Click the cat!</small></h1>
+
+            <!-- cat choices -->
+            <div class="cat-choices">
+                <p class="lead text-primary">First, choose a cat:</p>
+            </div><!-- /cat choices -->
+
+            <!-- cat display area -->
+            <div class="cat-display-area"></div><!-- /cat display area -->
+
         </div><!-- /container -->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
