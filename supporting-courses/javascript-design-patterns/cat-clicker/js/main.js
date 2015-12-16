@@ -40,6 +40,11 @@ var catClickerTheGame = function() {
             // call to render the selected cat
             catsView.render(data);
         },
+        getCats: function() {
+            // returns the cats from the data model
+            var cats = data.cats;
+                return cats;
+        },
         getClicks: function(catPos) {
             // returns the current number of clicks <int>
             return data.cats[catPos][1];
@@ -57,16 +62,24 @@ var catClickerTheGame = function() {
 
     // view layer for the buttons
     var buttonsView = {
-        render: function(data) {
+        context: function() {
+            // returns the template and data
+            var template = $('script[data-template="cat-button-template"]').html(),
+                data = octopus.getCats(),
+                context = [template, data];
+
+                return context;
+        },
+        render: function() {
             var i = 0,
-                cats = data.cats,
+                context = this.context(),
+                template = context[0],
+                cats = context[1],
                 catsLength = cats.length;
 
             while (i < catsLength) {
-                // render the cat buttons
-                $('.cat-choices').append('<input class="btn btn-default"' +
-                    'type="button" value="' + cats[i][0] + '" id="' +
-                    cats[i][0] + '">');
+                // render the cat buttons from the context
+                $('.cat-choices').append(template.replace(/{{catName}}/g, cats[i][0]));
 
                 i += 1;
             }
@@ -75,10 +88,14 @@ var catClickerTheGame = function() {
 
     // view layer for the cats
     var catsView = {
-        render: function(data) {
+        context: function() {
+            var context = octopus.getCats();
+                return context;
+        },
+        render: function() {
             // render the selected cat, the name, and number of clicks
             var i = 0,
-                cats = data.cats,
+                cats = this.context(),
                 catsLength = cats.length;
 
             while (i < catsLength) {

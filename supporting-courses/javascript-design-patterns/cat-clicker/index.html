@@ -55,8 +55,27 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
 
-        <script>
-            catClickerTheGame();
+        <!-- cat buttons template -->
+        <script type="text/template" data-template="cat-button-template">
+            <input class="btn btn-default" type="button" value="{{catName}}" id="{{catName}}">
         </script>
+
+        <!-- cat viewing area template -->
+        <script type="text/template" data-template="cat-view-template">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="cat-name">{{catName}}</h2>
+                    <img class="img-responsive cat-pic" id="cat-{{catName}}" src="img/{{catName}}.jpg" alt="cat">
+                </div>
+                <div class="col-md-6 clicks">
+                    <h2>Number of clicks:
+                        <span class="numbers" id="click-{{catName}}">octopus.getClicks(i)</span>
+                    </h2>
+                </div>
+            </div>
+        </script>
+
+        <!-- call the game function -->
+        <script>catClickerTheGame();</script>
     </body>
 </html>
