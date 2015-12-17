@@ -69,13 +69,21 @@
                 </div>
                 <div class="col-md-6 clicks">
                     <h2>Number of clicks:
-                        <span class="numbers" id="click-{{catName}}">octopus.getClicks(i)</span>
+                        <span class="numbers" id="click-{{catName}}">{{getClicks}}</span>
                     </h2>
                 </div>
             </div>
         </script>
 
+        <!-- template targets -->
+        <script>
+            catClickerTargets = {
+                buttonsTemplate: 'script[data-template="cat-button-template"',
+                catViewTemplate: 'script[data-template="cat-view-template"'
+            }
+        </script>
+
         <!-- call the game function -->
-        <script>catClickerTheGame();</script>
+        <script>catClickerTheGame(catClickerTargets);</script>
     </body>
 </html>

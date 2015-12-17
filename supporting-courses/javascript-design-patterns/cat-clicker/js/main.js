@@ -1,4 +1,4 @@
-var catClickerTheGame = function() {
+var catClickerTheGame = function(targets) {
 
     // model layer
     var data = {
@@ -16,7 +16,7 @@ var catClickerTheGame = function() {
             this.cats[catPos][1] = clicks;
         },
         toString: function() {
-            // returns the data in human readable way for the console
+            // logs human readable data in the console
             var i = 0,
                 catsLength = this.cats.length,
                 nameLabel = 'name:\t',
@@ -64,7 +64,7 @@ var catClickerTheGame = function() {
     var buttonsView = {
         context: function() {
             // returns the template and data
-            var template = $('script[data-template="cat-button-template"]').html(),
+            var template = $(targets.buttonsTemplate).html(),
                 data = octopus.getCats(),
                 context = [template, data];
 
@@ -89,13 +89,18 @@ var catClickerTheGame = function() {
     // view layer for the cats
     var catsView = {
         context: function() {
-            var context = octopus.getCats();
+            var template = $(targets.catViewTemplate).html(),
+                data = octopus.getCats(),
+                context = [template, data];
+
                 return context;
         },
         render: function() {
             // render the selected cat, the name, and number of clicks
             var i = 0,
-                cats = this.context(),
+                context = this.context(),
+                template = context[0],
+                cats = context[1],
                 catsLength = cats.length;
 
             while (i < catsLength) {
@@ -106,17 +111,12 @@ var catClickerTheGame = function() {
                 // listen for a click to render the cat
                 buttonId.addEventListener('click', (function(catName, i, catId) {
                     return function() {
-                        $('.cat-display-area').html('<div class="row">' +
-                            '<div class="col-md-6">' +
-                            '<h2 class="cat-name">' + catName + '</h2>' +
-                            '<img class="img-responsive cat-pic" id="cat-' + catName +
-                            '" src="img/' + catName + '.jpg" alt="cat">' +
-                            '</div>' +
-                            '<div class="col-md-6 clicks">' +
-                            '<h2>Number of clicks: ' +
-                            '<span class="numbers" id="click-' + catName +
-                            '">' + octopus.getClicks(i) + '</span></h2></div></div>'
-                        );
+                        // insert data into the template
+                        var html = template.replace(/{{catName}}/g, cats[i][0]),
+                            html = html.replace(/{{getClicks}}/g, octopus.getClicks(i));
+
+                        // render the template
+                        $('.cat-display-area').html(html);
 
                         // target the cat being clicked in the cat view area (not the button)
                         var catClickId = document.getElementById(catId),
