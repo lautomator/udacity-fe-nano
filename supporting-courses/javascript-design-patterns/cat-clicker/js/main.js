@@ -6,40 +6,48 @@ var catClickerTheGame = function(targets) {
             {
                 name:   'Alice',
                 clicks: 0,
-                imgSrc: 'img/alice.jpg'
+                imgSrc: 'img/alice.jpg',
+                imgUrl: 'https://c2.staticflickr.com/6/5480/12139930183_86af1b262e_b.jpg'
             },
             {
                 name:   'Bam-Bam',
                 clicks: 0,
-                imgSrc: 'img/bam-bam.jpg'
+                imgSrc: 'img/bam-bam.jpg',
+                imgUrl: 'https://lh5.ggpht.com/LfjkdmOKkGLvCt-VuRlWGjAjXqTBrPjRsokTNKBtCh8IFPRetGaXIpTQGE2e7ZCUaG2azKNkz38KkbM_emA=s0#w=640&h=454'
             },
             {
                 name:   'Barney',
                 clicks: 0,
-                imgSrc: 'img/barney.jpg'
+                imgSrc: 'img/barney.jpg',
+                imgUrl: 'https://lh3.ggpht.com/kixazxoJ2ufl3ACj2I85Xsy-Rfog97BM75ZiLaX02KgeYramAEqlEHqPC3rKqdQj4C1VFnXXryadFs1J9A=s0#w=640&h=496'
             },
             {
                 name:   'Coco',
                 clicks: 0,
-                imgSrc: 'img/coco.jpg'
+                imgSrc: 'img/coco.jpg',
+                imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Cute_grey_kitten.jpg/1024px-Cute_grey_kitten.jpg'
             },
             {
                 name:   'Dino',
                 clicks: 0,
-                imgSrc: 'img/dino.jpg'
+                imgSrc: 'img/dino.jpg',
+                imgUrl: 'https://lh3.ggpht.com/cesD31eroFxIZ4IEeXPAJkx_8i5-haU3P9LQosGNfV-GfAPUh2bE4iw4zV6Mc9XobWOR70BQh2JAP57wZlM=s0#w=640&h=480'
             },
             {
                 name:   'Pebbles',
                 clicks: 0,
-                imgSrc: 'img/pebbles.jpg'
+                imgSrc: 'img/pebbles.jpg',
+                imgUrl: 'https://lh4.ggpht.com/dUJNejPqb_qLsV1kfWcvviqc7adxsw02BSAm8YLWNklP4lI6fQCLKXd-28uKuchtjoEUpqFN0K6kkTSDHw=s0#w=588&h=640'
             },
             {
                 name:   'Wilma',
                 clicks: 0,
-                imgSrc: 'img/wilma.jpg'
+                imgSrc: 'img/wilma.jpg',
+                imgUrl: 'https://lh3.ggpht.com/nlI91wYNCrjjNy5f-S3CmVehIBM4cprx-JFWOztLk7vFlhYuFR6YnxcT446AvxYg4Ab7M1Fy0twaOCWYcUk=s0#w=640&h=426'
             }
         ],
-        update: function(catPos, clicks) {
+        selected: 0,
+        updateClicks: function(catPos, clicks) {
             // update the cats array
             this.cats[catPos].clicks = clicks;
         },
@@ -62,7 +70,7 @@ var catClickerTheGame = function(targets) {
     // controller layer
     var octopus = {
         getCats: function() {
-            // returns the cats from the data model
+            // returns the cats from the data model <array>
             var cats = data.cats;
                 return cats;
         },
@@ -71,18 +79,26 @@ var catClickerTheGame = function(targets) {
             return data.cats[catPos].clicks;
 
         },
+        getSelectedCat: function() {
+            // returns the current selected cat <int>
+            return data.selected;
+        },
         addClick: function(catPos, clicks) {
             // get the current number of clicks
             // and update the data
-            data.update(catPos, clicks);
+            data.updateClicks(catPos, clicks);
 
             // see the data in the console:
             data.toString();
+        },
+        updateCat: function(catPos) {
+            data.selected = (catPos);
         },
         init: function() {
             // render the view layers
             buttonsView.init();
             catsView.init();
+            catsAdminView.init();
         }
     };
 
@@ -131,10 +147,14 @@ var catClickerTheGame = function(targets) {
                 template = context[0],
                 cats = context[1],
                 catsLength = cats.length,
+                currentCat = octopus.getSelectedCat(),
                 buttonId,
                 catId,
                 catName,
-                catImage;
+                catImage,
+                html,
+                catClickId,
+                clicks;
 
             while (i < catsLength) {
                 buttonId = document.getElementById(cats[i].name);
@@ -146,7 +166,7 @@ var catClickerTheGame = function(targets) {
                 buttonId.addEventListener('click', (function(catName, i, catId, catImage) {
                     return function() {
                         // insert data into the template
-                        var html = template.replace(/%catName%/g,
+                        html = template.replace(/%catName%/g,
                             catName).replace(/%catImgSrc%/,
                             catImage).replace(/%getClicks%/,
                             octopus.getClicks(i));
@@ -154,9 +174,12 @@ var catClickerTheGame = function(targets) {
                         // render the template
                         $('.cat-display-area').html(html);
 
+                        // update the selected cat param
+                        octopus.updateCat(i);
+
                         // target the cat being clicked in the cat view area (not the button)
-                        var catClickId = document.getElementById(catId),
-                            clicks = octopus.getClicks(i);
+                        catClickId = document.getElementById(catId),
+                        clicks = octopus.getClicks(i);
 
                         // counts the clicks and displays them
                         catClickId.addEventListener('click', (function(clicks) {
@@ -174,6 +197,35 @@ var catClickerTheGame = function(targets) {
 
                 i += 1;
             }
+        },
+        init: function() {
+            this.render();
+        }
+    };
+
+    var catsAdminView = {
+        context: function() {
+            var template = $(targets.catAdminTemplate).html(),
+                model = octopus.getCats(),
+                context = [template, model];
+
+                return context;
+        },
+        render: function() {
+            // render the admin form when the button is pressed
+            var i = 0,
+                context = this.context(),
+                template = context[0],
+                cats = context[1],
+                catsLength = cats.length;
+
+            $( "#cat-admin-button" ).click(function() {
+                // render the admin panel with the current data
+                $('.cat-admin-area').html(template.replace(/%catName%/,
+                    cats[0].name).replace(/%ImgUrl%/,
+                    cats[0].ImgSrc));
+            });
+
         },
         init: function() {
             this.render();

@@ -25,6 +25,14 @@
             <!-- cat display area -->
             <div class="cat-display-area"></div><!-- /cat display area -->
 
+            <!-- admin area -->
+            <div class="row">
+                <div class="col-md-12">
+                    <input class="btn btn-warning" type="button" value="admin" id="cat-admin-button">
+                    <div class="cat-admin-area"></div>
+                </div>
+            </div><!-- / admin area -->
+
         </div><!-- /container -->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -39,11 +47,9 @@
         <!-- cat viewing area template -->
         <script type="text/template" data-template="cat-view-template">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <h2 class="cat-name">%catName%</h2>
                     <img class="img-responsive cat-pic" id="cat-%catName%" src="%catImgSrc%" alt="cat">
-                </div>
-                <div class="col-md-6 clicks">
                     <h2>Number of clicks:
                         <span class="numbers" id="click-%catName%">%getClicks%</span>
                     </h2>
@@ -51,11 +57,34 @@
             </div>
         </script>
 
+        <script type="text/template" data-template="cat-admin-template">
+            <form class="cat-admin-form">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td><label for="admin-cat-name">Name:</label></td>
+                            <td><input id="admin-cat-name" class="form-control" type="text" value="%catName%"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="admin-cat-img">Image URL:</label></td>
+                            <td><input id="admin-cat-img" class="form-control" type="text" value="%ImgUrl%"><br><a href="%ImgUrl%" target="_blank">%ImgUrl%</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="admin-cat-clicks">Clicks: </label></td>
+                            <td><input id="admin-cat-clicks" class="form-control" type="text" value="%getClicks%"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </script>
+
         <!-- template targets -->
         <script>
             catClickerTargets = {
-                buttonsTemplate: 'script[data-template="cat-button-template"',
-                catViewTemplate: 'script[data-template="cat-view-template"'
+                buttonsTemplate:    'script[data-template="cat-button-template"',
+                catViewTemplate:    'script[data-template="cat-view-template"',
+                catAdminTemplate:   'script[data-template="cat-admin-template"'
             }
         </script>
 
