@@ -1,19 +1,47 @@
 var catClickerTheGame = function(targets) {
-
+    'use strict';
     // model layer
     var data = {
-        // [cat name <str>, current number of clicks <int>]
         cats: [
-            ['alice', 0],
-            ['bam-bam', 0],
-            ['barney', 0],
-            ['coco', 0],
-            ['pebbles', 0],
-            ['wilma', 0]
+            {
+                name:   'Alice',
+                clicks: 0,
+                imgSrc: 'img/alice.jpg'
+            },
+            {
+                name:   'Bam-Bam',
+                clicks: 0,
+                imgSrc: 'img/bam-bam.jpg'
+            },
+            {
+                name:   'Barney',
+                clicks: 0,
+                imgSrc: 'img/barney.jpg'
+            },
+            {
+                name:   'Coco',
+                clicks: 0,
+                imgSrc: 'img/coco.jpg'
+            },
+            {
+                name:   'Dino',
+                clicks: 0,
+                imgSrc: 'img/dino.jpg'
+            },
+            {
+                name:   'Pebbles',
+                clicks: 0,
+                imgSrc: 'img/pebbles.jpg'
+            },
+            {
+                name:   'Wilma',
+                clicks: 0,
+                imgSrc: 'img/wilma.jpg'
+            }
         ],
         update: function(catPos, clicks) {
             // update the cats array
-            this.cats[catPos][1] = clicks;
+            this.cats[catPos].clicks = clicks;
         },
         toString: function() {
             // logs human readable data in the console
@@ -23,8 +51,8 @@ var catClickerTheGame = function(targets) {
                 clicksLabel = 'clicks:\t';
 
             while (i < catsLength) {
-                console.log(nameLabel + this.cats[i][0] + '\t\t|\t' +
-                    clicksLabel + this.cats[i][1]);
+                console.log(nameLabel + this.cats[i].name + '\t\t|\t' +
+                    clicksLabel + this.cats[i].clicks);
                 i += 1;
             }
             console.log('\n...\n');
@@ -33,13 +61,6 @@ var catClickerTheGame = function(targets) {
 
     // controller layer
     var octopus = {
-        init: function() {
-            // call to render the buttons
-            buttonsView.render(data);
-
-            // call to render the selected cat
-            catsView.render(data);
-        },
         getCats: function() {
             // returns the cats from the data model
             var cats = data.cats;
@@ -47,7 +68,7 @@ var catClickerTheGame = function(targets) {
         },
         getClicks: function(catPos) {
             // returns the current number of clicks <int>
-            return data.cats[catPos][1];
+            return data.cats[catPos].clicks;
 
         },
         addClick: function(catPos, clicks) {
@@ -57,6 +78,11 @@ var catClickerTheGame = function(targets) {
 
             // see the data in the console:
             data.toString();
+        },
+        init: function() {
+            // render the view layers
+            buttonsView.init();
+            catsView.init();
         }
     };
 
@@ -65,8 +91,8 @@ var catClickerTheGame = function(targets) {
         context: function() {
             // returns the template and data
             var template = $(targets.buttonsTemplate).html(),
-                data = octopus.getCats(),
-                context = [template, data];
+                model = octopus.getCats(),
+                context = [template, model];
 
                 return context;
         },
@@ -79,10 +105,13 @@ var catClickerTheGame = function(targets) {
 
             while (i < catsLength) {
                 // render the cat buttons from the context
-                $('.cat-choices').append(template.replace(/{{catName}}/g, cats[i][0]));
+                $('.cat-choices').append(template.replace(/%catName%/g, cats[i].name));
 
                 i += 1;
             }
+        },
+        init: function() {
+            this.render();
         }
     };
 
@@ -90,8 +119,8 @@ var catClickerTheGame = function(targets) {
     var catsView = {
         context: function() {
             var template = $(targets.catViewTemplate).html(),
-                data = octopus.getCats(),
-                context = [template, data];
+                model = octopus.getCats(),
+                context = [template, model];
 
                 return context;
         },
@@ -101,19 +130,26 @@ var catClickerTheGame = function(targets) {
                 context = this.context(),
                 template = context[0],
                 cats = context[1],
-                catsLength = cats.length;
+                catsLength = cats.length,
+                buttonId,
+                catId,
+                catName,
+                catImage;
 
             while (i < catsLength) {
-                var buttonId = document.getElementById(cats[i][0]),
-                    catId = 'cat-' + cats[i][0],
-                    catName = cats[i][0];
+                buttonId = document.getElementById(cats[i].name);
+                catId = 'cat-' + cats[i].name;
+                catName = cats[i].name;
+                catImage = cats[i].imgSrc;
 
                 // listen for a click to render the cat
-                buttonId.addEventListener('click', (function(catName, i, catId) {
+                buttonId.addEventListener('click', (function(catName, i, catId, catImage) {
                     return function() {
                         // insert data into the template
-                        var html = template.replace(/{{catName}}/g, cats[i][0]),
-                            html = html.replace(/{{getClicks}}/g, octopus.getClicks(i));
+                        var html = template.replace(/%catName%/g,
+                            catName).replace(/%catImgSrc%/,
+                            catImage).replace(/%getClicks%/,
+                            octopus.getClicks(i));
 
                         // render the template
                         $('.cat-display-area').html(html);
@@ -134,13 +170,16 @@ var catClickerTheGame = function(targets) {
                             };
                         })(clicks));
                     };
-                })(catName, i, catId));
+                })(catName, i, catId, catImage));
 
                 i += 1;
             }
+        },
+        init: function() {
+            this.render();
         }
     };
 
     octopus.init();
 
-} // end of the game function
+}; // end of the game function

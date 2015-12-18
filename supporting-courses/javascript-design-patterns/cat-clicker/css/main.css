@@ -1,0 +1,23 @@
+.cat-pic {
+    cursor: pointer;
+}
+
+.btn {
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.btn:last-of-type {
+    margin-right: 0;
+}
+
+/* desktop corrections */
+@media (min-width: 768px) {
+    .br-mobile {
+        display: none;
+    }
+
+    .btn {
+        margin-top: 0;
+    }
+}

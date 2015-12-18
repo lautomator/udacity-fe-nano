@@ -6,35 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="description" content="Cat Clicker: Click the cat!">
         <meta name="author" content="John Merigliano">
+
         <title>Cat Clicker</title>
 
-        <style>
-            .cat-pic {
-                cursor: pointer;
-            }
-
-            .btn {
-                margin-right: 5px;
-                margin-top: 5px;
-            }
-
-            .btn:last-of-type {
-                margin-right: 0;
-            }
-
-            /* desktop exception */
-            @media (min-width: 768px) {
-                .br-mobile {
-                    display: none;
-                }
-
-                .btn {
-                    margin-top: 0;
-                }
-            }
-
-        </style>
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
     </head>
 
     <body>
@@ -57,19 +33,19 @@
 
         <!-- cat buttons template -->
         <script type="text/template" data-template="cat-button-template">
-            <input class="btn btn-default" type="button" value="{{catName}}" id="{{catName}}">
+            <input class="btn btn-default" type="button" value="%catName%" id="%catName%">
         </script>
 
         <!-- cat viewing area template -->
         <script type="text/template" data-template="cat-view-template">
             <div class="row">
                 <div class="col-md-6">
-                    <h2 class="cat-name">{{catName}}</h2>
-                    <img class="img-responsive cat-pic" id="cat-{{catName}}" src="img/{{catName}}.jpg" alt="cat">
+                    <h2 class="cat-name">%catName%</h2>
+                    <img class="img-responsive cat-pic" id="cat-%catName%" src="%catImgSrc%" alt="cat">
                 </div>
                 <div class="col-md-6 clicks">
                     <h2>Number of clicks:
-                        <span class="numbers" id="click-{{catName}}">{{getClicks}}</span>
+                        <span class="numbers" id="click-%catName%">%getClicks%</span>
                     </h2>
                 </div>
             </div>
