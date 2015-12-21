@@ -15,6 +15,10 @@ table {
     margin: 10px 0;
 }
 
+#cat-admin-button {
+    margin-top: 5px;
+}
+
 /* desktop corrections */
 @media (min-width: 768px) {
     .br-mobile {

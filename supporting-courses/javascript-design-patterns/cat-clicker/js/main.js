@@ -46,6 +46,7 @@ var catClickerTheGame = function(targets) {
                 imgUrl: 'https://lh3.ggpht.com/nlI91wYNCrjjNy5f-S3CmVehIBM4cprx-JFWOztLk7vFlhYuFR6YnxcT446AvxYg4Ab7M1Fy0twaOCWYcUk=s0#w=640&h=426'
             }
         ],
+        // this is the selected cat index
         selected: 0,
         updateClicks: function(catPos, clicks) {
             // update the cats array
@@ -56,14 +57,18 @@ var catClickerTheGame = function(targets) {
             var i = 0,
                 catsLength = this.cats.length,
                 nameLabel = 'name:\t',
-                clicksLabel = 'clicks:\t';
+                clicksLabel = 'clicks:\t',
+                imgSrcLabel = 'source:\t',
+                imgUrlLabel = 'url:\t';
 
             while (i < catsLength) {
                 console.log(nameLabel + this.cats[i].name + '\t\t|\t' +
-                    clicksLabel + this.cats[i].clicks);
+                    clicksLabel + this.cats[i].clicks + '\n' +
+                    imgSrcLabel + this.cats[i].imgSrc + '\n' +
+                    imgUrlLabel + this.cats[i].imgUrl);
                 i += 1;
             }
-            console.log('\n...\n');
+            console.log('\n_____\n');
         }
     };
 
@@ -81,18 +86,20 @@ var catClickerTheGame = function(targets) {
         },
         getSelectedCat: function() {
             // returns the current selected cat <int>
-            return data.selected;
+            var currentCat = data.selected,
+                cat = data.cats[currentCat];
+            return cat;
         },
         addClick: function(catPos, clicks) {
             // get the current number of clicks
             // and update the data
             data.updateClicks(catPos, clicks);
-
-            // see the data in the console:
-            data.toString();
         },
         updateCat: function(catPos) {
             data.selected = (catPos);
+
+            // see the data in the console:
+            data.toString();
         },
         init: function() {
             // render the view layers
@@ -173,8 +180,16 @@ var catClickerTheGame = function(targets) {
 
                         // render the template
                         $('.cat-display-area').html(html);
+                        // show the admin button
+                        $('#cat-admin-button').show();
+                        // hide the admin area
+                        $('.cat-admin-form').hide();
+                        // reset the button value
+                        $('#cat-admin-button').attr('value', 'admin');
+                        // update the form status
+                        $('#admin-form').removeClass('is-active');
 
-                        // update the selected cat param
+                        // update the selected cat
                         octopus.updateCat(i);
 
                         // target the cat being clicked in the cat view area (not the button)
@@ -190,6 +205,14 @@ var catClickerTheGame = function(targets) {
 
                                 // add to the total number of clicks
                                 octopus.addClick(i, clicks);
+
+                                // if the admin panel is open:
+                                // change the admin button to an update button
+                                if ($('#admin-form').hasClass('is-active')) {
+                                    $('#cat-admin-button').removeAttr('value');
+                                    $('#cat-admin-button').attr('value', 'update');
+                                }
+
                             };
                         })(clicks));
                     };
@@ -206,29 +229,32 @@ var catClickerTheGame = function(targets) {
     var catsAdminView = {
         context: function() {
             var template = $(targets.catAdminTemplate).html(),
-                model = octopus.getCats(),
+                model = octopus.getSelectedCat(),
                 context = [template, model];
 
                 return context;
         },
         render: function() {
-            // render the admin form when the button is pressed
-            var i = 0,
-                context = this.context(),
+            var context = this.context(),
                 template = context[0],
-                cats = context[1],
-                catsLength = cats.length;
+                currentCat = context[1];
 
-            $( "#cat-admin-button" ).click(function() {
-                // render the admin panel with the current data
-                $('.cat-admin-area').html(template.replace(/%catName%/,
-                    cats[0].name).replace(/%ImgUrl%/,
-                    cats[0].ImgSrc));
-            });
+            // render the admin panel with the current cat data
+            $('.cat-admin-area').html(template.replace(/%catName%/g,
+                currentCat.name).replace(/%ImgUrl%/g,
+                currentCat.imgUrl).replace(/%getClicks%/, currentCat.clicks));
 
+            // the form is active
+            $('#admin-form').addClass('is-active');
         },
         init: function() {
-            this.render();
+            // hide the cat admin button until a button is pressed
+            $('#cat-admin-button').hide();
+
+            // render the admin form when the button is pressed
+            $('#cat-admin-button').click(function() {
+                catsAdminView.render();
+            });
         }
     };
 

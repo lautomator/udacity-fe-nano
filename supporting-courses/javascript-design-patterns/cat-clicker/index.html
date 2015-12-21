@@ -19,7 +19,7 @@
 
             <!-- cat choices -->
             <div class="cat-choices">
-                <p class="lead text-primary">First, choose a cat:</p>
+                <p class="lead text-primary">Choose a cat:</p>
             </div><!-- /cat choices -->
 
             <!-- cat display area -->
@@ -28,7 +28,7 @@
             <!-- admin area -->
             <div class="row">
                 <div class="col-md-12">
-                    <input class="btn btn-warning" type="button" value="admin" id="cat-admin-button">
+                    <input class="btn btn-warning" type="button" id="cat-admin-button" value="admin">
                     <div class="cat-admin-area"></div>
                 </div>
             </div><!-- / admin area -->
@@ -58,7 +58,7 @@
         </script>
 
         <script type="text/template" data-template="cat-admin-template">
-            <form class="cat-admin-form">
+            <form class="cat-admin-form" id="admin-form" method="get">
                 <table class="table table-striped">
                     <tbody>
                         <tr>
@@ -67,7 +67,7 @@
                         </tr>
                         <tr>
                             <td><label for="admin-cat-img">Image URL:</label></td>
-                            <td><input id="admin-cat-img" class="form-control" type="text" value="%ImgUrl%"><br><a href="%ImgUrl%" target="_blank">%ImgUrl%</a>
+                            <td><input id="admin-cat-img" class="form-control" type="text" value="%ImgUrl%"><br><a href="%ImgUrl%" target="_blank">%catName%</a>
                             </td>
                         </tr>
                         <tr>
@@ -76,6 +76,8 @@
                         </tr>
                     </tbody>
                 </table>
+                <input class="btn btn-success" type="submit" value="save" id="cat-admin-button-save">
+                <input class="btn btn-default" type="button" value="cancel" id="cat-admin-button-cancel">
             </form>
         </script>
 
