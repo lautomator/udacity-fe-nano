@@ -52,6 +52,10 @@ var catClickerTheGame = function(targets) {
             // update the cats array
             this.cats[catPos].clicks = clicks;
         },
+        update: function(name, catIndex) {
+            // update the fields that have been changed
+            this.cats[catIndex].name = name;
+        },
         toString: function() {
             // logs human readable data in the console
             var i = 0,
@@ -85,10 +89,15 @@ var catClickerTheGame = function(targets) {
 
         },
         getSelectedCat: function() {
-            // returns the current selected cat <int>
+            // returns the current selected cat <array>
             var currentCat = data.selected,
                 cat = data.cats[currentCat];
             return cat;
+        },
+        getSelectedIndex: function() {
+            // returns the current selected cat <int>
+            var selectedCat = data.selected;
+            return selectedCat;
         },
         addClick: function(catPos, clicks) {
             // get the current number of clicks
@@ -100,6 +109,12 @@ var catClickerTheGame = function(targets) {
 
             // see the data in the console:
             data.toString();
+        },
+        adminUpdate: function(postData, catIndex) {
+            // updates the model based on info added to form:
+            // right now, name is the only param I want to allow to be changed
+            var name = postData[0];
+            data.update(name, catIndex);
         },
         init: function() {
             // render the view layers
@@ -169,7 +184,7 @@ var catClickerTheGame = function(targets) {
                 catName = cats[i].name;
                 catImage = cats[i].imgSrc;
 
-                // listen for a click to render the cat
+                // listen for a button click to render the cat
                 buttonId.addEventListener('click', (function(catName, i, catId, catImage) {
                     return function() {
                         // insert data into the template
@@ -181,7 +196,8 @@ var catClickerTheGame = function(targets) {
                         // render the template
                         $('.cat-display-area').html(html);
                         // show the admin button
-                        $('#cat-admin-button').show();
+                        $('#cat-admin-button').removeClass('is-hidden');
+                        $('#cat-admin-button').addClass('is-visible');
                         // hide the admin area
                         $('.cat-admin-form').hide();
                         // reset the button value
@@ -246,11 +262,25 @@ var catClickerTheGame = function(targets) {
 
             // the form is active
             $('#admin-form').addClass('is-active');
+
+            // listen for an update
+            this.save();
+        },
+        save: function() {
+            // will write input to data model
+            $('#cat-admin-button-save').click(function() {
+                // Get the data from the fields and add them to an array.
+                // There could be all kinds functions for validation here.
+                var $name = $('#admin-cat-name').val(),
+                    $image = $('#admin-cat-img').val(),
+                    $clicks = $('#admin-cat-clicks').val(),
+                    catIndex = octopus.getSelectedIndex(),
+                    postData = [$name, $image, $clicks];
+
+                octopus.adminUpdate(postData, catIndex);
+            });
         },
         init: function() {
-            // hide the cat admin button until a button is pressed
-            $('#cat-admin-button').hide();
-
             // render the admin form when the button is pressed
             $('#cat-admin-button').click(function() {
                 catsAdminView.render();

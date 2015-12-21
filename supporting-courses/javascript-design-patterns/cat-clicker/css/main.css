@@ -19,6 +19,14 @@ table {
     margin-top: 5px;
 }
 
+.is-hidden {
+    visibility: hidden;
+}
+
+.is-visible {
+    visibility: visible;
+}
+
 /* desktop corrections */
 @media (min-width: 768px) {
     .br-mobile {

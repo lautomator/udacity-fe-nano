@@ -28,7 +28,7 @@
             <!-- admin area -->
             <div class="row">
                 <div class="col-md-12">
-                    <input class="btn btn-warning" type="button" id="cat-admin-button" value="admin">
+                    <input class="btn btn-warning is-hidden" type="button" id="cat-admin-button" value="admin">
                     <div class="cat-admin-area"></div>
                 </div>
             </div><!-- / admin area -->
@@ -58,7 +58,7 @@
         </script>
 
         <script type="text/template" data-template="cat-admin-template">
-            <form class="cat-admin-form" id="admin-form" method="get">
+            <form class="cat-admin-form" id="admin-form">
                 <table class="table table-striped">
                     <tbody>
                         <tr>
@@ -76,7 +76,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <input class="btn btn-success" type="submit" value="save" id="cat-admin-button-save">
+                <input class="btn btn-success" type="button" value="save" id="cat-admin-button-save">
                 <input class="btn btn-default" type="button" value="cancel" id="cat-admin-button-cancel">
             </form>
         </script>
