@@ -18,9 +18,8 @@
             <h1>Cat Clicker <br class="br-mobile"><small>Click the cat!</small></h1>
 
             <!-- cat choices -->
-            <div class="cat-choices">
-                <p class="lead text-primary">Choose a cat:</p>
-            </div><!-- /cat choices -->
+            <p class="lead text-primary">Choose a cat:</p>
+            <div class="cat-choices"></div><!-- /cat choices -->
 
             <!-- cat display area -->
             <div class="cat-display-area"></div><!-- /cat display area -->
@@ -49,7 +48,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2 class="cat-name">%catName%</h2>
-                    <img class="img-responsive cat-pic" id="cat-%catName%" src="%catImgSrc%" alt="cat">
+                    <img class="img-responsive cat-pic" id="cat-%catName%" src="%catImgSrc%" alt="cat" title="%catName%">
                     <h2>Number of clicks:
                         <span class="numbers" id="click-%catName%">%getClicks%</span>
                     </h2>
