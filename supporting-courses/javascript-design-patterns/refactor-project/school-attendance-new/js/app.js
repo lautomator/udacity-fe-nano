@@ -1,84 +1,111 @@
-/* STUDENTS IGNORE THIS FUNCTION
- * All this does is create an initial
- * attendance record if one is not found
- * within localStorage.
- */
-(function() {
-    if (!localStorage.attendance) {
-        console.log('Creating attendance records...');
-        function getRandom() {
-            return (Math.random() >= 0.5);
-        }
+var udacityAttendanceApp = function(targets) {
 
-        var nameColumns = $('tbody .name-col'),
-            attendance = {};
-
-        nameColumns.each(function() {
-            var name = this.innerText;
-            attendance[name] = [];
-
-            for (var i = 0; i <= 11; i++) {
-                attendance[name].push(getRandom());
+    // model
+    var data = {
+        // app data
+        days: 12,
+        students: [
+            {
+                name:   'Slappy the Frog',
+                daysMissed: 0
+            },
+            {
+                name:   'Lilly the Lizard',
+                daysMissed: 0
+            },
+            {
+                name:   'Paulrus the Walrus',
+                daysMissed: 0
+            },
+            {
+                name:   'Gregory the Goat',
+                daysMissed: 0
+            },
+            {
+                name:   'Adam the Anaconda',
+                daysMissed: 0
             }
-        });
+        ]
+    };
 
-        localStorage.attendance = JSON.stringify(attendance);
-    }
-}());
+    // controller
+    var app = {
+        getData: function() {
+            // get the data from the model
+            return data;
+        },
+        init: function() {
+            // render the view layer
+            view.init();
+        }
+    };
 
+    // view
+    var view = {
+        context: function() {
+            // get the data and templates
+            var allData = app.getData(),
+                context = {
+                    days: allData.days,
+                    students: allData.students,
+                    headTemplate: targets.attendanceHeader,
+                    bodyTemplate: targets.attendanceStudent,
+                    checkBoxes: targets.attendanceCheckBox
+                };
 
-/* STUDENT APPLICATION */
-$(function() {
-    var attendance = JSON.parse(localStorage.attendance),
-        $allMissed = $('tbody .missed-col'),
-        $allCheckboxes = $('tbody input');
+            return context;
+        },
+        render: function() {
+            var context = this.context(),
+                totalDays = context.days,
+                students = context.students,
+                totalStudents = context.students.length,
+                tableHead = $(context.headTemplate).html(),
+                tableBody = $(context.bodyTemplate).html(),
+                checkBox = $(context.checkBoxes).html(),
+                tableHeadHtml,
+                tableBodyHtml,
+                day = 1,
+                index = 0;
 
-    // Count a student's missed days
-    function countMissing() {
-        $allMissed.each(function() {
-            var studentRow = $(this).parent('tr'),
-                dayChecks = $(studentRow).children('td').children('input'),
-                numMissed = 0;
+            // build and render the template for the table header (cols)
+            while (day <= totalDays) {
 
-            dayChecks.each(function() {
-                if (!$(this).prop('checked')) {
-                    numMissed++;
+                // render the template header with the data
+                tableHeadHtml = tableHead.replace('%classNumber%', day);
+
+                $('#days-missed-header').before(tableHeadHtml);
+
+                day += 1;
+            }
+
+            // build and render the template for the table body (rows)
+            while (index < totalStudents) {
+
+                // render the template body with the data
+                tableBodyHtml = tableBody.replace('%studentName%',
+                    students[index].name).replace('%missedNumber%',
+                    students[index].daysMissed).replace('%studentId%', index);
+
+                // render the name of the student,
+                $('#tableContent').append(tableBodyHtml);
+
+                // render the class sessions checkboxes,
+                for (var i = 1; i <= totalDays; i += 1) {
+                    // render the check boxes
+                    $('.student-' + index).after(checkBox);
                 }
-            });
 
-            $(this).text(numMissed);
-        });
+                index += 1;
+            }
+
+        },
+        init: function() {
+            // render the view
+            this.render();
+        }
     }
 
-    // Check boxes, based on attendace records
-    $.each(attendance, function(name, days) {
-        var studentRow = $('tbody .name-col:contains("' + name + '")').parent('tr'),
-            dayChecks = $(studentRow).children('.attend-col').children('input');
+    app.init();
 
-        dayChecks.each(function(i) {
-            $(this).prop('checked', days[i]);
-        });
-    });
-
-    // When a checkbox is clicked, update localStorage
-    $allCheckboxes.on('click', function() {
-        var studentRows = $('tbody .student'),
-            newAttendance = {};
-
-        studentRows.each(function() {
-            var name = $(this).children('.name-col').text(),
-                $allCheckboxes = $(this).children('td').children('input');
-
-            newAttendance[name] = [];
-
-            $allCheckboxes.each(function() {
-                newAttendance[name].push($(this).prop('checked'));
-            });
-        });
-
-        countMissing();
-        localStorage.attendance = JSON.stringify(newAttendance);
-    });
-
-    countMissing();
-}());
+}; // udacityAttendanceApp app ends

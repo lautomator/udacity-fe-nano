@@ -237,8 +237,6 @@ var catClickerTheGame = function(targets) {
                                 clicks += 1;
                                 $(clickCountId).text(clicks);
 
-                                console.log(clicks);
-
                                 // add to the total number of clicks
                                 octopus.addClick(i, clicks);
 
