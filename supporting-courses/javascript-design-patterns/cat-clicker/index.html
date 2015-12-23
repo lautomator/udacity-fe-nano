@@ -40,7 +40,7 @@
 
         <!-- cat buttons template -->
         <script type="text/template" data-template="cat-button-template">
-            <input class="btn btn-default" type="button" value="%catName%" id="%catName%">
+            <input class="btn btn-default" type="button" value="%catName%" id="btn-%index%">
         </script>
 
         <!-- cat viewing area template -->
@@ -48,9 +48,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2 class="cat-name">%catName%</h2>
-                    <img class="img-responsive cat-pic" id="cat-%catName%" src="%catImgSrc%" alt="cat" title="%catName%">
+                    <img class="img-responsive cat-pic" id="cat-%index%" src="%catImgSrc%" alt="cat" title="%catName%">
                     <h2>Number of clicks:
-                        <span class="numbers" id="click-%catName%">%getClicks%</span>
+                        <span class="numbers" id="click-%index%">%getClicks%</span>
                     </h2>
                 </div>
             </div>

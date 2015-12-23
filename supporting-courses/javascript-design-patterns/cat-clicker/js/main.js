@@ -122,6 +122,8 @@ var catClickerTheGame = function(targets) {
 
             // update the data
             data.update(updates, catIndex);
+            // update the page
+            this.init();
         },
         init: function() {
             // render the view layers
@@ -149,9 +151,13 @@ var catClickerTheGame = function(targets) {
                 catsLength = cats.length,
                 html;
 
+            // clear old data
+            $('.cat-choices').html('');
+
             while (i < catsLength) {
                 // render the cat buttons from the context
-                html = template.replace(/%catName%/g, cats[i].name);
+                html = template.replace(/%catName%/,
+                    cats[i].name).replace(/%index%/, i);
                 $('.cat-choices').append(html);
 
                 i += 1;
@@ -187,9 +193,12 @@ var catClickerTheGame = function(targets) {
                 catClickId,
                 clicks;
 
+            // clear old data
+            $('.cat-display-area').html('');
+
             while (i < catsLength) {
-                buttonId = document.getElementById(cats[i].name);
-                catId = 'cat-' + cats[i].name;
+                buttonId = document.getElementById('btn-' + i);
+                catId = 'cat-' + i;
                 catName = cats[i].name;
                 catImage = cats[i].imgSrc;
 
@@ -200,7 +209,7 @@ var catClickerTheGame = function(targets) {
                         html = template.replace(/%catName%/g,
                             catName).replace(/%catImgSrc%/,
                             catImage).replace(/%getClicks%/,
-                            octopus.getClicks(i));
+                            octopus.getClicks(i)).replace(/%index%/g, i);
 
                         // render the template
                         $('.cat-display-area').html(html);
@@ -224,9 +233,11 @@ var catClickerTheGame = function(targets) {
                         // counts the clicks and displays them
                         catClickId.addEventListener('click', (function(clicks) {
                             return function() {
-                                var clickCountId = '#click-' + catName;
+                                var clickCountId = '#click-' + i;
                                 clicks += 1;
                                 $(clickCountId).text(clicks);
+
+                                console.log(clicks);
 
                                 // add to the total number of clicks
                                 octopus.addClick(i, clicks);
@@ -280,7 +291,8 @@ var catClickerTheGame = function(targets) {
         },
         save: function() {
             var context = this.context(),
-                catName = context[1].name;
+                catName = context[1].name,
+                catClicks = context[1].clicks;
 
             // will write input to data model
             $('#cat-admin-button-save').click(function() {
@@ -288,7 +300,7 @@ var catClickerTheGame = function(targets) {
                 // There could be all kinds functions for validation here.
                 var $name = $('#admin-cat-name').val(),
                     $image = $('#admin-cat-img').val(),
-                    $clicks = $('#admin-cat-clicks').val(),
+                    $clicks = catClicks,
                     catIndex = octopus.getSelectedIndex(),
                     postData = [$name, $image, $clicks];
 
