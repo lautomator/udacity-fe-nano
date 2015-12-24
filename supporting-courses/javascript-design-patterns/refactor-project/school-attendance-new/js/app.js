@@ -115,9 +115,11 @@ var udacityAttendanceApp = function(targets) {
                 checkBox = $(context.checkBoxes).html(),
                 tableHeadHtml,
                 tableBodyHtml,
+                attendance,
                 missed,
                 day = 1,
-                index = 0;
+                index = 0,
+                i;
 
             // build and render the template for the table header (cols)
             while (day <= totalDays) {
@@ -132,7 +134,8 @@ var udacityAttendanceApp = function(targets) {
 
             // build and render the template for the table body (rows)
             while (index < totalStudents) {
-                missed = app.attendanceCount(index);
+                missed = app.attendanceCount(index),
+                attendance = students[index].attendance;
 
                 // render the template body with the data
                 tableBodyHtml = tableBody.replace('%studentName%',
@@ -143,9 +146,15 @@ var udacityAttendanceApp = function(targets) {
                 $('#tableContent').append(tableBodyHtml);
 
                 // render the class sessions checkboxes,
-                for (var i = 1; i <= totalDays; i += 1) {
+                for (i = 1; i <= attendance.length; i += 1) {
                     // render the check boxes
-                    $('.student-' + index).after(checkBox);
+                    if (attendance[i] === true) {
+                        // a class was attended
+                        $('.student-' + index).after(checkBox.replace('%status%', 'checked'));
+                    } else {
+                        // a class was missed
+                        $('.student-' + index).after(checkBox.replace('%status%', ''));
+                    }
                 }
 
                 index += 1;
