@@ -7,23 +7,23 @@ var udacityAttendanceApp = function(targets) {
         students: [
             {
                 name:   'Slappy the Frog',
-                daysMissed: 0
+                attendance: [],
             },
             {
                 name:   'Lilly the Lizard',
-                daysMissed: 0
+                attendance: []
             },
             {
                 name:   'Paulrus the Walrus',
-                daysMissed: 0
+                attendance: []
             },
             {
                 name:   'Gregory the Goat',
-                daysMissed: 0
+                attendance: []
             },
             {
                 name:   'Adam the Anaconda',
-                daysMissed: 0
+                attendance: []
             }
         ]
     };
@@ -34,7 +34,57 @@ var udacityAttendanceApp = function(targets) {
             // get the data from the model
             return data;
         },
+        getRandom: function() {
+            // returns true or false
+            return (Math.random() >= 0.5);
+        },
+        createRecords: function() {
+            // default records created when page is loaded
+            var attendance = {},
+                data = this.getData(),
+                students = data.students,
+                studentsLength = data.students.length,
+                totalDays = data.days,
+                index = 0,
+                classes;
+
+            // create a random matrix of days missed
+            // based on the number of days from the data model
+            while (index < studentsLength) {
+                // push true or false values to each name array, resp.
+                for (classes = 0; classes < totalDays; classes += 1) {
+                    students[index].attendance.push(this.getRandom());
+                }
+
+                index += 1;
+            }
+        },
+        attendanceCount: function(student) {
+            // takes in the student index ->
+            // returns the number of false values
+            // from the attendance array
+            var data = this.getData(),
+                student = data.students[student],
+                attendance = student.attendance,
+                days = data.days,
+                missed = 0,
+                index = 0;
+
+            // count the attendance for the student passed in
+            while (index < days) {
+                if (attendance[index] === false) {
+                    missed += 1;
+                }
+
+                index += 1;
+            }
+
+            return missed;
+        },
         init: function() {
+            // create some records
+            this.createRecords();
+
             // render the view layer
             view.init();
         }
@@ -65,6 +115,7 @@ var udacityAttendanceApp = function(targets) {
                 checkBox = $(context.checkBoxes).html(),
                 tableHeadHtml,
                 tableBodyHtml,
+                missed,
                 day = 1,
                 index = 0;
 
@@ -81,11 +132,12 @@ var udacityAttendanceApp = function(targets) {
 
             // build and render the template for the table body (rows)
             while (index < totalStudents) {
+                missed = app.attendanceCount(index);
 
                 // render the template body with the data
                 tableBodyHtml = tableBody.replace('%studentName%',
                     students[index].name).replace('%missedNumber%',
-                    students[index].daysMissed).replace('%studentId%', index);
+                    missed).replace('%studentId%', index);
 
                 // render the name of the student,
                 $('#tableContent').append(tableBodyHtml);

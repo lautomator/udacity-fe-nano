@@ -23,7 +23,11 @@
         });
 
         localStorage.attendance = JSON.stringify(attendance);
+
+    } else {
+        console.log(localStorage.attendance);
     }
+
 }());
 
 
