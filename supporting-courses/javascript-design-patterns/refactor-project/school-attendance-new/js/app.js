@@ -25,7 +25,11 @@ var udacityAttendanceApp = function(targets) {
                 name:   'Adam the Anaconda',
                 attendance: []
             }
-        ]
+        ],
+        update: function(student) {
+            // updates the attendance array
+            console.log('updated');
+        }
     };
 
     // controller
@@ -80,6 +84,12 @@ var udacityAttendanceApp = function(targets) {
             }
 
             return missed;
+        },
+        attendanceUpdate: function(student) {
+            // updates the attendance array
+            // for the selected student
+
+            data.update(student);
         },
         init: function() {
             // create some records
@@ -150,10 +160,14 @@ var udacityAttendanceApp = function(targets) {
                     // render the check boxes
                     if (attendance[i] === true) {
                         // a class was attended
-                        $('.student-' + index).after(checkBox.replace('%status%', 'checked'));
+                        $('.student-' + index).after(checkBox.replace('%status%',
+                            'checked').replace('%studentId%',
+                            index).replace('%session%', i));
                     } else {
                         // a class was missed
-                        $('.student-' + index).after(checkBox.replace('%status%', ''));
+                        $('.student-' + index).after(checkBox.replace('%status%',
+                         '').replace('%studentId%',
+                            index).replace('%session%', i));
                     }
                 }
 
@@ -161,9 +175,46 @@ var udacityAttendanceApp = function(targets) {
             }
 
         },
+        statusChange: function() {
+            var context = this.context(),
+                students = context.students,
+                totalStudents = context.students.length,
+                attendance,
+                index = 0,
+                i = 0,
+                selectedBox;
+
+            // loop through the students and the attendance array
+            while (index < totalStudents) {
+                attendance = students[index].attendance;
+
+                for (i = attendance.length; i > 0; i -= 1) {
+
+                    // listen for check check box value
+                    $('#' + index + '-' + i).click(function() {
+                        selectedBox = $('#' + index + '-' + i);
+                        // $this will contain a reference to the checkbox
+                        if (selectedBox.is(':checked')) {
+                            // the checkbox was checked
+                            console.log(selectedBox);
+                        } else {
+                            // the checkbox was unchecked
+                            console.log(selectedBox);
+                        }
+                    });
+                }
+
+                index += 1;
+            }
+
+
+
+        },
         init: function() {
             // render the view
             this.render();
+
+            this.statusChange();
         }
     }
 
