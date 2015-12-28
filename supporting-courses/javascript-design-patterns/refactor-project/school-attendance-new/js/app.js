@@ -7,7 +7,7 @@ var udacityAttendanceApp = function(targets) {
         students: [
             {
                 name:   'Slappy the Frog',
-                attendance: [],
+                attendance: []
             },
             {
                 name:   'Lilly the Lizard',
@@ -26,9 +26,9 @@ var udacityAttendanceApp = function(targets) {
                 attendance: []
             }
         ],
-        update: function(student) {
+        update: function(student, session, value) {
             // updates the attendance array
-            console.log('updated');
+            data.students[student].attendance[session] = value;
         }
     };
 
@@ -85,11 +85,13 @@ var udacityAttendanceApp = function(targets) {
 
             return missed;
         },
-        attendanceUpdate: function(student) {
+        attendanceUpdate: function(student, button, value) {
             // updates the attendance array
-            // for the selected student
+            // for the selected student, button,
+            // and value (checked or unchecked)
 
-            data.update(student);
+            // update the data
+            data.update(student, button, value);
         },
         init: function() {
             // create some records
@@ -127,9 +129,10 @@ var udacityAttendanceApp = function(targets) {
                 tableBodyHtml,
                 attendance,
                 missed,
+                missedUpdate,
                 day = 1,
                 index = 0,
-                i;
+                i, j;
 
             // build and render the template for the table header (cols)
             while (day <= totalDays) {
@@ -150,13 +153,13 @@ var udacityAttendanceApp = function(targets) {
                 // render the template body with the data
                 tableBodyHtml = tableBody.replace('%studentName%',
                     students[index].name).replace('%missedNumber%',
-                    missed).replace('%studentId%', index);
+                    missed).replace(/%studentId%/g, index);
 
                 // render the name of the student,
                 $('#tableContent').append(tableBodyHtml);
 
                 // render the class sessions checkboxes,
-                for (i = 1; i <= attendance.length; i += 1) {
+                for (i = attendance.length - 1; i >= 0; i -= 1) {
                     // render the check boxes
                     if (attendance[i] === true) {
                         // a class was attended
@@ -171,50 +174,38 @@ var udacityAttendanceApp = function(targets) {
                     }
                 }
 
-                index += 1;
-            }
-
-        },
-        statusChange: function() {
-            var context = this.context(),
-                students = context.students,
-                totalStudents = context.students.length,
-                attendance,
-                index = 0,
-                i = 0,
-                selectedBox;
-
-            // loop through the students and the attendance array
-            while (index < totalStudents) {
-                attendance = students[index].attendance;
-
-                for (i = attendance.length; i > 0; i -= 1) {
+                // listen for checkbox
+                for (j = 0; j <= attendance.length; j += 1) {
 
                     // listen for check check box value
-                    $('#' + index + '-' + i).click(function() {
-                        selectedBox = $('#' + index + '-' + i);
-                        // $this will contain a reference to the checkbox
-                        if (selectedBox.is(':checked')) {
-                            // the checkbox was checked
-                            console.log(selectedBox);
-                        } else {
-                            // the checkbox was unchecked
-                            console.log(selectedBox);
+                    $('#' + index + '-' + j).click(function(index, j) {
+
+                        // returns the id info of the button that was clicked
+                        return function() {
+                            selectedBox = $('#' + index + '-' + j);
+                            if (selectedBox.is(':checked')) {
+                                // the checkbox was checked
+                                // update the records
+                                app.attendanceUpdate(index, j, true);
+                                // update the view
+                                $('#missed-' + index).text(app.attendanceCount(index));
+                            } else {
+                                // the checkbox was unchecked
+                                // update the records
+                                app.attendanceUpdate(index, j, false);
+                                // update the view
+                                $('#missed-' + index).text(app.attendanceCount(index));
+                            }
                         }
-                    });
+                    }(index, j));
                 }
 
                 index += 1;
             }
-
-
-
         },
         init: function() {
             // render the view
             this.render();
-
-            this.statusChange();
         }
     }
 
