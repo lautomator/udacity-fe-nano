@@ -52,7 +52,6 @@ var initialCats = [
 
 var Cat = function(data) {
 
-    // the model
     this.clickCount = ko.observable(data.clickCount); // initial click count
     this.name = ko.observable(data.name); // cat name
     this.nicknames = ko.observableArray(data.nicknames); // cat nicknames
@@ -71,7 +70,7 @@ var Cat = function(data) {
             return 'adult';
         // this could go on and on ...
         } else {
-            return 'granny';
+            return 'zen master';
         }
     }, this);
 };
@@ -88,20 +87,21 @@ var ViewModel = function() {
         self.catList.push( new Cat(catItem) );
     });
 
-    // default cat view
     this.currentCat = ko.observable(this.catList()[0]);
 
-    this.catChooser = function(data) {
-        // displays the chosen cat from the list
-        console.log('clicked', data);
-        this.currentCat;
+    this.getCat = function(data) {
+        // returns the index of the chosen cat
+        var pos = self.catList.indexOf(data);
 
+        console.log('clicked: ' + pos);
     };
 
     this.incrementCounter = function() {
         // adds one to the click count
         this.clickCount(this.clickCount() + 1);
     };
+
+
 };
 
 
