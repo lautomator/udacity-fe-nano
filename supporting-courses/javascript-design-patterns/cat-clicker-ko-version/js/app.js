@@ -84,22 +84,23 @@ var ViewModel = function() {
 
     // add the cats from data into the list
     initialCats.forEach(function(catItem) {
-        self.catList.push( new Cat(catItem) );
+        self.catList.push(new Cat(catItem));
     });
 
     this.currentCat = ko.observable(this.catList()[0]);
 
-    this.getCat = function(data) {
-        // returns the index of the chosen cat
-        var pos = self.catList.indexOf(data);
+    this.setCat = function(clickedCat) {
+        // renders the cat clicked from the list
+        self.currentCat(clickedCat);
 
-        console.log('clicked: ' + pos);
+        console.log('clicked:');
     };
 
     this.incrementCounter = function() {
         // adds one to the click count
         this.clickCount(this.clickCount() + 1);
     };
+
 
 
 };
