@@ -1,0 +1,20 @@
+div {
+    padding: 0 !important;
+}
+
+.map__search {
+    background: #000;
+    color: #fff;
+    min-height: 500px;
+}
+
+.mobile__nav {
+    background: #212121;
+    color: #608ac7;
+    min-height: 50px;
+}
+
+.map__api {
+    background: #7e7e7e;
+    min-height: 450px;
+}
