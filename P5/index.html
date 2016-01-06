@@ -10,6 +10,7 @@
         <link rel="shortcut icon" href="img/favicon.png" type='image/x-icon'>
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body class="container">
@@ -18,15 +19,70 @@
             <!-- nav and map area -->
             <div id="nav" class="col-md-9">
                 <!-- mobile nav -->
-                <div class="mobile__nav"></div>
+                <div class="mobile__nav">
+                    <div id="hamburger" class="content fa fa-bars fa-2x hidden-md hidden-lg"></div>
+                    <div class="list__content is__hidden content">
+
+<!-- TODO: THIS WILL BE A TEMPLATE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                        <!-- search form -->
+                        <div class="content">
+                            <h3>%query%</h3>
+                            <form>
+                                <input type="search" class="form-control" id="map__api__search" placeholder="enter your search query">
+                                <button type="submit" class="btn btn-primary">Filter&ensp;<span class="fa fa-filter"></span></button>
+                            </form>
+                        </div><!-- /search form -->
+
+                        <!-- search results -->
+                        <div class="results__content content">
+                            <ul>
+                                <li>%search results%</li>
+                                <li>%search results%</li>
+                                <li>%search results%</li>
+                                <li>%search results%</li>
+                                <li>%search results%</li>
+                                <li>%search results%</li>
+                                <li>%search results%</li>
+                            </ul>
+                        </div><!-- /results -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    </div>
+                </div>
 
                 <!-- map -->
-                <div class="map__api"></div>
+                <div id="g_map__api">
+                    <div class="map__api"></div>
+                </div>
             </div>
 
             <!-- search and locations -->
             <div id="search" class="col-md-3">
-                <div class="map__search"></div>
+                <div class="map__search visible-md-block visible-lg-block">
+
+<!-- TODO: THIS WILL BE A TEMPLATE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                    <!-- search form -->
+                    <div class="content">
+                        <h3>%query%</h3>
+                        <form>
+                            <input type="search" class="form-control" id="map__api__search" placeholder="enter your search query">
+                            <button type="submit" class="btn btn-primary">Filter&ensp;<span class="fa fa-filter"></span></button>
+                        </form>
+                    </div><!-- /search form -->
+
+                    <!-- search results -->
+                    <div class="results__content content">
+                        <ul>
+                            <li>%search results%</li>
+                            <li>%search results%</li>
+                            <li>%search results%</li>
+                            <li>%search results%</li>
+                            <li>%search results%</li>
+                            <li>%search results%</li>
+                            <li>%search results%</li>
+                        </ul>
+                    </div><!-- /results -->
+                </div>
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
             </div><!-- /search and locations -->
 
         </div><!-- /nav and map area -->

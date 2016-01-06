@@ -6,4 +6,11 @@ $( document ).ready(function() {
         $('#nav').addClass('col-md-push-3');
         $('#search').addClass('col-md-pull-9');
     }
+
+    // toggle the nav 'hamburger' when clicked
+    $('#hamburger').click(function() {
+        console.log('clicked');
+        $('.list__content').toggleClass('is__hidden');
+    });
+
 });
