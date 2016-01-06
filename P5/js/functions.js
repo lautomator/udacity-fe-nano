@@ -1,3 +1,5 @@
+// this script handles the interactive view
+
 $( document ).ready(function() {
     // change the order of the columns
     // when the window is sized to desktop
