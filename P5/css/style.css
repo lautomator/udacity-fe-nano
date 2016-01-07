@@ -3,13 +3,14 @@
  * ------ */
 
 #nav,
-#g_map__api,
+#g_map_api,
 #search {
     padding: 0;
 }
 
 .container {
     max-width: 1200px;
+    overflow: hidden;
 }
 
 .content {
@@ -17,34 +18,42 @@
     width: 100%;
 }
 
-.map__search {
+.title_header {
+    color: #608ac7;
+    position: absolute;
+    right: 10px;
+    top: 7px;
+}
+
+.map_search {
     background: #000;
     color: #a0a0a0;
     line-height: 25px;
     min-height: 500px;
 }
 
-.mobile__nav {
+.mobile_nav {
     background: #212121;
     color: #608ac7;
     min-height: 50px;
 }
 
-.map__api {
+.map_api {
     background: #7e7e7e;
-    height: 450px;
+    min-height: 450px;
 }
 
-.list__content {
+.list_content {
     background: #212121;
     left: 0;
     line-height: 25px;
-    opacity: 0.75;
+    opacity: 0.9;
     position: absolute;
     top: 50px;
+    z-index: 999;
 }
 
-.results__content {
+.results_content {
     right: 38px;
     position: relative;
 
@@ -54,7 +63,7 @@
  * interactive
  * ----------- */
 
-.is__hidden {
+.is_hidden {
     display: none;
 }
 
@@ -66,6 +75,7 @@ button {
  * typography
  * ---------- */
 
+h2,
 h3 {
     margin-top: 0;
 }

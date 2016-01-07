@@ -18,78 +18,78 @@
 
             <!-- nav and map area -->
             <div id="nav" class="col-md-9">
-                <!-- mobile nav -->
-                <div class="mobile__nav">
-                    <div id="hamburger" class="content fa fa-bars fa-2x hidden-md hidden-lg"></div>
-                    <div class="list__content is__hidden content">
+                <!-- title -->
+                <div class="title_header"><h2>Neighborhood Map</h2></div>
 
-<!-- TODO: THIS WILL BE A TEMPLATE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                        <!-- search form -->
-                        <div class="content">
-                            <h3 data-bind="text: searchQuery"></h3>
-                            <form>
-                                <input type="search" class="form-control" id="map__api__search" placeholder="enter your search query">
-                                <button type="submit" class="btn btn-primary">Filter&ensp;<span class="fa fa-filter"></span></button>
-                            </form>
-                        </div><!-- /search form -->
+                <!-- mobile nav -->
+                <div class="mobile_nav">
+                    <div id="hamburger" class="content fa fa-bars fa-2x hidden-md hidden-lg"></div>
+                    <div class="list_content is_hidden content">
+                        <div class="search_mobile content ">
+                            <h3 data-bind="text: searchTerm"></h3>
+
+                        </div><!--/the search form -->
 
                         <!-- search results -->
-                        <div class="results__content content">
-                            <ul>
-                                <li>%search results%</li>
-                                <li>%search results%</li>
-                                <li>%search results%</li>
-                                <li>%search results%</li>
-                                <li>%search results%</li>
-                                <li>%search results%</li>
-                                <li>%search results%</li>
-                            </ul>
+                        <div class="results_content content">
+                            <ul></ul>
                         </div><!-- /results -->
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
                     </div>
-                </div>
+                </div><!-- /mobile nav -->
 
                 <!-- map -->
-                <div id="g_map__api">
-                    <div class="map__api"></div>
+                <div id="g_map_api">
+                    <div class="map_api">
+                        <!-- Google Maps -->
+                        <div id="map"></div>
+                    </div>
                 </div>
-            </div>
+            </div><!-- /nav and map area -->
 
             <!-- search and locations -->
             <div id="search" class="col-md-3">
-                <div class="map__search visible-md-block visible-lg-block">
+                <div class="map_search visible-md-block visible-lg-block">
+                    <!-- the search form -->
+                    <div class="search_desktop content ">
+                        <h3 data-bind="text: searchTerm"></h3>
 
-<!-- TODO: THIS WILL BE A TEMPLATE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                    <!-- search form -->
-                    <div class="content">
-                        <h3 data-bind="text: searchQuery"></h3>
-                        <form>
-                            <input type="search" class="form-control" id="map__api__search" placeholder="enter your search query">
-                            <button type="submit" class="btn btn-primary">Filter&ensp;<span class="fa fa-filter"></span></button>
-                        </form>
-                    </div><!-- /search form -->
+                    </div><!--/the search form -->
 
                     <!-- search results -->
-                    <div class="results__content content">
-                        <ul>
-                            <li>%search results%</li>
-                            <li>%search results%</li>
-                            <li>%search results%</li>
-                            <li>%search results%</li>
-                            <li>%search results%</li>
-                            <li>%search results%</li>
-                            <li>%search results%</li>
-                        </ul>
+                    <div class="results_content content">
+                        <ul></ul>
                     </div><!-- /results -->
                 </div>
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
             </div><!-- /search and locations -->
+        </div><!-- /row -->
 
-        </div><!-- /nav and map area -->
+        <!-- TEMPLATES -->
+        <!-- search form template -->
+        <script type="text/template" data-template="search_form">
+            <form>
+                <input type="search" class="form-control" id="map_api_search" placeholder="enter your search query">
+                <button type="submit" class="btn btn-primary">Filter&ensp;<span class="fa fa-filter"></span></button>
+            </form>
+        </script>
+
+        <!-- results template -->
+        <script type="text/template" data-template="search_results">
+            <li>%data%</li>
+        </script><!-- /TEMPLATES -->
+
+        <!-- targets -->
+        <script>
+            var neighborhoodMapTargets = {
+                searchFormTemplate: 'script[data-template="search_form"',
+                resultsTemplate: 'script[data-template="search_results"',
+                mapDiv: document.getElementById("map")
+            };
+        </script><!-- /targets -->
 
         <script src="js/jquery-1.11.3.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/lib/knockout-3.4.0.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_-j4VDXLK3zJdRuS3kptvaUZUfKCZos4"></script>
         <script src="js/main.js"></script>
         <script src="js/functions.js"></script>
 

@@ -1,17 +1,17 @@
 // model
-var data = [
-    {
+var model = {
         query:   'NYC Subways', // default search term
-        results: [] // resulting titles (10 max)
-    }
-];
+        results: [] // titles returned
+    };
 
 // controller
-var ViewModel = function() {
+var ViewModel = function(data) {
 
-    this.searchQuery = ko.observable(data.query); // search term
-    this.searchResults = ko.observableArray(data.results);
+    var self = this;
+
+    self.searchTerm = ko.observable(data.query);
+    self.searchResults = ko.observableArray(data.results);
 
 };
 
-ko.applyBindings(new ViewModel());
+ko.applyBindings(new ViewModel(model));
