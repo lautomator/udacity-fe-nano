@@ -12,6 +12,10 @@ var ViewModel = function(data) {
     self.searchTerm = ko.observable(data.query);
     self.searchResults = ko.observableArray(data.results);
 
+    self.filter = function() {
+        console.log('filtered');
+    }
+
 };
 
 ko.applyBindings(new ViewModel(model));

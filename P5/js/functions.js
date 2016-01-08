@@ -12,10 +12,13 @@ $(document).ready(function() {
         var useragent = navigator.userAgent;
 
         if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
+            // get the device's window height minus the nav bar header
+            // (for some reason 100% height does not work here.)
+            var deviceWinHeight = $(window).height() - 50;
+            mapdiv.style.height = deviceWinHeight + 'px';
             mapdiv.style.width = '100%';
-            mapdiv.style.height = '100%';
         } else {
-            mapdiv.style.minHeight = '450px';
+            mapdiv.style.height = '450px';
         }
     }
 
@@ -51,41 +54,38 @@ $(document).ready(function() {
         }
     }
 
-    function getGeocodes(q) {
-        // returns the geocodes to be used
-        // to draw the map. 'q' is passed
-        // in from the search query or default
-        var geoCodes = {
-                lat: '',
-                lng: ''
-            },
-            geoCodesJson = 'http://maps.googleapis.com/maps/api/geocode/json?' + q;
+    // function getGeocodes(q) {
+    //     // returns the geocodes to be used
+    //     // to draw the map. 'q' is passed
+    //     // in from the search query or default
+    //     var geoCodes = {
+    //             lat: '',
+    //             lng: ''
+    //         },
+    //         geoCodesJson = 'http://maps.googleapis.com/maps/api/geocode/json?' + q;
 
-            // need some error handling
+    //         // need some error handling
 
-            // parse json
-            var parsed = JSON.parse(geoCodesJson);
+    //         // parse json
+    //         var parsed = JSON.parse(geoCodesJson);
 
-            geoCodes.lat = parsed.results.geometry.location.lat;
-            geoCodes.lng = parsed.results.geometry.location.lng;
+    //         geoCodes.lat = parsed.results.geometry.location.lat;
+    //         geoCodes.lng = parsed.results.geometry.location.lng;
 
-        return geoCodes;
-    }
+    //     return geoCodes;
+    // }
 
     function initMap() {
         // renders the Google map
         // data from search query passed in
         // map is rendered based on query or is default
-
-// loc = getGeocodes('New York City'),
         var map = new google.maps.Map(mapdiv, {
             center: {
-                // lat: getGeocodes.lat,
-                // lng: getGeocodes.lng
                 lat: -34.397,
                 lng: 150.644
             },
-            zoom: 10
+            scrollwheel: false,
+            zoom: 8
         });
     }
 

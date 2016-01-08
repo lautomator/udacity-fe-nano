@@ -66,10 +66,10 @@
         <!-- TEMPLATES -->
         <!-- search form template -->
         <script type="text/template" data-template="search_form">
-            <form>
-                <input type="search" class="form-control" id="map_api_search" placeholder="enter your search query">
-                <button type="submit" class="btn btn-primary">Filter&ensp;<span class="fa fa-filter"></span></button>
-            </form>
+            <input type="search" class="form-control" id="map_api_search" placeholder="enter your search query">
+            <button data-bind="click: filter" class="btn btn-primary">
+                Filter&ensp;<span class="fa fa-filter"></span>
+            </button>
         </script>
 
         <!-- results template -->
