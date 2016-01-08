@@ -35,7 +35,7 @@
 .mobile_nav {
     background: #212121;
     color: #608ac7;
-    min-height: 50px;
+    height: 50px;
 }
 
 .map_api {
@@ -86,4 +86,9 @@ input {
 
 ul li {
     list-style: none;
+}
+
+.search_warning {
+    font-weight: bold;
+    font-style: italic;
 }

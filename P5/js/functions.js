@@ -15,8 +15,10 @@ $(document).ready(function() {
             // get the device's window height minus the nav bar header
             // (for some reason 100% height does not work here.)
             var deviceWinHeight = $(window).height() - 50;
+
             mapdiv.style.height = deviceWinHeight + 'px';
             mapdiv.style.width = '100%';
+
         } else {
             mapdiv.style.height = '450px';
         }
@@ -37,7 +39,6 @@ $(document).ready(function() {
     function mobileMenu() {
         // toggle the nav 'hamburger' when clicked
         $('#hamburger').click(function() {
-            console.log('clicked');
             $('.list_content').toggleClass('is_hidden');
         });
     }
@@ -47,10 +48,10 @@ $(document).ready(function() {
         // the desktop or mobile version
         if (isDesktop) {
             // render for desktop
-            $('.search_desktop').append(searchTemplate);
+            $('.search_mobile').remove();
         } else {
             // render for mobile
-            $('.search_mobile').append(searchTemplate);
+            $('.search_desktop').remove();
         }
     }
 
