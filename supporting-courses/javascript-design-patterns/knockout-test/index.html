@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Knockout Demo</title>
+
+    </head>
+    <body>
+        <h1>Knockout JS Demo</h1>
+
+        <div class="content">
+            <form data-bind="submit: update">
+                <input id="f-name" type="text" placeholder="enter a new first name"><br>
+                <input id="l-name" type="text" placeholder="enter a new last name"><br>
+                <input id="is-enrolled" type="checkbox">&emsp;enrolled<br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <div class="content">
+            <table>
+                <thead>
+                    <tr>
+                        <td>First Name | </td>
+                        <td>Last Name | </td>
+                        <td>Enrolled</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-bind="text: fName"></td>
+                        <td data-bind="text: lName"></td>
+                        <td data-bind="text: enrolled"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script src="jquery-1.11.3.min.js"></script>
+        <script src="knockout-3.4.0.js"></script>
+        <script src="app.js"></script>
+
+    </body>
+</html>

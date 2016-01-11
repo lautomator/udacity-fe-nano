@@ -9,7 +9,7 @@ var ViewModel = function(data) {
 
     var self = this;
 
-    self.searchTerm = ko.observable(data.query);
+    self.searchTerm = ko.observable(model.query);
     self.searchResults = ko.observableArray(data.results);
 
     this.filterQuery = function() {
@@ -22,7 +22,11 @@ var ViewModel = function(data) {
         model.query = submittedQuery;
 
         console.log(model.query);
+        console.log(self.searchTerm());
+
     }
+
+
 
 };
 
