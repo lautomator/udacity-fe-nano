@@ -1,33 +1,44 @@
-// model
-var model = {
-        query:   'NYC Subways', // default search term
-        results: [] // titles returned
-    };
+// contains the data and update functions
+var viewModel = {
 
-// controller
-var ViewModel = function(data) {
+    // the data model: default search terms and results
+    query:   ko.observable('NYC Subways'),
+    results: ko.observableArray([]),
+    entryStatus: ko.observable(''),
 
-    var self = this;
-
-    self.searchTerm = ko.observable(model.query);
-    self.searchResults = ko.observableArray(data.results);
-
-    this.filterQuery = function() {
-        // updates the data model with the new query
-
-        // get the value from the input area
+    // app functions
+    update: function() {
+        // gets valid form data and updates the model
         var submittedQuery = $('.map_api_search').val();
 
-        // update the model
-        model.query = submittedQuery;
+        this.entryStatus('');
 
-        console.log(model.query);
-        console.log(self.searchTerm());
+        // update only if validation is passed
+        if (this.validate(submittedQuery)) {
+            // trim any trailing white space and update the model
+            this.query(submittedQuery.trim());
+            // TODO: the results will be added to the results data
 
+        } else {
+            console.log(submittedQuery.trim());
+            this.entryStatus('invalid input');
+        }
+
+
+    },
+    validate: function(q) {
+        // filter unwanted chars: returns true if valid
+        var isValid = true,
+            invalidChars = /[\\#\$%\^\*\[\]\{\}<>\?\/\"\"]/;
+
+        // user input should contain valid chars, as defined above
+        if (q.match(invalidChars) || q === '') {
+            isValid = false;
+        }
+
+        return isValid;
     }
-
-
 
 };
 
-ko.applyBindings(new ViewModel(model));
+ko.applyBindings(viewModel);

@@ -26,13 +26,13 @@
                     <div id="hamburger" class="content fa fa-bars fa-2x hidden-md hidden-lg"></div>
                     <div class="list_content is_hidden content">
                         <div class="search_mobile content">
-                            <h3 data-bind="text: searchTerm"></h3>
-                            <form data-bind="submit: filterQuery">
-                                <input type="search" class="form-control map_api_search" placeholder="enter your search query">
+                            <h3 data-bind="text: query"></h3>
+                            <form data-bind="submit: update">
+                                <input type="search" class="form-control map_api_search" placeholder="enter your search query" maxlength="25">
                                 <button type="submit" class="btn btn-primary">
                                 Filter&ensp;<span class="fa fa-filter"></span>
                                 </button>
-                                <p class="text-warning search_warning">hey</p>
+                                <p data-bind="text: entryStatus" class="text-warning has_warning"></p>
                             </form>
                         </div><!--/the search form -->
 
@@ -57,13 +57,13 @@
                 <div class="map_search visible-md-block visible-lg-block">
                     <!-- the search form -->
                     <div class="search_desktop content ">
-                        <h3 data-bind="text: searchTerm"></h3>
-                        <form data-bind="submit: filterQuery">
-                            <input type="search" class="form-control map_api_search" placeholder="enter your search query">
+                        <h3 data-bind="text: query"></h3>
+                        <form data-bind="submit: update">
+                            <input type="search" class="form-control map_api_search" placeholder="enter your search query" maxlength="25">
                             <button type="submit" class="btn btn-primary">
                                 Filter&ensp;<span class="fa fa-filter"></span>
                             </button>
-                            <!-- <p class="text-warning search_warning"></p> -->
+                            <p data-bind="text: entryStatus" class="text-warning has_warning"></p>
                         </form>
                     </div><!--/the search form -->
                     <!-- search results -->
