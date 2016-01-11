@@ -1,14 +1,16 @@
 $(document).ready(function() {
-    // this script handles some initial rendering options
+    // This script handles initial page rendering details
+    // and the Google MAps API.
 
     var isDesktop = false,
         searchForm = neighborhoodMapTargets.searchFormTemplate,
         searchTemplate = $(searchForm).html(),
-        mapdiv = neighborhoodMapTargets.mapDiv;
+        mapdiv = neighborhoodMapTargets.mapDiv,
+        map,
+        infowindow;
 
     function detectBrowser() {
-        // Google Maps API:
-        // Scale the map div window based on device
+        // scale the map div window based on device
         var useragent = navigator.userAgent;
 
         if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
@@ -41,6 +43,12 @@ $(document).ready(function() {
         $('#hamburger').click(function() {
             $('.list_content').toggleClass('is_hidden');
         });
+
+        // make the nav bar disappear if the user clicks
+        // the map in the mobile view
+        $('#map').click(function() {
+            $('.list_content').addClass('is_hidden');
+        });
     }
 
     function renderForm() {
@@ -55,38 +63,90 @@ $(document).ready(function() {
         }
     }
 
-    // function getGeocodes(q) {
-    //     // returns the geocodes to be used
-    //     // to draw the map. 'q' is passed
-    //     // in from the search query or default
-    //     var geoCodes = {
-    //             lat: '',
-    //             lng: ''
-    //         },
-    //         geoCodesJson = 'http://maps.googleapis.com/maps/api/geocode/json?' + q;
+    // Google maps/places functions
+    function callback(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                createMarker(results[i]);
+            }
+        }
+    }
 
-    //         // need some error handling
+    function processResults(results, status, pagination) {
+        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+            return;
+        } else {
+            createMarkers(results);
 
-    //         // parse json
-    //         var parsed = JSON.parse(geoCodesJson);
+            // if (pagination.hasNextPage) {
+            //     var moreButton = document.getElementById('more');
 
-    //         geoCodes.lat = parsed.results.geometry.location.lat;
-    //         geoCodes.lng = parsed.results.geometry.location.lng;
+            //     moreButton.disabled = false;
 
-    //     return geoCodes;
-    // }
+            //     moreButton.addEventListener('click', function() {
+            //         moreButton.disabled = true;
+            //         pagination.nextPage();
+            //     });
+            // }
+        }
+    }
+
+    function createMarkers(places) {
+        var bounds = new google.maps.LatLngBounds();
+        // var placesList = document.getElementById('map');
+
+        for (var i = 0, place; place = places[i]; i++) {
+            var image = {
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(25, 25)
+            };
+
+            var marker = new google.maps.Marker({
+                map: map,
+                icon: image,
+                title: place.name,
+                position: place.geometry.location
+            });
+
+            // placesList.innerHTML += '<li>' + place.name + '</li>';
+
+            bounds.extend(place.geometry.location);
+        }
+        // map.fitBounds(bounds);
+    }
+
+    function createMarker(place) {
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+            map: map,
+            position: place.geometry.location
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.setContent(place.name);
+            infowindow.open(map, this);
+        });
+    }
 
     function initMap() {
         // renders the Google map
-        // data from search query passed in
-        // map is rendered based on query or is default
-        var map = new google.maps.Map(mapdiv, {
-            center: {
-                lat: -34.397,
-                lng: 150.644
-            },
-            zoom: 8
+        var geoLocation = new google.maps.LatLng(39.9383886, -75.1531351),
+            map = new google.maps.Map(mapdiv, {
+            center: geoLocation,
+            zoom: 16
         });
+
+        infowindow = new google.maps.InfoWindow();
+        var service = new google.maps.places.PlacesService(map);
+
+        service.nearbySearch({
+            location: geoLocation,
+            radius: 100,
+            types: ['store']
+        }, processResults);
     }
 
     function init() {
