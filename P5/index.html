@@ -26,7 +26,7 @@
                     <div id="hamburger" class="content fa fa-bars fa-2x hidden-md hidden-lg"></div>
                     <div class="list_content is_hidden content">
                         <div class="search_mobile content">
-                            <h3 data-bind="text: type"></h3>
+                            <h3 data-bind="text: place"></h3>
                             <form data-bind="submit: filter">
                                 <input type="search" class="form-control map_api_search" placeholder="refine the results" maxlength="25">
                                 <button type="submit" class="btn btn-primary">
@@ -38,7 +38,8 @@
 
                         <!-- search results -->
                         <div class="results_content content">
-                            <ul></ul>
+                            <ul class="places"></ul>
+                            <button class="more btn btn-primary">More results</button>
                         </div><!-- /results -->
                     </div>
                 </div><!-- /mobile nav -->
@@ -54,10 +55,11 @@
 
             <!-- search and locations -->
             <div id="search" class="col-md-3">
+
                 <div class="map_search visible-md-block visible-lg-block">
                     <!-- the search form -->
                     <div class="search_desktop content ">
-                        <h3 data-bind="text: type"></h3>
+                        <h3 data-bind="text: place"></h3>
                         <form data-bind="submit: filter">
                             <input type="search" class="form-control map_api_search" placeholder="refine the results" maxlength="25">
                             <button type="submit" class="btn btn-primary">
@@ -68,9 +70,11 @@
                     </div><!--/the search form -->
                     <!-- search results -->
                     <div class="results_content content">
-                        <ul></ul>
+                        <ul class="places"></ul>
+                        <button class="more btn btn-primary">More results&ensp;<span class="fa fa-caret-square-o-down"></span></button>
                     </div><!-- /results -->
                 </div>
+
             </div><!-- /search and locations -->
         </div><!-- /row -->
 
@@ -79,22 +83,22 @@
             <li>%data%</li>
         </script>
 
-        <!-- targets -->
+        <!-- html targets -->
         <script>
             var neighborhoodMapTargets = {
                 resultsTemplate: 'script[data-template="search_results"',
-                mapDiv: document.getElementById('map')
+                mapDiv: document.getElementById('map'),
+                moreButton: document.getElementsByClassName('more'),
+                placesList: document.getElementsByClassName('places')
             };
         </script><!-- /targets -->
 
         <script src="js/jquery-1.11.3.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/lib/knockout-3.4.0.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_-j4VDXLK3zJdRuS3kptvaUZUfKCZos4&amp;libraries=places"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_-j4VDXLK3zJdRuS3kptvaUZUfKCZos4&amp;signed_in=false&amp;libraries=places" defer></script>
         <script src="js/functions.js"></script>
         <script src="js/main.js"></script>
-
-
 
     </body>
 </html>

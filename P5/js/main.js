@@ -5,8 +5,8 @@ var viewModel = {
     place: ko.observable('Queen Village, Philadelphia, PA'),
     lat: ko.observable(39.9383886),
     lng: ko.observable(-75.1531351),
-    type: ko.observable('Restaurants'),
-    query:   ko.observable(''),
+    type: ko.observable('restaurant'),
+    query: ko.observable(''),
     results: ko.observableArray([]),
     entryStatus: ko.observable(''),
 
