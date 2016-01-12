@@ -3,8 +3,8 @@ $(document).ready(function() {
     // and the Google MAps API.
 
     var isDesktop = false,
-        searchForm = neighborhoodMapTargets.searchFormTemplate,
-        searchTemplate = $(searchForm).html(),
+        qResults = neighborhoodMapTargets.resultsTemplate,
+        resultsTemplate = $(qResults).html(),
         mapDiv = neighborhoodMapTargets.mapDiv,
         moreButton = neighborhoodMapTargets.moreButton,
         placesList = neighborhoodMapTargets.placesList,
@@ -12,19 +12,17 @@ $(document).ready(function() {
 
     function detectBrowser() {
         // scale the map div window based on the device
-        var useragent = navigator.userAgent;
+        var useragent = navigator.userAgent,
+            deviceWinHeight = $(window).height() - 50;
 
         if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
-            // get the device's window height minus the nav bar header
-            // (for some reason 100% height does not work here.)
-            var deviceWinHeight = $(window).height() - 50;
 
             mapDiv.style.height = deviceWinHeight + 'px';
             mapDiv.style.width = '100%';
 
         } else {
-            // mapDiv.style.height = deviceWinHeight + 'px';
-            mapDiv.style.height = '450px';
+            mapDiv.style.height = deviceWinHeight + 'px';
+            mapDiv.style.width = '100%';
         }
     }
 
@@ -131,10 +129,8 @@ $(document).ready(function() {
                 position: place.geometry.location
             });
 
-            // populate the on-screen list
-            $(placesList).append('<li>' + place.name + '</li>');
-
-            console.log(place.name);
+            // populate the on-screen list using the template
+            $(placesList).append(resultsTemplate.replace('%data%', place.name));
 
             bounds.extend(place.geometry.location);
         }

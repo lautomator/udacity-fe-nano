@@ -2,15 +2,18 @@
  * layout
  * ------ */
 
-#nav,
-#g_map_api,
-#search {
-    padding: 0;
-}
-
 .container {
     max-width: 1200px;
-    /*overflow: hidden;*/
+}
+
+.row {
+    background: #e9e5dc;
+}
+
+#nav,
+#search,
+#map {
+    padding: 0;
 }
 
 .content {
@@ -39,8 +42,9 @@
 }
 
 .map_api {
-    background: #7e7e7e;
-    min-height: 450px;
+    min-height: 500px;
+    padding: 0;
+    width: 100%;
 }
 
 .list_content {
@@ -56,7 +60,6 @@
 .results_content {
     right: 38px;
     position: relative;
-
 }
 
 .more {
@@ -95,4 +98,14 @@ ul li {
 .has_warning {
     font-weight: bold;
     font-style: italic;
+}
+
+.results_item {
+    cursor: pointer;
+    line-height: 50px;
+}
+
+.results_item:hover {
+    background: #212121;
+    color: #fff;
 }

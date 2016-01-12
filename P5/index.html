@@ -15,7 +15,6 @@
     </head>
     <body class="container">
         <div class="row">
-
             <!-- nav and map area -->
             <div id="nav" class="col-md-9">
                 <!-- title -->
@@ -45,11 +44,9 @@
                 </div><!-- /mobile nav -->
 
                 <!-- map -->
-                <div id="g_map_api">
-                    <div class="map_api">
-                        <!-- Google Maps -->
-                        <div id="map"></div>
-                    </div>
+                <div class="map_api">
+                    <!-- Google Maps -->
+                    <div id="map"></div>
                 </div>
             </div><!-- /nav and map area -->
 
@@ -68,6 +65,7 @@
                             <p data-bind="text: entryStatus" class="text-warning has_warning"></p>
                         </form>
                     </div><!--/the search form -->
+
                     <!-- search results -->
                     <div class="results_content content">
                         <ul class="places"></ul>
@@ -80,7 +78,7 @@
 
         <!-- results template -->
         <script type="text/template" data-template="search_results">
-            <li>%data%</li>
+            <li class="results_item">%data%</li>
         </script>
 
         <!-- html targets -->
