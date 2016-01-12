@@ -31,7 +31,7 @@
 .map_search {
     background: #000;
     color: #a0a0a0;
-    line-height: 25px;
+    padding-left: 0 !important;
     min-height: 500px;
 }
 
@@ -57,13 +57,8 @@
     z-index: 999;
 }
 
-.results_content {
-    right: 38px;
-    position: relative;
-}
-
 .more {
-    margin-left: 38px;
+    margin: 10px;
 }
 
 /* -----------
@@ -102,10 +97,18 @@ ul li {
 
 .results_item {
     cursor: pointer;
-    line-height: 50px;
+    line-height: 35px;
 }
 
 .results_item:hover {
     background: #212121;
     color: #fff;
+}
+
+.results_content ul {
+    padding-left: 0;
+}
+
+.results_content li {
+    padding-left: 10px;
 }

@@ -69,11 +69,14 @@ $(document).ready(function() {
 
     // Google maps/places functions
     function initMap() {
+        // get the data to pass into the map service
+        var params = viewModel;
+
         // defines the location based on the model data
         // renders the map
         var loc = {
-            lat: 39.9383886,
-            lng: -75.1531351
+            lat: params.lat(),
+            lng: params.lng()
         };
 
         map = new google.maps.Map(mapDiv, {
@@ -84,8 +87,8 @@ $(document).ready(function() {
         var service = new google.maps.places.PlacesService(map);
         service.nearbySearch({
             location: loc,
-            radius: 500,
-            types: ['restaurant']
+            radius: params.placeRadius(),
+            types: [params.placeType()]
         }, processResults);
     }
 
@@ -129,12 +132,17 @@ $(document).ready(function() {
                 position: place.geometry.location
             });
 
-            // populate the on-screen list using the template
+            // render the results on the page
             $(placesList).append(resultsTemplate.replace('%data%', place.name));
+
+            // store these results in the data model
+            viewModel.results().push(place.name);
 
             bounds.extend(place.geometry.location);
         }
+
         map.fitBounds(bounds);
+
     } // google maps API ends
 
     function init() {
