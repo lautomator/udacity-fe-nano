@@ -27,7 +27,7 @@
                         <div class="search_mobile content">
                             <h3 data-bind="text: place"></h3>
                             <form data-bind="submit: filter">
-                                <input type="search" class="form-control map_api_search" placeholder="refine the results" maxlength="25">
+                                <input type="search" class="form-control map_api_search" placeholder="refine the results" maxlength="25" data-bind="textInput: refresh()">
                                 <button type="submit" class="btn btn-primary">
                                 Filter&ensp;<span class="fa fa-filter"></span>
                                 </button>
@@ -60,7 +60,7 @@
                     <div class="search_desktop content ">
                         <h3 data-bind="text: place"></h3>
                         <form data-bind="submit: filter">
-                            <input type="search" class="form-control map_api_search" placeholder="refine the results" maxlength="25">
+                            <input type="search" class="form-control map_api_search" placeholder="refine the results" maxlength="25" data-bind="textInput: refresh()">
                             <button type="submit" class="btn btn-primary">
                                 Filter&ensp;<span class="fa fa-filter"></span>
                             </button>

@@ -45,7 +45,7 @@ var viewModel = {
     entryStatus: ko.observable(),
 
     // app functions
-    filter: function() {
+    filter: function(val) {
         // Gets valid form data and filters the results.
         // Returns a list with the results, if any
         var submittedQuery = $('.map_api_search').val(),
@@ -92,9 +92,6 @@ var viewModel = {
         } else {
             this.entryStatus('invalid input');
         }
-
-
-
     },
     update: function(filtered) {
         // updates the listings array based on the filter query
@@ -132,6 +129,14 @@ var viewModel = {
         }
 
         return results;
+    },
+    refresh: function() {
+        // refresh the data on the fly
+        var textInput = $('.map_api_search').val();
+
+        if (textInput === '') {
+            this.listings(this.getListings(data.results));
+        }
     },
     init: function() {
         // populate the observables (above) with the data
