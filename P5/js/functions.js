@@ -3,8 +3,6 @@ $(document).ready(function() {
     // and the Google MAps API.
 
     var isDesktop = false,
-        qResults = neighborhoodMapTargets.resultsTemplate,
-        resultsTemplate = $(qResults).html(),
         mapDiv = neighborhoodMapTargets.mapDiv,
         moreButton = neighborhoodMapTargets.moreButton,
         placesList = neighborhoodMapTargets.placesList,
@@ -117,26 +115,19 @@ $(document).ready(function() {
         var bounds = new google.maps.LatLngBounds();
 
         for (var i = 0, place; place = places[i]; i++) {
-            var image = {
-                url: place.icon, //map.icon if you want pins
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-            };
-
             var marker = new google.maps.Marker({
                 map: map,
-                icon: image,
+                icon: map.icon,
                 title: place.name,
                 position: place.geometry.location
             });
 
             // render the results on the page
-            $(placesList).append(resultsTemplate.replace('%data%', place.name));
+            // $(placesList).append(resultsTemplate.replace('%data%', place.name));
 
             // store these results in the data model
-            viewModel.results().push(place.name);
+            // viewModel.results().push(place.name);
+            console.log(place.name);
 
             bounds.extend(place.geometry.location);
         }
@@ -151,7 +142,7 @@ $(document).ready(function() {
         orderColumns();
         mobileMenu();
         renderForm();
-        initMap();
+        // initMap();
     }
 
     init();

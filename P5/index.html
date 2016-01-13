@@ -37,8 +37,10 @@
 
                         <!-- search results -->
                         <div class="results_content content">
-                            <ul class="places"></ul>
-                            <button class="more btn btn-primary">More results</button>
+                            <ul class="places" data-bind="foreach: listings">
+                                <li class="results_item" data-bind="text: $data"></li>
+                            </ul>
+                            <!-- <button class="more btn btn-primary">More results</button> -->
                         </div><!-- /results -->
                     </div>
                 </div><!-- /mobile nav -->
@@ -68,23 +70,19 @@
 
                     <!-- search results -->
                     <div class="results_content">
-                        <ul class="places"></ul>
-                        <button class="more btn btn-primary">More results&ensp;<span class="fa fa-caret-square-o-down"></span></button>
+                        <ul class="places" data-bind="foreach: listings">
+                            <li class="results_item" data-bind="text: $data"></li>
+                        </ul>
+                        <!-- <button class="more btn btn-primary">More results&ensp;<span class="fa fa-caret-square-o-down"></span></button> -->
                     </div><!-- /results -->
                 </div>
 
             </div><!-- /search and locations -->
         </div><!-- /row -->
 
-        <!-- results template -->
-        <script type="text/template" data-template="search_results">
-            <li class="results_item">%data%</li>
-        </script>
-
         <!-- html targets -->
         <script>
             var neighborhoodMapTargets = {
-                resultsTemplate: 'script[data-template="search_results"',
                 mapDiv: document.getElementById('map'),
                 moreButton: document.getElementsByClassName('more'),
                 placesList: document.getElementsByClassName('places')
@@ -97,7 +95,6 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_-j4VDXLK3zJdRuS3kptvaUZUfKCZos4&amp;signed_in=false&amp;libraries=places" defer></script>
         <script src="js/main.js"></script>
         <script src="js/functions.js"></script>
-
 
     </body>
 </html>
