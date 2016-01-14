@@ -31,6 +31,9 @@
                                 <button type="submit" class="btn btn-primary">
                                 Filter&ensp;<span class="fa fa-filter"></span>
                                 </button>
+                                <button type="button" class="btn btn-warning" data-bind="click: reset()">
+                                    Reset&ensp;<span class="fa fa-repeat"></span>
+                                </button>
                                 <p data-bind="text: entryStatus" class="text-warning has_warning"></p>
                             </form>
                         </div><!--/the search form -->
@@ -64,6 +67,9 @@
                             <button type="submit" class="btn btn-primary">
                                 Filter&ensp;<span class="fa fa-filter"></span>
                             </button>
+                            <button type="button" class="btn btn-warning" data-bind="click: reset()">
+                                Reset&ensp;<span class="fa fa-repeat"></span>
+                            </button>
                             <p data-bind="text: entryStatus" class="text-warning has_warning"></p>
                         </form>
                     </div><!--/the search form -->
@@ -76,7 +82,6 @@
                         <!-- <button class="more btn btn-primary">More results&ensp;<span class="fa fa-caret-square-o-down"></span></button> -->
                     </div><!-- /results -->
                 </div>
-
             </div><!-- /search and locations -->
         </div><!-- /row -->
 
@@ -85,16 +90,16 @@
             var neighborhoodMapTargets = {
                 mapDiv: document.getElementById('map'),
                 moreButton: document.getElementsByClassName('more'),
-                placesList: document.getElementsByClassName('places')
             };
         </script><!-- /targets -->
 
         <script src="js/jquery-1.11.3.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/lib/knockout-3.4.0.js"></script>
+        <!--
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_-j4VDXLK3zJdRuS3kptvaUZUfKCZos4&amp;signed_in=false&amp;libraries=places" defer></script>
-        <script src="js/main.js"></script>
+        -->
         <script src="js/functions.js"></script>
-
+        <script src="js/main.js"></script>
     </body>
 </html>

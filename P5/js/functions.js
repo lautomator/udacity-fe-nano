@@ -2,10 +2,13 @@ $(document).ready(function() {
     // This script handles initial page rendering details
     // and the Google MAps API.
 
+    /* -------------------------------------------
+        page rendering, appearence, and responsive
+       ------------------------------------------- */
+
     var isDesktop = false,
         mapDiv = neighborhoodMapTargets.mapDiv,
         moreButton = neighborhoodMapTargets.moreButton,
-        placesList = neighborhoodMapTargets.placesList,
         map;
 
     function detectBrowser() {
@@ -28,11 +31,16 @@ $(document).ready(function() {
         // change the order of the columns
         // when the window is sized to desktop
         // >= 992px
+        var deviceWinHeight = $(window).height() - 50;
+
         if ($(window).width() >= 992) {
             $('#nav').addClass('col-md-push-3');
             $('#search').addClass('col-md-pull-9');
 
             isDesktop = true;
+
+            // set the results column to be 100% of the screen height
+            $('.results_content').css('height', deviceWinHeight - 120);
         }
     }
 
@@ -93,9 +101,13 @@ $(document).ready(function() {
     function processResults(results, status, pagination) {
         // process the results from the query
         // show more results, if available
+
+        console.log(results);
+
         if (status !== google.maps.places.PlacesServiceStatus.OK) {
             return;
         } else {
+
             createMarkers(results);
 
             if (pagination.hasNextPage) {
@@ -111,8 +123,9 @@ $(document).ready(function() {
     }
 
     function createMarkers(places) {
-        // create the markers
-        var bounds = new google.maps.LatLngBounds();
+        // creates the markers
+        var bounds = new google.maps.LatLngBounds(),
+            titles = [];
 
         for (var i = 0, place; place = places[i]; i++) {
             var marker = new google.maps.Marker({
@@ -122,14 +135,9 @@ $(document).ready(function() {
                 position: place.geometry.location
             });
 
-            // render the results on the page
-            // $(placesList).append(resultsTemplate.replace('%data%', place.name));
-
-            // store these results in the data model
-            // viewModel.results().push(place.name);
-            console.log(place.name);
-
             bounds.extend(place.geometry.location);
+
+            titles.push(place.name);
         }
 
         map.fitBounds(bounds);

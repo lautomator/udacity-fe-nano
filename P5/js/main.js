@@ -3,34 +3,23 @@
 // The API is called once and stored in a master var
 var data = {
     origin: 'Queen Village, Philadelphia, PA',
-    results: [
-        "Southwark Restaurant",
-        "Jim's Steaks South St.",
-        "Sabrina's Cafe",
-        "Ralph's Italian Restaurant",
-        "Creperie Beau Monde",
-        "Blackbird Pizzeria",
-        "Bibou",
-        "Famous 4th Street Delicatessen",
-        "Lorenzo & Son Pizza",
-        "Royal Tavern",
-        "Percy Street Barbecue",
-        "Italian Market Visitor Center",
-        "La Fourno Ristorante Trattoria",
-        "Ishkabibble's",
-        "O'neal's Pub",
-        "Essene Market & Cafe'",
-        "Brauhaus Schmitz",
-        "Saloon Restaurant",
-        "Marrakesh",
-        "Bistrot La Minette"
+    locations: [
+        {
+            name: 'test1',
+            address: 'add 1'
+        },
+        {
+            name: 'test2',
+            address: 'add 2'
+        }
     ],
     geoCoords: {
         lat: 39.9383886,
         lng: -75.1531351
     },
     qType: 'restaurant',
-    radius: 500
+    radius: 500,
+    appStatus: ''
 };
 // fake data ends ============================================
 
@@ -45,6 +34,27 @@ var viewModel = {
     entryStatus: ko.observable(),
 
     // app functions
+    loadData: function() {
+    // loads data from the API and populates the names array
+        var placesKey = 'AIzaSyDg_zRxIh9QfvEedhbI0eBh9Nz-fV94Ogw',
+            placesURL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
+            data.geoCoords.lat + ',' +
+            data.geoCoords.lng + '&radius=' +
+            data.radius + '&types=' +
+            data.qType + '&key=' + placesKey;
+
+        $.getJSON(placesURL, function(d) {
+            // we just need the names of the places for now
+            // TODO: will need the address information for the markers
+            $.each(d.results, function() {
+                console.log(this.name);
+
+            }).error(function(e) {
+                // update app status on error
+                data.appStatus = 'no data available';
+            });
+        });
+    },
     filter: function(val) {
         // Gets valid form data and filters the results.
         // Returns a list with the results, if any
@@ -81,12 +91,11 @@ var viewModel = {
             }
 
             // report no results
-            if (missed === len) {
+            if (missed === len || submitted === '') {
                 this.entryStatus('no results found');
             } else {
                 // there are results: ok to update
                 this.update(filtered);
-                console.log(filtered);
             }
 
         } else {
@@ -103,29 +112,31 @@ var viewModel = {
             invalidChars = /[\\#\$%\^\*\[\]\{\}<>\?\/\"\"]/;
 
         // user input should contain valid chars, as defined above
-        if (q.match(invalidChars) || q === '') {
+        if (q.match(invalidChars)) {
             isValid = false;
         }
 
         return isValid;
     },
-    getListings: function(data) {
+    getLocations: function(loc) {
         // gets the first ten places from the search
-        var places = data, // this is temp data
+        var places = loc,
             len = places.length,
             max = 10,
             index = 0,
             results = [];
 
-        // get the first ten results
         if (len > max) {
             while (index < max) {
-                results.push(places[index]);
+                results.push(places[index].name);
                 index += 1;
             }
         } else {
-            // get the results
-            results = places;
+            // get whatever is available
+            while (index < len) {
+                results.push(places[index].name);
+                index += 1;
+            }
         }
 
         return results;
@@ -135,17 +146,27 @@ var viewModel = {
         var textInput = $('.map_api_search').val();
 
         if (textInput === '') {
-            this.listings(this.getListings(data.results));
+            this.listings(this.getLocations(data.locations));
         }
     },
+    reset: function() {
+        // remove warnings
+        this.entryStatus('');
+        // clear the form
+        $('.map_api_search').val('');
+        // reset the listings
+        this.listings(this.getLocations(data.locations));
+    },
     init: function() {
+        // load the data from the API
+        this.loadData();
         // populate the observables (above) with the data
         this.place(data.origin);
         this.lat(data.geoCoords.lat);
         this.lng(data.geoCoords.lng);
         this.placeType(data.qType);
         this.placeRadius(data.radius);
-        this.listings(this.getListings(data.results));
+        this.listings(this.getLocations(data.locations));
     }
 };
 
