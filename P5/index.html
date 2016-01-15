@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/style.css">
+<!-- TODO: THIS IS TEMPORARY -->
+        <script src="keys.js"></script>
     </head>
     <body class="container">
         <div class="row">
@@ -49,7 +51,7 @@
                 </div><!-- /mobile nav -->
 
                 <!-- map -->
-                <div class="map_api">
+                <div class="map_api" data-bind="text: status">
                     <!-- Google Maps -->
                     <div id="map"></div>
                 </div>
@@ -85,20 +87,17 @@
             </div><!-- /search and locations -->
         </div><!-- /row -->
 
-        <!-- html targets -->
+        <!-- html targets and keys -->
         <script>
             var neighborhoodMapTargets = {
                 mapDiv: document.getElementById('map'),
-                moreButton: document.getElementsByClassName('more'),
-            };
-        </script><!-- /targets -->
+                moreButton: document.getElementsByClassName('more')
+            }
+        </script><!-- /targets and keys-->
 
         <script src="js/jquery-1.11.3.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/lib/knockout-3.4.0.js"></script>
-        <!--
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_-j4VDXLK3zJdRuS3kptvaUZUfKCZos4&amp;signed_in=false&amp;libraries=places" defer></script>
-        -->
         <script src="js/functions.js"></script>
         <script src="js/main.js"></script>
     </body>
