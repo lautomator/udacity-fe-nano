@@ -7,7 +7,7 @@ The [FOURSQUARE](https://foursquare.com/) API is used to get the relevant data.
 [Google Maps](https://developers.google.com/maps/?hl=en) is used to render the maps and markers.
 
 ##Setup
-To get this running: clone or download this repo. Open `index.html` in your web browser. You can also run from a local server environment: For example, run the following in the root directory via your terminal: `python -m SimpleHTTPServer 8000` to run on port 8000.
+To get this running: clone or download this repo. Open `index.html` in your web browser. You can also run from a local server environment: For example, run the following in the root directory via your terminal: `python -m SimpleHTTPServer 8000` to run on port 8000 (http://localhost:8000/).
 
 **Please Note:** You will need to provide your own *keys* from **FourSquare** by registering the app and getting the *Client ID* and *Client Secret* keys. Those are then passed into the data file in `main.js`:
 ```
