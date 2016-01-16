@@ -90,19 +90,17 @@ $(document).ready(function() {
             zoom: 17
         });
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch({
-            location: loc,
-            radius: params.placeRadius(),
-            types: [params.placeType()]
-        }, processResults);
+        // var service = new google.maps.places.PlacesService(map);
+        // service.nearbySearch({
+        //     location: loc,
+        //     radius: params.placeRadius(),
+        //     types: [params.placeType()]
+        // }, processResults);
     }
 
     function processResults(results, status, pagination) {
         // process the results from the query
         // show more results, if available
-
-        console.log(results);
 
         if (status !== google.maps.places.PlacesServiceStatus.OK) {
             return;

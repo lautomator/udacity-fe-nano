@@ -1,8 +1,12 @@
-// The following is fake data that would be passed from the FourSquare API
-// The API is called once and stored in a master var
+// The following is data passed from the FourSquare API
+// https://foursquare.com/
+// The API is called once and stored in a master var ('data')
 var data = {
+    // The origin, radius, and limit could be set by the user
+    // if the app were to be scaled; for now they are hardcoded.
     origin: 'Queen Village, Philadelphia, PA',
-    locations: [],
+    locations: {}, // the requested API data
+    labels: [], // the names of the venues only
     geoCoords: {
         lat: 39.9383886,
         lng: -75.1531351
@@ -10,14 +14,14 @@ var data = {
     section: 'food',
     radius: 500,
     limit: 15,
-    appStatus: 'getting data',
+    appStatus: 'getting data...',
     v: '20160115',
     clientID: keys.cid,
     clientSecret: keys.cse
 };
 
 var viewModel = {
-    // the data model: default search term and results
+    // from the data model
     place: ko.observable(),
     lat: ko.observable(),
     lng: ko.observable(),
@@ -29,7 +33,8 @@ var viewModel = {
 
     // app functions
     loadData: function() {
-        // loads data from the FoursSquare API and populates the locations array
+        // loads data from the FoursSquare API and populates the
+        // locations and names data objects
         var venuesURL = 'https://api.foursquare.com/v2/venues/explore?' +
             'll=' + this.lat() + ',' + this.lng() +
             '&radius=' + this.placeRadius() +
@@ -44,6 +49,7 @@ var viewModel = {
                 console.log('failed to get resource: timed out');
             }, 8000);
 
+        // the async request
         $.ajax({
             url: venuesURL,
             dataType: 'json',
@@ -51,25 +57,29 @@ var viewModel = {
                 var index = 0,
                     len = d.response.groups[0].items.length,
                     done = false,
-                    names = [];
+                    names = [],
+                    entry;
+
+                // add the api data to the locations object in the data model
+                data.locations = d;
 
                 if (len === 0) {
 // TODO: the user needs to know this
                     console.log('No data available');
                 } else {
-                    while (index < len) {
-// TODO: address need to be added so that they can populate the label callout
-                        // add the data to the data model
-                        data.locations.push(d.response.groups[0].items[index].venue.name);
 
-                        // populate the names array
+                    while (index < len) {
+
+                        // populate the names array and the labels array (in the model)
                         names.push(d.response.groups[0].items[index].venue.name);
+                        data.labels.push(d.response.groups[0].items[index].venue.name);
+
                         index += 1;
                     };
                     done = true;
                     viewModel.status('success');
 
-                    // add the names to the listings that are view on the screen
+                    // add the names to the listings that are viewed on the screen
                     viewModel.listings(names);
                 }
                 clearTimeout($requestTimeout);
@@ -144,7 +154,7 @@ var viewModel = {
         var textInput = $('.map_api_search').val();
 
         if (textInput === '') {
-            this.listings(data.locations);
+            this.listings(data.labels);
         }
     },
     reset: function() {
@@ -153,7 +163,7 @@ var viewModel = {
         // clear the form
         $('.map_api_search').val('');
         // reset the listings
-        this.listings(data.locations);
+        this.listings(data.labels);
     },
     init: function() {
         // populate the observables (above) with the data
@@ -164,7 +174,6 @@ var viewModel = {
         this.placeRadius(data.radius);
         this.loadData();
         this.status(data.appStatus);
-
     }
 };
 
