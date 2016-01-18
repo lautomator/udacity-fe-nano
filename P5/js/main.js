@@ -28,6 +28,7 @@ var viewModel = {
     placeType: ko.observable(),
     placeRadius: ko.observable(),
     listings: ko.observableArray(),
+    currentResults: ko.observableArray(),
     status: ko.observable(),
     entryStatus: ko.observable(),
 
@@ -82,6 +83,9 @@ var viewModel = {
                     // add the names to the listings that are viewed on the screen
                     viewModel.listings(names);
 
+                    // define the current results
+                    viewModel.currentResults(d);
+
                     // draw the map
                     appMap.init();
 
@@ -94,8 +98,8 @@ var viewModel = {
         // Gets valid form data and filters the results.
         // Returns a list with the results, if any
         var submittedQuery = $('.map_api_search').val(),
-            currentResults = this.listings(),
-            len = currentResults.length,
+            currentNames = this.listings(),
+            len = currentNames.length,
             index = 0,
             submitted,
             missed = 0,
@@ -114,9 +118,9 @@ var viewModel = {
             // in the current results
             while (index < len) {
 
-                if (currentResults[index].toLocaleLowerCase().search(submitted) !== -1 ) {
+                if (currentNames[index].toLocaleLowerCase().search(submitted) !== -1 ) {
                     // push to the filtered results
-                    filtered.push(currentResults[index]);
+                    filtered.push(currentNames[index]);
 
                 } else {
                     missed += 1;
@@ -124,6 +128,9 @@ var viewModel = {
 
                 index += 1;
             }
+
+            // redraw the map
+            appMap.init();
 
             // report no results
             if (missed === len || submitted === '') {
@@ -171,12 +178,12 @@ var viewModel = {
     },
     init: function() {
         // populate the observables (above) with the data
-        this.status(data.appStatus);
         this.place(data.origin);
         this.lat(data.geoCoords.lat);
         this.lng(data.geoCoords.lng);
         this.placeType(data.qType);
         this.placeRadius(data.radius);
+        this.status(data.appStatus);
         this.loadData();
     }
 };

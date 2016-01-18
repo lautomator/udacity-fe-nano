@@ -8,8 +8,7 @@ $(document).ready(function() {
 
     var isDesktop = false,
         mapDiv = neighborhoodMapTargets.mapDiv,
-        moreButton = neighborhoodMapTargets.moreButton,
-        map;
+        moreButton = neighborhoodMapTargets.moreButton;
 
     function detectBrowser() {
         // scale the map div window based on the device
@@ -98,7 +97,11 @@ var appMap = {
     initMap: function(targets) {
         // get the data to pass into the map service
         var params = viewModel,
-            mapDiv = targets.mapDiv;
+            results = params.currentResults().response.groups[0].items,
+            len = results.length,
+            index = 0
+            mapDiv = targets.mapDiv,
+            map;
 
         // defines the location based on the model data
         // renders the map
@@ -107,62 +110,28 @@ var appMap = {
             lng: params.lng()
         };
 
-
         map = new google.maps.Map(mapDiv, {
             center: loc,
             zoom: 17
         });
 
-        this.showStatus();
+        console.log(results);
 
-        // var service = new google.maps.places.PlacesService(map);
-        // service.nearbySearch({
-        //     location: loc,
-        //     radius: params.placeRadius(),
-        //     types: [params.placeType()]
-        // }, processResults);
-    },
-    processResults: function(results, status, pagination) {
-        // process the results from the query
-        // show more results, if available
-
-        if (status !== google.maps.places.PlacesServiceStatus.OK) {
-            return;
-        } else {
-
-            createMarkers(results);
-
-            if (pagination.hasNextPage) {
-
-                moreButton.disabled = false;
-
-                $(moreButton).click(function() {
-                    moreButton.disabled = true;
-                    pagination.nextPage();
-                });
-            }
-        }
-    },
-    createMarkers: function(places) {
-        // creates the markers
-        var bounds = new google.maps.LatLngBounds(),
-            titles = [];
-
-        for (var i = 0, place; place = places[i]; i++) {
-            var marker = new google.maps.Marker({
+        // draw the markers for the current results
+        while (index < len) {
+            marker = new google.maps.Marker({
                 map: map,
-                icon: map.icon,
-                title: place.name,
-                position: place.geometry.location
+                draggable: true,
+                position: {
+                    lat: results[index].venue.location.lat,
+                    lng: results[index].venue.location.lng
+                }
             });
 
-            bounds.extend(place.geometry.location);
-
-            titles.push(place.name);
+            index += 1;
         }
 
-        map.fitBounds(bounds);
-
+        this.showStatus();
     },
     init: function() {
         this.initMap(neighborhoodMapTargets);
