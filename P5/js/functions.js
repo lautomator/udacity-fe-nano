@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // This script handles initial page rendering details
-    // and the Google MAps API.
+    // and the Google Maps API.
 
     /* -------------------------------------------
         page rendering, appearence, and responsive
@@ -97,12 +97,13 @@ var appMap = {
     initMap: function(targets) {
         // get the data to pass into the map service
         var params = viewModel,
-            results = params.currentResults().response.groups[0].items,
+            results = params.currentLocations(),
             len = results.length,
             index = 0
             mapDiv = targets.mapDiv,
             map;
 
+        console.log(results);
         // defines the location based on the model data
         // renders the map
         var loc = {
@@ -115,7 +116,7 @@ var appMap = {
             zoom: 17
         });
 
-        console.log(results);
+        // console.log(results);
 
         // draw the markers for the current results
         while (index < len) {
@@ -132,6 +133,8 @@ var appMap = {
         }
 
         this.showStatus();
+
+        console.log('map rendered');
     },
     init: function() {
         this.initMap(neighborhoodMapTargets);

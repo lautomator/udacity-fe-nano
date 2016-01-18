@@ -43,7 +43,7 @@
 
                         <!-- search results -->
                         <div class="results_content content">
-                            <ul class="places" data-bind="foreach: listings">
+                            <ul class="places" data-bind="foreach: currentLabels">
                                 <li class="results_item" data-bind="text: $data"></li>
                             </ul>
                             <!-- <button class="more btn btn-primary">More results</button> -->
@@ -80,7 +80,7 @@
 
                     <!-- search results -->
                     <div class="results_content">
-                        <ul class="places" data-bind="foreach: listings">
+                        <ul class="places" data-bind="foreach: currentLabels">
                             <li class="results_item" data-bind="text: $data"></li>
                         </ul>
                         <!-- <button class="more btn btn-primary">More results&ensp;<span class="fa fa-caret-square-o-down"></span></button> -->

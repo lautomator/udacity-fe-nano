@@ -5,8 +5,8 @@ var data = {
     // The origin, radius, and limit could be set by the user.
     // For now, these are hardcoded.
     origin: 'Queen Village, Philadelphia, PA',
-    locations: {}, // all of the requested API data
-    labels: [], // the names of the venues only
+    locations: [], // all of the objects from the API
+    labels: [], // just the venue names
     geoCoords: {
         lat: 39.9383886,
         lng: -75.1531351
@@ -27,8 +27,8 @@ var viewModel = {
     lng: ko.observable(),
     placeType: ko.observable(),
     placeRadius: ko.observable(),
-    listings: ko.observableArray(),
-    currentResults: ko.observableArray(),
+    currentLocations: ko.observableArray(), // current API objects (venues)
+    currentLabels: ko.observableArray(), // current names only
     status: ko.observable(),
     entryStatus: ko.observable(),
 
@@ -58,10 +58,8 @@ var viewModel = {
                 var index = 0,
                     len = d.response.groups[0].items.length,
                     names = [],
+                    name,
                     entry;
-
-                // add the api data to the locations object in the data model
-                data.locations = d;
 
                 if (len === 0) {
                     // update the status
@@ -69,26 +67,30 @@ var viewModel = {
                 } else {
 
                     while (index < len) {
+                        name = d.response.groups[0].items[index].venue.name;
 
-                        // populate the names array and the labels array (in the model)
-                        names.push(d.response.groups[0].items[index].venue.name);
-                        data.labels.push(d.response.groups[0].items[index].venue.name);
+                        // populate the labels array and add to the model
+                        names.push(name);
+                        data.labels.push(name);
+
+                        // add the api data to the locations object in the data model
+                        data.locations.push(d.response.groups[0].items[index]);
 
                         index += 1;
                     };
+
+                    // add the names to the currentLabels that are viewed on the screen
+                    viewModel.currentLabels(data.labels);
+
+                    // define the current results
+                    viewModel.currentLocations(data.locations);
+
                     // update the status
                     viewModel.status('success');
                     data.appStatus = 'success';
 
-                    // add the names to the listings that are viewed on the screen
-                    viewModel.listings(names);
-
-                    // define the current results
-                    viewModel.currentResults(d);
-
                     // draw the map
                     appMap.init();
-
                 }
                 clearTimeout($requestTimeout);
             }
@@ -98,12 +100,14 @@ var viewModel = {
         // Gets valid form data and filters the results.
         // Returns a list with the results, if any
         var submittedQuery = $('.map_api_search').val(),
-            currentNames = this.listings(),
-            len = currentNames.length,
+            labels = this.currentLabels(),
+            locations = this.currentLocations(),
+            len = labels.length,
             index = 0,
             submitted,
             missed = 0,
-            filtered = [];
+            filteredLabels = [],
+            filteredLocations = [];
 
         // reports warnings
         this.entryStatus('');
@@ -118,9 +122,12 @@ var viewModel = {
             // in the current results
             while (index < len) {
 
-                if (currentNames[index].toLocaleLowerCase().search(submitted) !== -1 ) {
-                    // push to the filtered results
-                    filtered.push(currentNames[index]);
+                if (labels[index].toLocaleLowerCase().search(submitted) !== -1 ) {
+                    // push to the filteredLabels results
+                    filteredLabels.push(labels[index]);
+
+                    // update the currentLocations
+                    filteredLocations.push(locations[index])
 
                 } else {
                     missed += 1;
@@ -129,24 +136,21 @@ var viewModel = {
                 index += 1;
             }
 
-            // redraw the map
-            appMap.init();
-
             // report no results
             if (missed === len || submitted === '') {
                 this.entryStatus('no results found');
             } else {
                 // there are results: ok to update
-                this.update(filtered);
+                this.updateLabels(filteredLabels);
+                this.updateLocations(filteredLocations);
+
+                // redraw the map
+                appMap.init();
             }
 
         } else {
             this.entryStatus('invalid input');
         }
-    },
-    update: function(filtered) {
-        // updates the listings array based on the filter query
-        this.listings(filtered);
     },
     validate: function(q) {
         // filter unwanted chars: returns true if valid
@@ -160,12 +164,21 @@ var viewModel = {
 
         return isValid;
     },
+    updateLabels: function(filtered) {
+        // updates the currentLabels array based on the filter query
+        this.currentLabels(filtered);
+    },
+    updateLocations: function(filtered) {
+        // updates the currentLocations array based on the filter query
+        this.currentLocations(filtered);
+    },
     refresh: function() {
         // refresh the data on the fly
         var textInput = $('.map_api_search').val();
 
         if (textInput === '') {
-            this.listings(data.labels);
+            this.currentLabels(data.labels);
+            this.currentLocations(data.locations);
         }
     },
     reset: function() {
@@ -173,8 +186,9 @@ var viewModel = {
         this.entryStatus('');
         // clear the form
         $('.map_api_search').val('');
-        // reset the listings
-        this.listings(data.labels);
+        // reset the currentLabels
+        this.currentLabels(data.labels);
+        this.currentLocations(data.locations);
     },
     init: function() {
         // populate the observables (above) with the data
