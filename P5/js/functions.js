@@ -69,14 +69,36 @@ $(document).ready(function() {
         }
     }
 
+    function init() {
+        // function calls from above
+        detectBrowser();
+        orderColumns();
+        mobileMenu();
+        renderForm();
+    }
+
+    init();
+});
+
     /* -----------------
         Google Maps API
        ----------------- */
+var appMap = {
+
+    showStatus: function() {
+        // Shows the status bar when a map load error occurs.
+        // Otherwise, it is hidden.
+        if (data.appStatus === 'success') {
+            // hide this panel when data and map load successfully
+            $('.status').remove();
+        }
+    },
 
     // Google maps/places functions
-    function initMap() {
+    initMap: function(targets) {
         // get the data to pass into the map service
-        var params = viewModel;
+        var params = viewModel,
+            mapDiv = targets.mapDiv;
 
         // defines the location based on the model data
         // renders the map
@@ -85,10 +107,13 @@ $(document).ready(function() {
             lng: params.lng()
         };
 
+
         map = new google.maps.Map(mapDiv, {
             center: loc,
             zoom: 17
         });
+
+        this.showStatus();
 
         // var service = new google.maps.places.PlacesService(map);
         // service.nearbySearch({
@@ -96,9 +121,8 @@ $(document).ready(function() {
         //     radius: params.placeRadius(),
         //     types: [params.placeType()]
         // }, processResults);
-    }
-
-    function processResults(results, status, pagination) {
+    },
+    processResults: function(results, status, pagination) {
         // process the results from the query
         // show more results, if available
 
@@ -118,9 +142,8 @@ $(document).ready(function() {
                 });
             }
         }
-    }
-
-    function createMarkers(places) {
+    },
+    createMarkers: function(places) {
         // creates the markers
         var bounds = new google.maps.LatLngBounds(),
             titles = [];
@@ -140,16 +163,9 @@ $(document).ready(function() {
 
         map.fitBounds(bounds);
 
-    } // google maps API ends
-
-    function init() {
-        // function calls from above
-        detectBrowser();
-        orderColumns();
-        mobileMenu();
-        renderForm();
-        // initMap();
+    },
+    init: function() {
+        this.initMap(neighborhoodMapTargets);
     }
+};
 
-    init();
-});

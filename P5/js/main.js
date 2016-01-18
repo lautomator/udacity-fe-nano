@@ -1,11 +1,11 @@
-// The following is data passed from the FourSquare API
+// The following is data pulled from the FourSquare API
 // https://foursquare.com/
 // The API is called once and stored in a master var ('data')
 var data = {
-    // The origin, radius, and limit could be set by the user
-    // if the app were to be scaled; for now they are hardcoded.
+    // The origin, radius, and limit could be set by the user.
+    // For now, these are hardcoded.
     origin: 'Queen Village, Philadelphia, PA',
-    locations: {}, // the requested API data
+    locations: {}, // all of the requested API data
     labels: [], // the names of the venues only
     geoCoords: {
         lat: 39.9383886,
@@ -14,7 +14,7 @@ var data = {
     section: 'food',
     radius: 500,
     limit: 15,
-    appStatus: 'getting data...',
+    appStatus: 'fetching data...',
     v: '20160115',
     clientID: keys.cid,
     clientSecret: keys.cse
@@ -45,8 +45,8 @@ var viewModel = {
             '&v=' + data.v,
             // the timeout function
             $requestTimeout = setTimeout(function() {
-// TODO: an update needs to be made to notify the user
-                console.log('failed to get resource: timed out');
+                // update the status
+                viewModel.status('Failed to get resource: timed out');
             }, 8000);
 
         // the async request
@@ -56,7 +56,6 @@ var viewModel = {
             success: function(d) {
                 var index = 0,
                     len = d.response.groups[0].items.length,
-                    done = false,
                     names = [],
                     entry;
 
@@ -64,8 +63,8 @@ var viewModel = {
                 data.locations = d;
 
                 if (len === 0) {
-// TODO: the user needs to know this
-                    console.log('No data available');
+                    // update the status
+                    viewModel.status('No data available');
                 } else {
 
                     while (index < len) {
@@ -76,11 +75,16 @@ var viewModel = {
 
                         index += 1;
                     };
-                    done = true;
+                    // update the status
                     viewModel.status('success');
+                    data.appStatus = 'success';
 
                     // add the names to the listings that are viewed on the screen
                     viewModel.listings(names);
+
+                    // draw the map
+                    appMap.init();
+
                 }
                 clearTimeout($requestTimeout);
             }
@@ -167,13 +171,13 @@ var viewModel = {
     },
     init: function() {
         // populate the observables (above) with the data
+        this.status(data.appStatus);
         this.place(data.origin);
         this.lat(data.geoCoords.lat);
         this.lng(data.geoCoords.lng);
         this.placeType(data.qType);
         this.placeRadius(data.radius);
         this.loadData();
-        this.status(data.appStatus);
     }
 };
 
