@@ -79,9 +79,9 @@ $(document).ready(function() {
     init();
 });
 
-    /* -----------------
-        Google Maps API
-       ----------------- */
+/* -----------------
+    Google Maps API
+   ----------------- */
 var appMap = {
 
     showStatus: function() {
@@ -92,18 +92,16 @@ var appMap = {
             $('.status').remove();
         }
     },
-
-    // Google maps/places functions
-    initMap: function(targets) {
+    initMap: function(targets, mapStatus) {
         // get the data to pass into the map service
         var params = viewModel,
             results = params.currentLocations(),
             len = results.length,
             index = 0
             mapDiv = targets.mapDiv,
-            map;
+            map,
+            markers = [];
 
-        console.log(results);
         // defines the location based on the model data
         // renders the map
         var loc = {
@@ -111,33 +109,47 @@ var appMap = {
             lng: params.lng()
         };
 
-        map = new google.maps.Map(mapDiv, {
-            center: loc,
-            zoom: 17
-        });
-
-        // console.log(results);
-
-        // draw the markers for the current results
-        while (index < len) {
-            marker = new google.maps.Marker({
-                map: map,
-                draggable: true,
-                position: {
-                    lat: results[index].venue.location.lat,
-                    lng: results[index].venue.location.lng
-                }
+        // draw the map if it has not been drawn before
+        if (!mapStatus) {
+            map = new google.maps.Map(mapDiv, {
+                center: loc,
+                zoom: 17
             });
 
-            index += 1;
+            console.log(mapStatus);
+
+        } else {
+            console.log(mapStatus);
+            // don't redraw the map, just update the markers
+
+
         }
 
         this.showStatus();
 
-        console.log('map rendered');
+        function addMarker(results) {
+            // draw the markers for the current results
+            // and add to the markers array
+            while (index < len) {
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: {
+                        lat: results[index].venue.location.lat,
+                        lng: results[index].venue.location.lng
+                    }
+                });
+
+                markers.push(marker);
+
+                index += 1;
+            }
+        }
+
+        addMarker(results);
+        console.log(markers);
     },
     init: function() {
-        this.initMap(neighborhoodMapTargets);
+        this.initMap(neighborhoodMapTargets, false);
     }
 };
 
