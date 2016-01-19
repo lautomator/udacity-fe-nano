@@ -90,7 +90,7 @@ var viewModel = {
                     data.appStatus = 'success';
 
                     // draw the map
-                    appMap.init(neighborhoodMapTargets, false);
+                    appGoogleMap(false);
                 }
                 clearTimeout($requestTimeout);
             }
@@ -144,8 +144,9 @@ var viewModel = {
                 this.updateLabels(filteredLabels);
                 this.updateLocations(filteredLocations);
 
-                // update the markers
-                appMap.initMap(neighborhoodMapTargets, true);
+                // update the map
+                appGoogleMap(true);
+
             }
 
         } else {

@@ -7,8 +7,7 @@ $(document).ready(function() {
        ------------------------------------------- */
 
     var isDesktop = false,
-        mapDiv = neighborhoodMapTargets.mapDiv,
-        moreButton = neighborhoodMapTargets.moreButton;
+        mapDiv = neighborhoodMapTargets.mapDiv;
 
     function detectBrowser() {
         // scale the map div window based on the device
@@ -82,101 +81,102 @@ $(document).ready(function() {
 /* -----------------
     Google Maps API
    ----------------- */
-var appMap = {
+var appGoogleMap = function(mapStatus) {
 
-    showStatus: function() {
+    var map,
+        markers = [],
+        mapDiv = neighborhoodMapTargets.mapDiv,
+        params = viewModel,
+        results = params.currentLocations(),
+        index = 0,
+        len = results.length;
+
+    function showStatus() {
         // Shows the status bar when a map load error occurs.
         // Otherwise, it is hidden.
         if (data.appStatus === 'success') {
             // hide this panel when data and map load successfully
             $('.status').remove();
         }
-    },
-    initMap: function(targets, mapStatus) {
-        // get the data to pass into the map service
-        var allLocations = data.locations,
-            params = viewModel,
-            results = params.currentLocations(),
-            mapDiv = targets.mapDiv,
-            markers = [],
-            map;
+    }
 
-        // defines the location based on the model data
-        // renders the map
-        var loc = {
-            lat: params.lat(),
-            lng: params.lng()
+    function initMap() {
+        var location = {
+            lat: data.geoCoords.lat,
+            lng: data.geoCoords.lng
         };
 
+        map = new google.maps.Map(mapDiv, {
+            zoom: 16,
+            center: location,
+        });
+
+        // add the markers
+        while (index < len) {
+            addMarker(results[index]);
+
+            index += 1;
+        }
+
+        // will hide status if 'success' upon loading data
+        showStatus();
+
+        console.log(markers);
+    }
+
+    // Adds a marker to the map and push to the array.
+    function addMarker(location) {
+        var marker = new google.maps.Marker({
+            position: {
+                lat: results[index].venue.location.lat,
+                lng: results[index].venue.location.lng
+            },
+            title: results[index].venue.name,
+            map: map
+        });
+
+        markers.push(marker);
+    }
+
+    // Sets the map on all markers in the array.
+    function setMapOnAll(map) {
+        var index = 0,
+            len = markers.length;
+
+        while (index < len) {
+            markers[index].setMap(map);
+        }
+    }
+
+    // Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+
+    // Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+
+    // Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+
+    function init(mapStatus) {
         // draw the map if it has not been drawn before
         if (!mapStatus) {
 
-            map = new google.maps.Map(mapDiv, {
-                center: loc,
-                zoom: 16
-            });
-
-            // will hide status if 'success' upon loading data
-            this.showStatus();
-
-            // add markers to the markers array
-            setMarkers(results);
-
-            // get the markers from the array and render
-            getMarkers(map, markers);
-
-            console.log(markers.length)
+            initMap();
 
         } else {
-            // add the current markers (based on the filter query)
-            // to the markers array
-            setMarkers(results);
+            clearMarkers();
+            setMapOnAll(map);
 
-            console.log(markers.length);
-
-            // clear the existing markers
-            clearMarkers(markers);
+            console.log('update the markers');
         }
-
-        function setMarkers(results) {
-            // generate the markers and push them to the 'markers' array
-            var index = 0,
-                len = results.length;
-
-            while (index < len) {
-                marker = new google.maps.Marker({
-                    map: map,
-                    position: {
-                        lat: results[index].venue.location.lat,
-                        lng: results[index].venue.location.lng
-                    },
-                    title: results[index].venue.name
-                });
-
-                markers.push(marker);
-
-                index += 1;
-            }
-        }
-
-        function getMarkers(map, markers) {
-            // draw the markers for the current results
-            var index = 0,
-                len = markers.length;
-
-            while (index < len) {
-                markers[index].setMap(map);
-                index += 1;
-            }
-        }
-
-        function clearMarkers() {
-            // clears the current markers from the screen
-            getMarkers(null, markers);
-        }
-    },
-    init: function() {
-        this.initMap(neighborhoodMapTargets, false);
     }
-};
 
+    init(mapStatus);
+};
