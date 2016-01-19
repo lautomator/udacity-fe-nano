@@ -94,13 +94,12 @@ var appMap = {
     },
     initMap: function(targets, mapStatus) {
         // get the data to pass into the map service
-        var params = viewModel,
+        var allLocations = data.locations,
+            params = viewModel,
             results = params.currentLocations(),
-            len = results.length,
-            index = 0
             mapDiv = targets.mapDiv,
-            map,
-            markers = [];
+            markers = [],
+            map;
 
         // defines the location based on the model data
         // renders the map
@@ -111,32 +110,47 @@ var appMap = {
 
         // draw the map if it has not been drawn before
         if (!mapStatus) {
+
             map = new google.maps.Map(mapDiv, {
                 center: loc,
-                zoom: 17
+                zoom: 16
             });
 
-            console.log(mapStatus);
+            // will hide status if 'success' upon loading data
+            this.showStatus();
+
+            // add markers to the markers array
+            setMarkers(results);
+
+            // get the markers from the array and render
+            getMarkers(map, markers);
+
+            console.log(markers.length)
 
         } else {
-            console.log(mapStatus);
-            // don't redraw the map, just update the markers
+            // add the current markers (based on the filter query)
+            // to the markers array
+            setMarkers(results);
 
+            console.log(markers.length);
 
+            // clear the existing markers
+            clearMarkers(markers);
         }
 
-        this.showStatus();
+        function setMarkers(results) {
+            // generate the markers and push them to the 'markers' array
+            var index = 0,
+                len = results.length;
 
-        function addMarker(results) {
-            // draw the markers for the current results
-            // and add to the markers array
             while (index < len) {
                 marker = new google.maps.Marker({
                     map: map,
                     position: {
                         lat: results[index].venue.location.lat,
                         lng: results[index].venue.location.lng
-                    }
+                    },
+                    title: results[index].venue.name
                 });
 
                 markers.push(marker);
@@ -145,8 +159,21 @@ var appMap = {
             }
         }
 
-        addMarker(results);
-        console.log(markers);
+        function getMarkers(map, markers) {
+            // draw the markers for the current results
+            var index = 0,
+                len = markers.length;
+
+            while (index < len) {
+                markers[index].setMap(map);
+                index += 1;
+            }
+        }
+
+        function clearMarkers() {
+            // clears the current markers from the screen
+            getMarkers(null, markers);
+        }
     },
     init: function() {
         this.initMap(neighborhoodMapTargets, false);
