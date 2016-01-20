@@ -81,67 +81,43 @@ $(document).ready(function() {
    ----------------- */
 var NeighborhoodGmap = function() {
     // the map class
-    this.markers = [],
     this.map;
-
-    var mapDiv = neighborhoodMapTargets.mapDiv,
-        params = viewModel,
-        results = params.currentLocations(),
-        index = 0,
-        len = results.length;
-
-    function showStatus() {
-        // Shows the status bar when a map load error occurs.
-        // Otherwise, it is hidden.
-        if (data.appStatus === 'success' && Map.hasOwnProperty('name')) {
-            // hide this panel when data and map load successfully
-            $('.status').remove();
-        }
-    }
-
-    function initMap() {
-        var location = {
-            lat: data.geoCoords.lat,
-            lng: data.geoCoords.lng
-        };
-
-        this.map = new google.maps.Map(mapDiv, {
-            zoom: 16,
-            center: location,
-        });
-
-        // add the markers
-        while (index < len) {
-            this.addMarker(results[index]);
-
-            index += 1;
-        }
-
-        // will hide status if 'success' upon loading data
-        showStatus();
-    }
-
-    // Adds a marker to the map and push to the array.
-    this.addMarker = function(result) {
-        var marker = new google.maps.Marker({
-            position: {
-                lat: result.venue.location.lat,
-                lng: result.venue.location.lng
-            },
-            title: result.venue.name,
-            map: map
-        });
-
-        markers.push(marker);
-    }
-
-    initMap();
+    this.markers = [];
+    this.mapDiv = neighborhoodMapTargets.mapDiv;
+    this.params = viewModel;
+    this.origLat = data.geoCoords.lat;
+    this.origLng = data.geoCoords.lng;
+    this.results = this.params.currentLocations();
+    this.index = 0;
+    this.len = this.results.length;
 };
 
 // map methods
+NeighborhoodGmap.prototype.showStatus = function() {
+    // Shows the status bar when a map load error occurs.
+    // Otherwise, it is hidden.
+    if (data.appStatus === 'success' && Map.hasOwnProperty('name')) {
+        // hide this panel when data and map load successfully
+        $('.status').remove();
+    }
+};
+
+NeighborhoodGmap.prototype.addMarker = function(result) {
+    this.marker = new google.maps.Marker({
+        position: {
+            lat: result.venue.location.lat,
+            lng: result.venue.location.lng
+        },
+        title: result.venue.name,
+        map: map
+    });
+
+    this.markers.push(this.marker);
+};
+
 NeighborhoodGmap.prototype.getMarkers = function() {
     // return the current markers in the array
-    return markers;
+    return this.markers;
 };
 
 NeighborhoodGmap.prototype.updateMarkers = function(results) {
@@ -154,7 +130,7 @@ NeighborhoodGmap.prototype.updateMarkers = function(results) {
 
     // push the results to the array
     while (index < len) {
-        addMarker(results[index]);
+        this.addMarker(results[index]);
         index += 1;
     }
 };
@@ -167,13 +143,14 @@ NeighborhoodGmap.prototype.hideMarker = function(index) {
 NeighborhoodGmap.prototype.showMarker = function(index) {
     // add a marker from the markers array
     return markers[index].setMap(map);
-}
+};
 
 NeighborhoodGmap.prototype.toggleMarkers = function(visibility) {
     // show or hide all of the markers on the page view
     // depending on the value of: visibility<boolean>
     var index = 0,
-        len = markers.length
+        markers = this.markers,
+        len = this.len;
 
     while (index < len) {
         if (visibility) {
@@ -184,3 +161,36 @@ NeighborhoodGmap.prototype.toggleMarkers = function(visibility) {
         index += 1;
     }
 };
+
+NeighborhoodGmap.prototype.initMap = function() {
+    var index = this.index,
+        len = this.len,
+        results = this.results,
+        location = {
+        lat: this.origLat,
+        lng: this.origLng
+    };
+
+    map = new google.maps.Map(this.mapDiv, {
+        zoom: 16,
+        center: location,
+    });
+
+    // add the markers
+    while (index < len) {
+        this.addMarker(results[index]);
+
+        index += 1;
+    }
+
+    // will hide status if 'success' upon loading data
+    this.showStatus();
+};
+
+gmapInit = function() {
+    // create a new map object
+    var gmap = new NeighborhoodGmap();
+
+    // draw the map
+    gmap.initMap();
+}
