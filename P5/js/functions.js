@@ -103,6 +103,8 @@ NeighborhoodGmap.prototype.showStatus = function() {
 };
 
 NeighborhoodGmap.prototype.addMarker = function(result) {
+    // renders the markers on the map and
+    // add them to the markers array
     this.marker = new google.maps.Marker({
         position: {
             lat: result.venue.location.lat,
@@ -120,17 +122,17 @@ NeighborhoodGmap.prototype.getMarkers = function() {
     return this.markers;
 };
 
-NeighborhoodGmap.prototype.updateMarkers = function(results) {
+NeighborhoodGmap.prototype.updateMarkers = function(updates) {
     // update the markers array because of a filter query
     var index = 0,
-        len = results.length;
+        len = updates.length;
 
     // clear the existing markers
-    markers = [];
+    this.markers = [];
 
-    // push the results to the array
+    // push the updates to the array
     while (index < len) {
-        this.addMarker(results[index]);
+        this.addMarker(updates[index]);
         index += 1;
     }
 };
@@ -150,7 +152,7 @@ NeighborhoodGmap.prototype.toggleMarkers = function(visibility) {
     // depending on the value of: visibility<boolean>
     var index = 0,
         markers = this.markers,
-        len = this.len;
+        len = markers.length;
 
     while (index < len) {
         if (visibility) {

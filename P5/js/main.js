@@ -111,10 +111,17 @@ var viewModel = {
         gmap.initMap();
     },
     updateMap: function(updates) {
+        // clears the markers first before
+        //the markers array has been updated
+        gmap.toggleMarkers(false);
         // sends the filtered locations to the map
         gmap.updateMarkers(updates);
-        // clears the markers
+
+    },
+    resetMap: function(locations) {
+        // resets the markers to the default state
         gmap.toggleMarkers(false);
+        gmap.updateMarkers(locations);
     },
     filter: function(val) {
         // Gets valid form data and filters the results.
@@ -208,6 +215,7 @@ var viewModel = {
         // reset the currentLabels
         this.currentLabels(data.labels);
         this.currentLocations(data.locations);
+        this.resetMap(data.locations);
     },
     init: function() {
         // populate the observables (above) with the data
