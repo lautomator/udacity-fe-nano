@@ -18,7 +18,7 @@ var data = {
     v: '20160115',
     clientID: keys.cid,
     clientSecret: keys.cse,
-    local: true // set to true for development
+    local: true // set to true for local development
 };
 
 var viewModel = {
@@ -205,6 +205,11 @@ var viewModel = {
         if (textInput === '') {
             this.currentLabels(data.labels);
             this.currentLocations(data.locations);
+
+            // allow the map to refresh only after it has loaded
+            if (data.appStatus === 'success') {
+                this.resetMap(data.locations);
+            }
         }
     },
     reset: function() {

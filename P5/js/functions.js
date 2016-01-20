@@ -76,9 +76,11 @@ $(document).ready(function() {
     init();
 });
 
-/* -----------------
-    Google Maps API
-   ----------------- */
+/* ---------
+    The Map
+   --------- */
+// The Google Maps API is used, in part, here:
+// https://developers.google.com/maps/?hl=en
 var NeighborhoodGmap = function() {
     // the map class
     this.map;
