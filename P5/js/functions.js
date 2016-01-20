@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    // This script handles initial page rendering details
-    // and the Google Maps API.
 
     /* -------------------------------------------
         page rendering, appearence, and responsive
@@ -81,12 +79,12 @@ $(document).ready(function() {
 /* -----------------
     Google Maps API
    ----------------- */
-var appGoogleMap = function(mapStatus) {
-    this.markers = [];
+var NeighborhoodGmap = function() {
+    // the map class
+    this.markers = [],
+    this.map;
 
-    var map,
-        // markers = [],
-        mapDiv = neighborhoodMapTargets.mapDiv,
+    var mapDiv = neighborhoodMapTargets.mapDiv,
         params = viewModel,
         results = params.currentLocations(),
         index = 0,
@@ -95,7 +93,7 @@ var appGoogleMap = function(mapStatus) {
     function showStatus() {
         // Shows the status bar when a map load error occurs.
         // Otherwise, it is hidden.
-        if (data.appStatus === 'success') {
+        if (data.appStatus === 'success' && Map.hasOwnProperty('name')) {
             // hide this panel when data and map load successfully
             $('.status').remove();
         }
@@ -107,82 +105,82 @@ var appGoogleMap = function(mapStatus) {
             lng: data.geoCoords.lng
         };
 
-        map = new google.maps.Map(mapDiv, {
+        this.map = new google.maps.Map(mapDiv, {
             zoom: 16,
             center: location,
         });
 
         // add the markers
         while (index < len) {
-            addMarker(results[index]);
+            this.addMarker(results[index]);
 
             index += 1;
         }
 
         // will hide status if 'success' upon loading data
         showStatus();
-
-        console.log(markers);
     }
 
     // Adds a marker to the map and push to the array.
-    function addMarker(location) {
+    this.addMarker = function(result) {
         var marker = new google.maps.Marker({
             position: {
-                lat: results[index].venue.location.lat,
-                lng: results[index].venue.location.lng
+                lat: result.venue.location.lat,
+                lng: result.venue.location.lng
             },
-            title: results[index].venue.name,
+            title: result.venue.name,
             map: map
         });
 
         markers.push(marker);
     }
 
-    // Sets the map on all markers in the array.
-    function setMapOnAll(map) {
-        var index = 0,
-            len = markers.length;
-
-        while (index < len) {
-            markers[index].setMap(map);
-        }
-    }
-
-    // Removes the markers from the map, but keeps them in the array.
-    function clearMarkers() {
-        setMapOnAll(null);
-    }
-
-    // Shows any markers currently in the array.
-    function showMarkers() {
-        setMapOnAll(map);
-    }
-
-    // Deletes all markers in the array by removing references to them.
-    function deleteMarkers() {
-        clearMarkers();
-        markers = [];
-    }
-
-    function init(mapStatus) {
-        // draw the map if it has not been drawn before
-        if (!mapStatus) {
-
-            initMap();
-
-        } else {
-            clearMarkers();
-            setMapOnAll(map);
-
-            console.log('update the markers');
-        }
-    }
-
-    init(mapStatus);
-
+    initMap();
 };
 
-appGoogleMap.prototype.getMarkers = function() {
+// map methods
+NeighborhoodGmap.prototype.getMarkers = function() {
+    // return the current markers in the array
     return markers;
+};
+
+NeighborhoodGmap.prototype.updateMarkers = function(results) {
+    // update the markers array because of a filter query
+    var index = 0,
+        len = results.length;
+
+    // clear the existing markers
+    markers = [];
+
+    // push the results to the array
+    while (index < len) {
+        addMarker(results[index]);
+        index += 1;
+    }
+};
+
+NeighborhoodGmap.prototype.hideMarker = function(index) {
+    // hide a marker from the page view
+    return markers[index].setMap(null);
+};
+
+NeighborhoodGmap.prototype.showMarker = function(index) {
+    // add a marker from the markers array
+    return markers[index].setMap(map);
 }
+
+NeighborhoodGmap.prototype.toggleMarkers = function(visibility) {
+    // show or hide all of the markers on the page view
+    // depending on the value of: visibility<boolean>
+    var index = 0,
+        len = markers.length
+
+    while (index < len) {
+        if (visibility) {
+            this.showMarker(index);
+        } else {
+            this.hideMarker(index)
+        }
+        index += 1;
+    }
+};

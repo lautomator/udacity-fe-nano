@@ -90,7 +90,8 @@ var viewModel = {
                     data.appStatus = 'success';
 
                     // draw the map
-                    appGoogleMap(false);
+                    NeighborhoodGmap() ;
+
                 }
                 clearTimeout($requestTimeout);
             }
@@ -144,8 +145,10 @@ var viewModel = {
                 this.updateLabels(filteredLabels);
                 this.updateLocations(filteredLocations);
 
-                // update the map
-                appGoogleMap(true);
+                // update the markers
+                NeighborhoodGmap.prototype.toggleMarkers(false);
+                NeighborhoodGmap.prototype.updateMarkers(filteredLocations);
+                NeighborhoodGmap.prototype.toggleMarkers(true);
 
             }
 
