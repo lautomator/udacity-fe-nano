@@ -82,9 +82,10 @@ $(document).ready(function() {
     Google Maps API
    ----------------- */
 var appGoogleMap = function(mapStatus) {
+    this.markers = [];
 
     var map,
-        markers = [],
+        // markers = [],
         mapDiv = neighborhoodMapTargets.mapDiv,
         params = viewModel,
         results = params.currentLocations(),
@@ -179,4 +180,9 @@ var appGoogleMap = function(mapStatus) {
     }
 
     init(mapStatus);
+
 };
+
+appGoogleMap.prototype.getMarkers = function() {
+    return markers;
+}
