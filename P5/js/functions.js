@@ -137,7 +137,7 @@ NeighborhoodGmap.prototype.updateMarkers = function(results) {
 
 NeighborhoodGmap.prototype.hideMarker = function(index) {
     // hide a marker from the page view
-    return markers[index].setMap(null);
+    return this.markers[index].setMap(null);
 };
 
 NeighborhoodGmap.prototype.showMarker = function(index) {
@@ -186,11 +186,3 @@ NeighborhoodGmap.prototype.initMap = function() {
     // will hide status if 'success' upon loading data
     this.showStatus();
 };
-
-gmapInit = function() {
-    // create a new map object
-    var gmap = new NeighborhoodGmap();
-
-    // draw the map
-    gmap.initMap();
-}

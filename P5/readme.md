@@ -15,3 +15,13 @@ To get this running: clone or download this repo. Open `index.html` in your web 
     clientSecret: keys.cse // your client secret key
 ```
 The data for these keys in not in version control.
+
+### Working Locally
+You can use the sample data called `test-data.js` while working locally or without an internet connection. You will need to set the following variable in `main.js` called `local` to **true** to enable this feature.
+
+```
+    local: true // set to true for development
+
+```
+
+Set this to **false** if you want to access the FOURSQUARE API data.

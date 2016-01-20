@@ -17,7 +17,8 @@ var data = {
     appStatus: 'fetching data...',
     v: '20160115',
     clientID: keys.cid,
-    clientSecret: keys.cse
+    clientSecret: keys.cse,
+    local: true // set to true for development
 };
 
 var viewModel = {
@@ -50,52 +51,70 @@ var viewModel = {
                 viewModel.status('Failed to get resource: timed out');
             }, 8000);
 
-        // the async request
-        $.ajax({
-            url: venuesURL,
-            dataType: 'json',
-            success: function(d) {
-                var index = 0,
-                    len = d.response.groups[0].items.length,
-                    names = [],
-                    name,
-                    entry;
+        // do not perform the request if working locally to debug
+        if (!data.local) {
+            // the async request
+            $.ajax({
+                url: venuesURL,
+                dataType: 'json',
+                success: function(d) {
+                    var index = 0,
+                        len = d.response.groups[0].items.length,
+                        names = [],
+                        name,
+                        entry;
 
-                if (len === 0) {
-                    // update the status
-                    viewModel.status('No data available');
-                } else {
+                    if (len === 0) {
+                        // update the status
+                        viewModel.status('No data available');
+                    } else {
 
-                    while (index < len) {
-                        name = d.response.groups[0].items[index].venue.name;
+                        while (index < len) {
+                            name = d.response.groups[0].items[index].venue.name;
 
-                        // populate the labels array and add to the model
-                        names.push(name);
-                        data.labels.push(name);
+                            // populate the labels array and add to the model
+                            names.push(name);
+                            data.labels.push(name);
 
-                        // add the api data to the locations object in the data model
-                        data.locations.push(d.response.groups[0].items[index]);
+                            // add the api data to the locations object in the data model
+                            data.locations.push(d.response.groups[0].items[index]);
 
-                        index += 1;
-                    };
+                            index += 1;
+                        };
 
-                    // add the names to the currentLabels that are viewed on the screen
-                    viewModel.currentLabels(data.labels);
+                        // add the names to the currentLabels that are viewed on the screen
+                        viewModel.currentLabels(data.labels);
 
-                    // define the current results
-                    viewModel.currentLocations(data.locations);
+                        // define the current results
+                        viewModel.currentLocations(data.locations);
 
-                    // update the status
-                    viewModel.status('success');
-                    data.appStatus = 'success';
+                        // update the status
+                        viewModel.status('success');
+                        data.appStatus = 'success';
 
-                    // load the map
-                    gmapInit();
+                        // load the map
+                        viewModel.loadMap();
 
+                    }
+                    clearTimeout($requestTimeout);
                 }
-                clearTimeout($requestTimeout);
-            }
-        });
+            });
+        } else {
+            loadTestData();
+        }
+    },
+    loadMap: function() {
+        // create a new map object
+        gmap = new NeighborhoodGmap();
+
+        // draw the map
+        gmap.initMap();
+    },
+    updateMap: function(updates) {
+        // sends the filtered locations to the map
+        gmap.updateMarkers(updates);
+        // clears the markers
+        gmap.toggleMarkers(false);
     },
     filter: function(val) {
         // Gets valid form data and filters the results.
@@ -144,12 +163,8 @@ var viewModel = {
                 // there are results: ok to update
                 this.updateLabels(filteredLabels);
                 this.updateLocations(filteredLocations);
-
                 // update the markers
-                // NeighborhoodGmap.prototype.toggleMarkers(false);
-                // NeighborhoodGmap.prototype.updateMarkers(filteredLocations);
-                // NeighborhoodGmap.prototype.toggleMarkers(true);
-
+                this.updateMap(filteredLocations);
             }
 
         } else {
