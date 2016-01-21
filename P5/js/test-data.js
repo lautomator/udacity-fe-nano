@@ -1792,29 +1792,39 @@ function loadTestData() {
         name,
         entry;
 
-    while (index < len) {
-        name = d.response.groups[0].items[index].venue.name;
+    if (len === 0) {
 
-        // populate the labels array and add to the model
-        names.push(name);
-        data.labels.push(name);
+        // update the status
+        viewModel.status('No data available');
 
-        // add the api data to the locations object in the data model
-        data.locations.push(d.response.groups[0].items[index]);
+    } else {
+        while (index < d.response.groups[0].items.length) {
+            name = d.response.groups[0].items[index].venue.name;
 
-        index += 1;
-    };
+            // populate the labels array and add to the model
+            names.push(name);
+            data.labels.push(name);
 
-    // add the names to the currentLabels that are viewed on the screen
-    viewModel.currentLabels(data.labels);
+            // add the api data to the locations object in the data model
+            data.locations.push(d.response.groups[0].items[index]);
 
-    // define the current results
-    viewModel.currentLocations(data.locations);
+            index += 1;
+        };
 
-    // update the status
-    viewModel.status('success');
-    data.appStatus = 'success';
+        // add the names to the currentLabels that are viewed on the screen
+        viewModel.currentLabels(data.labels);
 
-    // load the map
-    viewModel.loadMap();
+        // define the current results
+        viewModel.currentLocations(data.locations);
+
+        // update the status
+        viewModel.status('success');
+        data.appStatus = 'success';
+
+        // load the map
+        viewModel.loadMap();
+
+        // log the status of the data to the console
+        console.log('Test data loaded.');
+    }
 };

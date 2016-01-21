@@ -105,8 +105,10 @@ NeighborhoodGmap.prototype.showStatus = function() {
 };
 
 NeighborhoodGmap.prototype.addMarker = function(result) {
-    // renders the markers on the map and
-    // add them to the markers array
+    // renders the markers on the map
+    // with the info windows and adds
+    // the markers to the markers array
+
     this.marker = new google.maps.Marker({
         position: {
             lat: result.venue.location.lat,
@@ -116,12 +118,39 @@ NeighborhoodGmap.prototype.addMarker = function(result) {
         map: map
     });
 
+    // info windows
+    var infowindow = new google.maps.InfoWindow({
+        content: '<h3>' + result.venue.name + '</h3>', // more data will be needed
+        position: {
+            lat: result.venue.location.lat + 0.0006,
+            lng: result.venue.location.lng
+        }
+    });
+
+    // push the markers to the markers array
     this.markers.push(this.marker);
+
+    // listen for clicks to render the info window
+    this.marker.addListener('click', function() {
+        infowindow.open(map, this.marker);
+    });
 };
 
 NeighborhoodGmap.prototype.getMarkers = function() {
     // return the current markers in the array
     return this.markers;
+};
+
+NeighborhoodGmap.prototype.addInfoWindow = function(result) {
+    // info windows
+    this.infowindow = new google.maps.InfoWindow({
+        content: '<h3>' + result.venue.name + '</h3>' // more data will be needed
+    });
+
+    // listen for clicks to render the info window
+    this.marker.addListener('click', function() {
+        this.infowindow.open(map, this.marker);
+    });
 };
 
 NeighborhoodGmap.prototype.updateMarkers = function(updates) {
@@ -180,10 +209,10 @@ NeighborhoodGmap.prototype.initMap = function() {
         center: location,
     });
 
-    // add the markers
+    // add the markers and info windows
     while (index < len) {
         this.addMarker(results[index]);
-
+        // this.addInfoWindow(results[index]);
         index += 1;
     }
 

@@ -48,7 +48,7 @@ var viewModel = {
             // the timeout function
             $requestTimeout = setTimeout(function() {
                 // update the status
-                viewModel.status('Failed to get resource: timed out');
+                viewModel.status('Failed to get resource: timed out. Try again later.');
             }, 8000);
 
         // do not perform the request if working locally to debug
@@ -189,6 +189,9 @@ var viewModel = {
         }
 
         return isValid;
+    },
+    openInfoWindow: function() {
+        console.log('open the info window');
     },
     updateLabels: function(filtered) {
         // updates the currentLabels array based on the filter query
