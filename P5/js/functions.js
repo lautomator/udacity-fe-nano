@@ -120,7 +120,7 @@ NeighborhoodGmap.prototype.addMarker = function(result) {
 
     // info windows
     var infowindow = new google.maps.InfoWindow({
-        content: '<h3>' + result.venue.name + '</h3>', // more data will be needed
+        content: this.addInfoWindowTemplate(result),
         position: {
             lat: result.venue.location.lat + 0.0006,
             lng: result.venue.location.lng
@@ -141,16 +141,43 @@ NeighborhoodGmap.prototype.getMarkers = function() {
     return this.markers;
 };
 
-NeighborhoodGmap.prototype.addInfoWindow = function(result) {
-    // info windows
-    this.infowindow = new google.maps.InfoWindow({
-        content: '<h3>' + result.venue.name + '</h3>' // more data will be needed
-    });
+NeighborhoodGmap.prototype.addInfoWindowTemplate = function(result) {
+    // returns the html template with venue data
+    var place = result.venue,
+        template,
+        title = place.name,
+        address = place.location.address,
+        city = place.location.city,
+        state = place.location.state,
+        zip = place.location.postalCode,
+        phone,
+        menuUrl,
+        link = '<a href="%data%" target="_blank">menu</a>';
 
-    // listen for clicks to render the info window
-    this.marker.addListener('click', function() {
-        this.infowindow.open(map, this.marker);
-    });
+    // check to see if there is a menu available
+    if (place.hasMenu) {
+        menuUrl = place.menu.url;
+    } else {
+        // perform a search query
+        menuUrl = 'https://www.google.com/#safe=off&q=' +
+            title + '+' + city + '+' + state + '+' + 'menu';
+    }
+
+    // check for a phone number
+    if (place.contact.formattedPhone) {
+        phone = place.contact.formattedPhone
+    } else {
+        phone = '<i>information not available</i>';
+    }
+
+    // define the template
+    template =  '<h4>' + title + '</h4>' +
+                '<p>' + address + '<br>' +
+                city + ', ' + state + ' ' + zip + '<br>' +
+                phone + '<br>' +
+                link.replace('%data%', menuUrl) + '</p>';
+
+    return template;
 };
 
 NeighborhoodGmap.prototype.updateMarkers = function(updates) {
