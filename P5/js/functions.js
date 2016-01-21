@@ -51,6 +51,11 @@ $(document).ready(function() {
         $('#map').click(function() {
             $('.list_content').addClass('is_hidden');
         });
+
+        // hide the results after a result is clicked in mobile view
+        $('#mobile_results').click(function() {
+            $('.list_content').addClass('is_hidden');
+        });
     }
 
     function renderForm() {
