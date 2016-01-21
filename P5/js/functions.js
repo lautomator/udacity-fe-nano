@@ -167,11 +167,11 @@ NeighborhoodGmap.prototype.addInfoWindowTemplate = function(result) {
     if (place.contact.formattedPhone) {
         phone = place.contact.formattedPhone
     } else {
-        phone = '<i>information not available</i>';
+        phone = '<i class="text-warning">information not available</i>';
     }
 
     // define the template
-    template =  '<h4>' + title + '</h4>' +
+    template =  '<h4 class="bg-primary">' + title + '</h4>' +
                 '<p>' + address + '<br>' +
                 city + ', ' + state + ' ' + zip + '<br>' +
                 phone + '<br>' +
