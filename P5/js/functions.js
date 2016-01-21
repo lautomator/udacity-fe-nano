@@ -130,15 +130,29 @@ NeighborhoodGmap.prototype.addMarker = function(result) {
     // push the markers to the markers array
     this.markers.push(this.marker);
 
-    // listen for clicks to render the info window
+    // listen for clicks to open the info window
     this.marker.addListener('click', function() {
-        infowindow.open(map, this.marker);
+        NeighborhoodGmap.prototype.openInfoWindow(result);
     });
 };
 
 NeighborhoodGmap.prototype.getMarkers = function() {
     // return the current markers in the array
     return this.markers;
+};
+
+NeighborhoodGmap.prototype.openInfoWindow = function(result) {
+    // opens the info window selected
+    var infowindow = new google.maps.InfoWindow({
+        content: this.addInfoWindowTemplate(result),
+        position: {
+            lat: result.venue.location.lat + 0.0006,
+            lng: result.venue.location.lng
+        }
+    });
+
+    // open the info window for the current marker
+    infowindow.open(map);
 };
 
 NeighborhoodGmap.prototype.addInfoWindowTemplate = function(result) {

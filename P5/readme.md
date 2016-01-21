@@ -16,8 +16,8 @@ To get this running: clone or download this repo. Open `index.html` in your web 
 ```
 The data for these keys in not in version control.
 
-### Working Locally
-You can use the sample data called `test-data.js` while working locally or without an internet connection. You will need to set the following variable in `main.js` called `local` to **true** to enable this feature.
+### Testing Environment
+You can use the sample data called `test-data.js` if you don't want to keep hitting the API everytime you refresh. You will need to set the following variable in `main.js` called `local` to **true** to enable this feature. An internet connection is still required for the Google Maps API to render.
 
 ```
     local: true // set to true for development

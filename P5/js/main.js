@@ -1,11 +1,11 @@
 // The following is data pulled from the FourSquare API
 // https://foursquare.com/
-// The API is called once and stored in a master var ('data')
+// The API is called once and stored in a master var ('data.locations')
 var data = {
-    // The origin, radius, and limit could be set by the user.
+    // The origin, radius, section, and limit could be set by the user.
     // For now, these are hardcoded.
     origin: 'Queen Village, Philadelphia, PA',
-    locations: [], // all of the objects from the API
+    locations: [], // all of the objects from the 4[] API
     labels: [], // just the venue names
     geoCoords: {
         lat: 39.9383886,
@@ -15,10 +15,10 @@ var data = {
     radius: 500,
     limit: 15,
     appStatus: 'fetching data...',
-    v: '20160115',
+    v: '20160115', // the version (for 4[])
     clientID: keys.cid,
     clientSecret: keys.cse,
-    local: true // set to true for local development
+    local: false // set to true for development
 };
 
 var viewModel = {
@@ -44,15 +44,16 @@ var viewModel = {
             '&limit=' + data.limit +
             '&client_id=' + data.clientID +
             '&client_secret=' + data.clientSecret +
-            '&v=' + data.v,
+            '&v=' + data.v
+
+        // do not perform the request if working locally to debug
+        if (!data.local) {
             // the timeout function
             $requestTimeout = setTimeout(function() {
                 // update the status
                 viewModel.status('Failed to get resource: timed out. Try again later.');
             }, 8000);
 
-        // do not perform the request if working locally to debug
-        if (!data.local) {
             // the async request
             $.ajax({
                 url: venuesURL,
@@ -190,8 +191,25 @@ var viewModel = {
 
         return isValid;
     },
-    openInfoWindow: function() {
-        console.log('open the info window');
+    openInfoWindow: function(venueName) {
+        // opens the info window for the venue clicked
+        console.log(venueName);
+
+        // get the results arg
+        var index = 0,
+            locations = viewModel.currentLocations(),
+            len = locations.length,
+            result;
+
+        while (index < len) {
+            if (venueName === locations[index].venue.name) {
+                result = locations[index];
+            }
+            index += 1;
+        }
+
+        gmap.openInfoWindow(result);
+
     },
     updateLabels: function(filtered) {
         // updates the currentLabels array based on the filter query

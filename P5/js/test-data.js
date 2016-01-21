@@ -1818,13 +1818,12 @@ function loadTestData() {
         viewModel.currentLocations(data.locations);
 
         // update the status
-        viewModel.status('success');
-        data.appStatus = 'success';
+        viewModel.status('Test data loaded.');
+        data.appStatus = 'Test data loaded.';
+
+        $requestTimeout = '';
 
         // load the map
         viewModel.loadMap();
-
-        // log the status of the data to the console
-        console.log('Test data loaded.');
     }
 };
