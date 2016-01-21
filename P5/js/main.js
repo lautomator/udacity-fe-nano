@@ -18,7 +18,7 @@ var data = {
     v: '20160115', // the version (for 4[])
     clientID: keys.cid,
     clientSecret: keys.cse,
-    local: false // set to true for development
+    local: true // set to true for development
 };
 
 var viewModel = {
@@ -32,6 +32,7 @@ var viewModel = {
     currentLabels: ko.observableArray(), // current names only
     status: ko.observable(),
     entryStatus: ko.observable(),
+    infoWindowOpen: ko.observableArray(), // keeps track of open info windows
 
     // app functions
     loadData: function() {
@@ -191,9 +192,9 @@ var viewModel = {
 
         return isValid;
     },
-    openInfoWindow: function(venueName) {
+    infoWindow: function(venueName) {
         // opens the info window for the venue clicked
-        console.log(venueName);
+        // from the search query panel
 
         // get the results arg
         var index = 0,
@@ -201,15 +202,17 @@ var viewModel = {
             len = locations.length,
             result;
 
-        while (index < len) {
-            if (venueName === locations[index].venue.name) {
-                result = locations[index];
+        // check to see if the info window for this item is not already open
+        if (viewModel.infoWindowOpen().indexOf(venueName) === -1) {
+            while (index < len) {
+                if (venueName === locations[index].venue.name) {
+                    result = locations[index];
+                }
+                index += 1;
             }
-            index += 1;
+
+            gmap.openInfoWindow(result);
         }
-
-        gmap.openInfoWindow(result);
-
     },
     updateLabels: function(filtered) {
         // updates the currentLabels array based on the filter query
@@ -251,6 +254,7 @@ var viewModel = {
         this.placeType(data.qType);
         this.placeRadius(data.radius);
         this.status(data.appStatus);
+        this.infoWindowOpen([]);
         this.loadData();
     }
 };

@@ -151,8 +151,18 @@ NeighborhoodGmap.prototype.openInfoWindow = function(result) {
         }
     });
 
-    // open the info window for the current marker
-    infowindow.open(map);
+    // check to see if the info window for this item is not already open
+    if (viewModel.infoWindowOpen().indexOf(result.venue.name) === -1) {
+        // open the info window for the current marker
+        infowindow.open(map);
+
+        viewModel.infoWindowOpen().push(result.venue.name);
+
+        // listen for when the window is closed
+        infowindow.addListener('closeclick', function() {
+            viewModel.infoWindowOpen([]);
+        });
+    }
 };
 
 NeighborhoodGmap.prototype.addInfoWindowTemplate = function(result) {
