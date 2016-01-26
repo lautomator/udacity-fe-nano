@@ -197,18 +197,26 @@ var viewModel = {
         var index = 0,
             locations = viewModel.currentLocations(),
             len = locations.length,
-            result;
+            result,
+            markers = gmap.markers,
+            marker;
 
         // check to see if the info window for this item is not already open
         if (viewModel.infoWindowOpen().indexOf(venueName) === -1) {
             while (index < len) {
-                if (venueName === locations[index].venue.name) {
+                // get the index of the marker selected
+                if (venueName === locations[index].venue.name &&
+                    venueName === markers[index].title) {
                     result = locations[index];
+                    marker = markers[index];
                 }
+
                 index += 1;
             }
 
             gmap.toggleInfoWindow(result);
+            // change the state of the marker
+            gmap.markerActive(marker);
         }
     },
     updateLabels: function(filtered) {
@@ -255,6 +263,3 @@ var viewModel = {
         this.loadData();
     }
 };
-
-ko.applyBindings(viewModel);
-viewModel.init();

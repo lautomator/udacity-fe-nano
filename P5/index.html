@@ -93,14 +93,17 @@
                 mapDiv: document.getElementById('map'),
                 moreButton: document.getElementsByClassName('more')
             }
+
+            function initApp() {
+                ko.applyBindings(viewModel);
+                viewModel.init();
+            }
         </script><!-- /targets and keys-->
 
         <script src="js/jquery-1.11.3.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/lib/knockout-3.4.0.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_-j4VDXLK3zJdRuS3kptvaUZUfKCZos4" ></script>
-        <!--
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_-j4VDXLK3zJdRuS3kptvaUZUfKCZos4" async defer></script>-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_-j4VDXLK3zJdRuS3kptvaUZUfKCZos4&amp;callback=initApp" async defer></script>
         <script src="js/functions.js"></script>
         <script src="js/main.js"></script>
     </body>

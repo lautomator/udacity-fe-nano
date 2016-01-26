@@ -132,14 +132,8 @@ NeighborhoodGmap.prototype.addMarker = function(result) {
         // open the info window
         NeighborhoodGmap.prototype.toggleInfoWindow(result);
         // change the color of the marker
-        NeighborhoodGmap.prototype.toggleActive(this);
-
+        NeighborhoodGmap.prototype.markerActive(this);
     });
-};
-
-NeighborhoodGmap.prototype.getMarkers = function() {
-    // return the current markers in the array
-    return this.markers;
 };
 
 NeighborhoodGmap.prototype.toggleInfoWindow = function(result) {
@@ -162,6 +156,9 @@ NeighborhoodGmap.prototype.toggleInfoWindow = function(result) {
         // listen for when the window is closed
         infowindow.addListener('closeclick', function() {
             viewModel.infoWindowOpen([]);
+
+            // change the color of the marker
+            NeighborhoodGmap.prototype.markerInactive(gmap.markers);
         });
     }
 };
@@ -247,8 +244,8 @@ NeighborhoodGmap.prototype.toggleMarkers = function(visibility) {
     }
 };
 
-NeighborhoodGmap.prototype.toggleActive = function(marker) {
-    // changes the marker color to red (active) or blue (ready)
+NeighborhoodGmap.prototype.markerActive = function(marker) {
+    // changes the marker color to red (active)
 
     // check to see if this marker is not already active
     if (viewModel.infoWindowOpen().indexOf(marker.title) !== -1) {
@@ -257,6 +254,20 @@ NeighborhoodGmap.prototype.toggleActive = function(marker) {
     } else {
         marker.icon = "img/blue_marker.png";
         marker.setMap(map);
+    }
+};
+
+NeighborhoodGmap.prototype.markerInactive = function(markers) {
+    // changes the marker color blue (ready)
+    // get the current marker
+    var index = 0,
+        len = markers.length;
+
+    while (index < len) {
+        markers[index].icon = "img/blue_marker.png";
+        markers[index].setMap(map);
+
+        index += 1;
     }
 };
 
