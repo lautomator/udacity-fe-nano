@@ -18,7 +18,7 @@ var data = {
     v: '20160115', // the version (for 4[])
     clientID: keys.cid,
     clientSecret: keys.cse,
-    local: false // set to true for development
+    local: true // set to true for development
 };
 
 var viewModel = {
@@ -36,74 +36,71 @@ var viewModel = {
 
     // app functions
     loadData: function() {
-        // loads data from the FoursSquare API and populates the
-        // locations and names data objects
-        var venuesURL = 'https://api.foursquare.com/v2/venues/explore?' +
+        // loads data from the FoursSquare API or the test data
+        // and populates the locations and names data objects
+        var venuesURL = '';
+
+        // determine if test data or real data is needed
+        if (!data.local) {
+            // from FourSquare
+            venuesURL = 'https://api.foursquare.com/v2/venues/explore?' +
             'll=' + this.lat() + ',' + this.lng() +
             '&radius=' + this.placeRadius() +
             '&section=' + this.placeType() +
             '&limit=' + data.limit +
             '&client_id=' + data.clientID +
             '&client_secret=' + data.clientSecret +
-            '&v=' + data.v
-
-        // do not perform the request if working locally to debug
-        if (!data.local) {
-            // the timeout function
-            $requestTimeout = setTimeout(function() {
-                // update the status
-                viewModel.status('Failed to get resource: timed out. Try again later.');
-            }, 8000);
-
-            // the async request
-            $.ajax({
-                url: venuesURL,
-                dataType: 'json',
-                success: function(d) {
-                    var index = 0,
-                        len = d.response.groups[0].items.length,
-                        names = [],
-                        name,
-                        entry;
-
-                    if (len === 0) {
-                        // update the status
-                        viewModel.status('No data available');
-                    } else {
-
-                        while (index < len) {
-                            name = d.response.groups[0].items[index].venue.name;
-
-                            // populate the labels array and add to the model
-                            names.push(name);
-                            data.labels.push(name);
-
-                            // add the api data to the locations object in the data model
-                            data.locations.push(d.response.groups[0].items[index]);
-
-                            index += 1;
-                        };
-
-                        // add the names to the currentLabels that are viewed on the screen
-                        viewModel.currentLabels(data.labels);
-
-                        // define the current results
-                        viewModel.currentLocations(data.locations);
-
-                        // update the status
-                        viewModel.status('success');
-                        data.appStatus = 'success';
-
-                        // load the map
-                        viewModel.loadMap();
-
-                    }
-                    clearTimeout($requestTimeout);
-                }
-            });
+            '&v=' + data.v;
         } else {
-            loadTestData();
+            // from the local file
+            venuesURL = '/js/test-data.json';
         }
+
+        // the async request
+        $.getJSON(venuesURL, function(d) {
+            var index = 0,
+                len = d.response.groups[0].items.length,
+                names = [],
+                name;
+
+            if (len === 0) {
+                // update the status
+                viewModel.status('No data available');
+            } else {
+
+                while (index < len) {
+                    name = d.response.groups[0].items[index].venue.name;
+
+                    // populate the labels array and add to the model
+                    names.push(name);
+                    data.labels.push(name);
+
+                    // add the api data to the locations object in the data model
+                    data.locations.push(d.response.groups[0].items[index]);
+
+                    index += 1;
+                }
+                // add the names to the currentLabels that are viewed on the screen
+                viewModel.currentLabels(data.labels);
+
+                // define the current results
+                viewModel.currentLocations(data.locations);
+
+                // update the status
+                if (!data.local) {
+                    viewModel.status('success');
+                    data.appStatus = 'success';
+                } else {
+                    viewModel.status('test data in use');
+                    data.appStatus = 'test data in use';
+                }
+
+                // load the map
+                viewModel.loadMap();
+            }
+        }).fail(function() {
+            viewModel.status('Failed to get resource.');
+        });
     },
     loadMap: function() {
         // create a new map object
@@ -156,7 +153,7 @@ var viewModel = {
                     filteredLabels.push(labels[index]);
 
                     // update the currentLocations
-                    filteredLocations.push(locations[index])
+                    filteredLocations.push(locations[index]);
 
                 } else {
                     missed += 1;
@@ -211,7 +208,7 @@ var viewModel = {
                 index += 1;
             }
 
-            gmap.openInfoWindow(result);
+            gmap.toggleInfoWindow(result);
         }
     },
     updateLabels: function(filtered) {

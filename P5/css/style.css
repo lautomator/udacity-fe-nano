@@ -29,7 +29,7 @@
 }
 
 .map_search {
-    background: #000;
+    background: #212121;
     color: #a0a0a0;
     height: 100%;
     padding-left: 0 !important;
@@ -42,7 +42,6 @@
 }
 
 .map_api {
-    min-height: 500px;
     padding: 0;
     width: 100%;
 }
@@ -133,7 +132,7 @@ ul li {
  /* desktop */
  @media (min-width: 992px) {
     .results_content {
-        background-color: #000;
+        background-color: #212121;
         height: 100%;
     }
  }

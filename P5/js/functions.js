@@ -88,7 +88,7 @@ $(document).ready(function() {
 // https://developers.google.com/maps/?hl=en
 var NeighborhoodGmap = function() {
     // the map class
-    this.map;
+    this.map = '';
     this.markers = [];
     this.mapDiv = neighborhoodMapTargets.mapDiv;
     this.params = viewModel;
@@ -120,16 +120,8 @@ NeighborhoodGmap.prototype.addMarker = function(result) {
             lng: result.venue.location.lng
         },
         title: result.venue.name,
-        map: map
-    });
-
-    // info windows
-    var infowindow = new google.maps.InfoWindow({
-        content: this.addInfoWindowTemplate(result),
-        position: {
-            lat: result.venue.location.lat + 0.0006,
-            lng: result.venue.location.lng
-        }
+        map: map,
+        icon: 'img/blue_marker.png'
     });
 
     // push the markers to the markers array
@@ -137,7 +129,11 @@ NeighborhoodGmap.prototype.addMarker = function(result) {
 
     // listen for clicks to open the info window
     this.marker.addListener('click', function() {
-        NeighborhoodGmap.prototype.openInfoWindow(result);
+        // open the info window
+        NeighborhoodGmap.prototype.toggleInfoWindow(result);
+        // change the color of the marker
+        NeighborhoodGmap.prototype.toggleActive(this);
+
     });
 };
 
@@ -146,7 +142,7 @@ NeighborhoodGmap.prototype.getMarkers = function() {
     return this.markers;
 };
 
-NeighborhoodGmap.prototype.openInfoWindow = function(result) {
+NeighborhoodGmap.prototype.toggleInfoWindow = function(result) {
     // opens the info window selected
     var infowindow = new google.maps.InfoWindow({
         content: this.addInfoWindowTemplate(result),
@@ -194,7 +190,7 @@ NeighborhoodGmap.prototype.addInfoWindowTemplate = function(result) {
 
     // check for a phone number
     if (place.contact.formattedPhone) {
-        phone = place.contact.formattedPhone
+        phone = place.contact.formattedPhone;
     } else {
         phone = '<i class="text-warning">information not available</i>';
     }
@@ -230,8 +226,8 @@ NeighborhoodGmap.prototype.hideMarker = function(index) {
 };
 
 NeighborhoodGmap.prototype.showMarker = function(index) {
-    // add a marker from the markers array
-    return markers[index].setMap(map);
+    // show a marker from the markers array
+    return this.markers[index].setMap(map);
 };
 
 NeighborhoodGmap.prototype.toggleMarkers = function(visibility) {
@@ -245,9 +241,22 @@ NeighborhoodGmap.prototype.toggleMarkers = function(visibility) {
         if (visibility) {
             this.showMarker(index);
         } else {
-            this.hideMarker(index)
+            this.hideMarker(index);
         }
         index += 1;
+    }
+};
+
+NeighborhoodGmap.prototype.toggleActive = function(marker) {
+    // changes the marker color to red (active) or blue (ready)
+
+    // check to see if this marker is not already active
+    if (viewModel.infoWindowOpen().indexOf(marker.title) !== -1) {
+        marker.icon = "img/red_marker.png";
+        marker.setMap(map);
+    } else {
+        marker.icon = "img/blue_marker.png";
+        marker.setMap(map);
     }
 };
 

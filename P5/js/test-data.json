@@ -1,5 +1,4 @@
-// This is some sample test data to be used locally for debugging
-var testData = {
+{
     "meta": {
         "code": 200,
         "requestId": "569feb67498e8903551b42b6"
@@ -1782,48 +1781,4 @@ var testData = {
         },
         "totalResults": 79
     }
-};
-
-function loadTestData() {
-    var d = testData,
-        index = 0,
-        len = d.response.groups[0].items.length,
-        names = [],
-        name,
-        entry;
-
-    if (len === 0) {
-
-        // update the status
-        viewModel.status('No data available');
-
-    } else {
-        while (index < d.response.groups[0].items.length) {
-            name = d.response.groups[0].items[index].venue.name;
-
-            // populate the labels array and add to the model
-            names.push(name);
-            data.labels.push(name);
-
-            // add the api data to the locations object in the data model
-            data.locations.push(d.response.groups[0].items[index]);
-
-            index += 1;
-        };
-
-        // add the names to the currentLabels that are viewed on the screen
-        viewModel.currentLabels(data.labels);
-
-        // define the current results
-        viewModel.currentLocations(data.locations);
-
-        // update the status
-        viewModel.status('Test data loaded.');
-        data.appStatus = 'Test data loaded.';
-
-        $requestTimeout = '';
-
-        // load the map
-        viewModel.loadMap();
-    }
-};
+}
