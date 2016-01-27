@@ -92,7 +92,7 @@
             var neighborhoodMapTargets = {
                 mapDiv: document.getElementById('map'),
                 moreButton: document.getElementsByClassName('more')
-            }
+            };
 
             function initApp() {
                 ko.applyBindings(viewModel);
@@ -100,8 +100,8 @@
             }
         </script><!-- /targets and keys-->
 
-        <script src="js/jquery-1.11.3.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <script src="js/lib/jquery-1.11.3.min.js"></script>
+        <script src="js/lib/bootstrap.min.js"></script>
         <script src="js/lib/knockout-3.4.0.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_-j4VDXLK3zJdRuS3kptvaUZUfKCZos4&amp;callback=initApp" async defer></script>
         <script src="js/functions.js"></script>

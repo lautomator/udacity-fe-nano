@@ -10,6 +10,7 @@
 - added callback and new init function: initApp()
 - map view markers change active/inactive states
 - results view markers change active/inactive states
+- added only one marker can open at a time
 
 ## 0.0.3 - 2016-01-22
 ### Added

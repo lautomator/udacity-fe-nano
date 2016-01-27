@@ -53,7 +53,7 @@ var viewModel = {
             '&v=' + data.v;
         } else {
             // from the local file
-            venuesURL = '/js/test-data.json';
+            venuesURL = 'test-data.json';
         }
 
         // the async request
@@ -202,7 +202,8 @@ var viewModel = {
             marker;
 
         // check to see if the info window for this item is not already open
-        if (viewModel.infoWindowOpen().indexOf(venueName) === -1) {
+        if (!gmap.infoWindowIsOpen) {
+            // get the infow window based on the the venue name
             while (index < len) {
                 // get the index of the marker selected
                 if (venueName === locations[index].venue.name &&
@@ -213,7 +214,7 @@ var viewModel = {
 
                 index += 1;
             }
-
+            // open the info window
             gmap.toggleInfoWindow(result);
             // change the state of the marker
             gmap.markerActive(marker);
@@ -236,7 +237,7 @@ var viewModel = {
             this.currentLocations(data.locations);
 
             // allow the map to refresh only after it has loaded
-            if (data.appStatus === 'success') {
+            if (data.appStatus === 'success' || data.appStatus === 'test data in use') {
                 this.resetMap(data.locations);
             }
         }

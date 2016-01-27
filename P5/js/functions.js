@@ -97,6 +97,8 @@ var NeighborhoodGmap = function() {
     this.results = this.params.currentLocations();
     this.index = 0;
     this.len = this.results.length;
+    this.infoWindowIsOpen = false;
+    this.currentMarker = {};
 };
 
 // map methods
@@ -129,6 +131,8 @@ NeighborhoodGmap.prototype.addMarker = function(result) {
 
     // listen for clicks to open the info window
     this.marker.addListener('click', function() {
+        // define the current marker
+        gmap.currentMarker = this;
         // open the info window
         NeighborhoodGmap.prototype.toggleInfoWindow(result);
         // change the color of the marker
@@ -147,11 +151,13 @@ NeighborhoodGmap.prototype.toggleInfoWindow = function(result) {
     });
 
     // check to see if the info window for this item is not already open
-    if (viewModel.infoWindowOpen().indexOf(result.venue.name) === -1) {
+    if (!gmap.infoWindowIsOpen) {
         // open the info window for the current marker
         infowindow.open(map);
-
         viewModel.infoWindowOpen().push(result.venue.name);
+
+        // allows only one window open at a time
+        gmap.infoWindowIsOpen = true;
 
         // listen for when the window is closed
         infowindow.addListener('closeclick', function() {
@@ -159,6 +165,8 @@ NeighborhoodGmap.prototype.toggleInfoWindow = function(result) {
 
             // change the color of the marker
             NeighborhoodGmap.prototype.markerInactive(gmap.markers);
+
+            gmap.infoWindowIsOpen = false;
         });
     }
 };
