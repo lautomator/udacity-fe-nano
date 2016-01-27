@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.5 - 2016-01-27
+### Added
+- error text to html in the event that there is no internet connection
+
 ## 0.0.4 - 2016-01-26
 ### Refactor
 - used $.getJSON()

@@ -18,7 +18,7 @@ var data = {
     v: '20160115', // the version (for 4[])
     clientID: keys.cid,
     clientSecret: keys.cse,
-    local: true // set to true for development
+    local: false // set to true for development
 };
 
 var viewModel = {
