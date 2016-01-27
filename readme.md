@@ -8,3 +8,4 @@ The following are the projects completed:
 * P2: Online Resume
 * P3: [Classic Arcade Clone](https://github.com/lautomator/lautomator.github.io)
 * P4: Website Optimization
+* P5: Neighborhood Map
