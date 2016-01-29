@@ -93,7 +93,7 @@ app.AppView = Backbone.View.extend({
 
     // a new todo is created if you hit enter
     createOnEnter: function( event ) {
-        if ( event.which !== ENTER_KEY || !this.$input.val().trim() ) {
+        if (event.which !== ENTER_KEY || !this.$input.val().trim()) {
             return;
         }
 
