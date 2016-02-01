@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="favicon.png" type='image/x-icon'>
+
+        <title>Cow Clicker</title>
+
+        <style>
+            .container {
+                font-family: sans-serif;
+                margin: 50px auto;
+                max-width: 600px;
+            }
+            .cow {
+                cursor: pointer;
+                width: 100%;
+            }
+
+            .counter {
+                text-align: center;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- the cow image -->
+            <div class="cow">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Cow_cartoon_04.svg" alt="moooooooo">
+
+                <!-- the counter -->
+                <h2 class="counter">0</h2>
+            </div>
+        </div>
+
+        <!-- get jquery -->
+        <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+        <script>
+            var cowClicker = {
+                clicks: 0, // default clicks
+                addClick: function() {
+                    // increments the clicks
+                    this.clicks += 1;
+                },
+                init: function() {
+                    // add clicks when the user clicks
+                    $('.cow').click(function() {
+                        cowClicker.addClick();
+
+                        // render on the screen
+                        $('.counter').text(cowClicker.clicks);
+                    });
+                }
+            };
+            // run the app
+            cowClicker.init();
+        </script>
+    </body>
+</html>
