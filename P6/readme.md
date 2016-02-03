@@ -1,7 +1,7 @@
 #P6: Feed Reader Testing
 
 ##Project Summary
-This site loads several Udacity RSS feeds. There is a menu on the left that allows the user to choose the desired feed. [Jasmine](http://jasmine.github.io/) has been used to run tests on site. The tests conducted are:
+This site loads several [Udacity](https://www.udacity.com/) RSS feeds. There is a menu on the left that allows the user to choose the desired feed. [Jasmine](http://jasmine.github.io/) has been used as the testing platform. The tests conducted were:
 
 * RSS feeds: are they defined? Are their properties defined?
 * The Menu: is the menu hidden by default? Does its visibility change when clicked.
