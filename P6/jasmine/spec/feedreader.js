@@ -9,6 +9,14 @@
  * to ensure they don't run until the DOM is ready.
  */
 $(function() {
+    // These are in this testing scope so that they
+    // are accessible below.
+    var index = 0,
+        len = allFeeds.length;
+
+    // set the timeout to be longer than the default
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
     * feeds definitions, the allFeeds variable in our application.
@@ -22,11 +30,6 @@ $(function() {
          * page?
          */
 
-        // These are in the global scope so that they
-        // are accessible below.
-        var index = 0,
-            len = allFeeds.length;
-
         // tests
         it('are defined', function() {
             expect(allFeeds).toBeDefined();
@@ -36,6 +39,7 @@ $(function() {
         // Loops through the allFeeds object and ensures that every
         // item has a 'url' defined and is not empty
         it('ensures all url fields are defined', function() {
+            index = 0;
             while (index < len) {
                 expect(allFeeds[index].url).toBeDefined();
                 expect(allFeeds[index].url).not.toBe('');
@@ -86,28 +90,72 @@ $(function() {
          */
 
         // the index of the API feed array
-        var id = 0;
+        var feedID = 0;
+
+        index = 0;
 
         // test the exception only after loadFeed is done
         beforeEach(function(done) {
-            loadFeed(id, function() {
+            loadFeed(feedID, function() {
                 done();
             });
         });
 
-        // check for one '.entry' element after loadFeed is done
-        it('should be at least one .entry element', function(done) {
-            expect($('.feed a article').hasClass('entry')).toBe(true);
-            done();
-        });
+        // check each feed
+        while (index < len) {
+            // check for one '.entry' element after loadFeed is done
+            it('should be at least one .entry element', function(done) {
+                expect($('.feed a article').hasClass('entry')).toBe(true);
+
+                // increment the feed id number
+                feedID += 1;
+
+                done();
+            });
+
+            index += 1;
+        }
     });
 
-
-
-    /* TODO: Write a new test suite named "New Feed Selection"
-
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
+    describe('New Feed Selection', function() {
+        /* -> ensures when a new feed is loaded
+         * by the loadFeed function that the content
+         * actually changes.
          */
+
+        /*
+         * It is assumed that if the 'header-title' text
+         * of the feed changes, then there is new content.
+         */
+
+        // the index of the API feed array
+        var feedID = 0;
+
+        index = 0;
+
+        // test the exception only after loadFeed is done
+        beforeEach(function(done) {
+            loadFeed(feedID, function() {
+                done();
+            });
+        });
+
+        // load each feed
+        while (index < len) {
+            // check for one '.entry' element after loadFeed is done
+            it('content actually changes', function(done) {
+                expect($('.header-title').text()).toEqual(allFeeds[feedID].name);
+
+                // increment the feed id number
+                feedID += 1;
+
+                done();
+
+                // load the initial feed when done
+                loadFeed(0);
+            });
+
+            index += 1;
+        }
+    });
 }());
