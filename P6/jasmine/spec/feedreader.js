@@ -14,8 +14,40 @@ $(function() {
     var index = 0,
         len = allFeeds.length;
 
+    // returns two unique random feed ids
+    // with max number passed in
+    function getRanId(max) {
+        var ids = [];
+        index = 0;
+
+        // ensure a max of at least 2
+        if (!max > 0) {
+            max = 2;
+        }
+
+        // set the ids
+        ids[0] = Math.floor((Math.random() * (max)));
+        ids[1] = Math.floor((Math.random() * (max)));
+
+        // fix a duplicate id
+        while (index < 50) {
+            if (ids[1] === ids[0]) {
+                ids[1] = Math.floor((Math.random() * (max)));
+            } else {
+                break;
+            }
+            index += 1;
+        }
+        return ids;
+    }
+
     // set the timeout to be longer than the default
+    // in the case that more time is needed
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
+    /***************/
+    /* TESTS BEGIN */
+    /***************/
 
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
@@ -89,73 +121,71 @@ $(function() {
          * element within the '.feed' container.
          */
 
-        // the index of the API feed array
-        var feedID = 0;
-
-        index = 0;
+        // get a random number between 0 and the
+        // length of the feeds array
+        var ranIds = getRanId(len),
+            feedId = ranIds[0]; // the index of the API feed array
 
         // test the exception only after loadFeed is done
         beforeEach(function(done) {
-            loadFeed(feedID, function() {
+            // load the randomly selected feed
+            loadFeed(feedId, function() {
                 done();
             });
         });
 
-        // check each feed
-        while (index < len) {
-            // check for one '.entry' element after loadFeed is done
-            it('should be at least one .entry element', function(done) {
-                expect($('.feed a article').hasClass('entry')).toBe(true);
-
-                // increment the feed id number
-                feedID += 1;
-
-                done();
-            });
-
-            index += 1;
-        }
+        // check for one '.entry' element after loadFeed is done
+        it('should be at least one .entry element', function(done) {
+            expect($('.feed a article').hasClass('entry')).toBe(true);
+            done();
+        });
     });
 
     describe('New Feed Selection', function() {
         /* -> ensures when a new feed is loaded
          * by the loadFeed function that the content
-         * actually changes.
+         * actually changes. To do this, we will load
+         * one feed, store its content and then load
+         * feed and store its content; we will then
+         * compare the content to ensure that they
+         * are not the same.
          */
 
-        /*
-         * It is assumed that if the 'header-title' text
-         * of the feed changes, then there is new content.
-         */
+        // get two random feeds to test
+        var ids = getRanId(len),
+            oldFeedId = ids[0],
+            newFeedId = ids[1],
+            oldEntry,
+            newEntry;
 
-        // the index of the API feed array
-        var feedID = 0;
-
-        index = 0;
+        console.log(oldFeedId, newFeedId);
 
         // test the exception only after loadFeed is done
         beforeEach(function(done) {
-            loadFeed(feedID, function() {
+            // clear the existing feed
+            $('.feed').html('');
+
+            // load a feed
+            loadFeed(oldFeedId, function() {
+                // get the entry name
+                oldEntry = $('.entry:first').text();
+                done();
+            });
+            // load another feed
+            loadFeed(newFeedId, function() {
+                // get the entry name
+                newEntry = $('.entry:first').text();
                 done();
             });
         });
 
-        // load each feed
-        while (index < len) {
-            // check for one '.entry' element after loadFeed is done
-            it('content actually changes', function(done) {
-                expect($('.header-title').text()).toEqual(allFeeds[feedID].name);
+        // check for one '.entry' element after loadFeed is done
+        it('content actually changes', function(done) {
+            console.log(oldEntry, newEntry);
+            done();
 
-                // increment the feed id number
-                feedID += 1;
-
-                done();
-
-                // load the initial feed when done
-                loadFeed(0);
-            });
-
-            index += 1;
-        }
+            // load the initial feed when done
+            // loadFeed(0);
+        });
     });
 }());
