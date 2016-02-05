@@ -21,7 +21,7 @@ $(function() {
         index = 0;
 
         // ensure a max of at least 2
-        if (!max > 0) {
+        if (max < 1) {
             max = 2;
         }
 
@@ -158,8 +158,6 @@ $(function() {
             oldEntry,
             newEntry;
 
-        console.log(oldFeedId, newFeedId);
-
         // test the exception only after loadFeed is done
         beforeEach(function(done) {
             // clear the existing feed
@@ -167,25 +165,78 @@ $(function() {
 
             // load a feed
             loadFeed(oldFeedId, function() {
-                // get the entry name
+                // get the entry name (gets the first entry)
                 oldEntry = $('.entry:first').text();
                 done();
             });
+        });
+
+        beforeEach(function(done) {
+            // clear the existing feed
+            $('.feed').html('');
+
             // load another feed
             loadFeed(newFeedId, function() {
-                // get the entry name
+                // get the entry name (gets the first entry)
                 newEntry = $('.entry:first').text();
                 done();
             });
         });
 
-        // check for one '.entry' element after loadFeed is done
+        // check that newEntry != oldEntry
         it('content actually changes', function(done) {
-            console.log(oldEntry, newEntry);
+            expect(newEntry).not.toEqual(oldEntry);
             done();
+        });
+    });
 
-            // load the initial feed when done
-            // loadFeed(0);
+    /*****************************************************
+    /* additional tests that will fail until implemented *
+     *****************************************************/
+
+    describe('Limit content to 5 entries or less', function() {
+        /* -> ensures when a new feed is loaded
+         * that only the first 5 entries (or less)
+         * will appear on the screen.
+         */
+
+
+        var limit = 5, // the max length
+            ranIds = getRanId(len), // get one feed chosen at random
+            feedId = ranIds[0]; // the index of the API feed array
+
+        // load the API async
+        beforeEach(function(done) {
+            loadFeed(feedId, function() {
+                done();
+            });
+        });
+
+        // check the length of the feed
+        it('the page displays 5 or less items', function(done) {
+            expect($('.entry').length).not.toBeGreaterThan(limit);
+            done();
+        });
+    });
+
+    describe('Initial loaded feed should be HTML5 Rocks', function() {
+        /* -> ensures when the API is loaded
+         * 'HTML5 Rocks' is the first feed to load
+         */
+
+        var feedId = 0; // the first feed
+
+        // load the API async
+        beforeEach(function(done) {
+            loadFeed(feedId, function() {
+                done();
+            });
+        });
+
+        // check name of the feed
+        it('the initial feed to load is HTML5 Rocks', function(done) {
+            expect($('.header-title').text()).toBe('HTML5 Rocks');
+            done();
         });
     });
 }());

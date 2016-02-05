@@ -54,7 +54,7 @@ function loadFeed(id, cb) {
             var container = $('.feed'),
                 title = $('.header-title'),
                 entries = result.feed.entries,
-                entriesLen = entries.length,
+                // entriesLen = entries.length, // this is not used
                 entryTemplate = Handlebars.compile($('.tpl-entry').html());
 
             title.html(feedName);   // Set the header text
@@ -94,8 +94,8 @@ google.setOnLoadCallback(init);
  * until the DOM is ready.
  */
 $(function() {
-    var container = $('.feed'),
-        feedList = $('.feed-list'),
+    // var container = $('.feed'), // not used
+    var feedList = $('.feed-list'),
         feedItemTemplate = Handlebars.compile($('.tpl-feed-list-item').html()),
         feedId = 0,
         menuIcon = $('.menu-icon-link');
